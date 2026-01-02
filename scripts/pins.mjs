@@ -111,21 +111,21 @@ function renderPin({ owner, repo, theme, info }) {
   <rect x="0.5" y="0.5" width="${W - 1}" height="${H - 1}" rx="14"
         fill="${t.bg}" stroke="${t.border}" stroke-width="1.2" filter="url(#shadow)"/>
 
-  <g transform="translate(${PAD},18)">
+  <g transform="translate(${PAD},14)">
     <text x="0" y="16" font-size="16" font-weight="900" fill="${t.title}" font-family="Segoe UI, Ubuntu, Arial">${esc(repo)}</text>
-    <text x="0" y="34" font-size="11" fill="${t.muted}" font-family="Segoe UI, Ubuntu, Arial">${esc(owner)}</text>
+    <text x="0" y="32" font-size="11" fill="${t.muted}" font-family="Segoe UI, Ubuntu, Arial">${esc(owner)}</text>
 
-    <text x="0" y="56" font-size="12" fill="${t.text}" font-family="Segoe UI, Ubuntu, Arial">${esc(desc[0])}</text>
-    ${desc[1] ? `<text x="0" y="72" font-size="12" fill="${t.text}" font-family="Segoe UI, Ubuntu, Arial">${esc(desc[1])}</text>` : ""}
+    <text x="0" y="50" font-size="12" fill="${t.text}" font-family="Segoe UI, Ubuntu, Arial">${esc(desc[0])}</text>
+    ${desc[1] ? `<text x="0" y="66" font-size="12" fill="${t.text}" font-family="Segoe UI, Ubuntu, Arial">${esc(desc[1])}</text>` : ""}
 
-    <rect x="0" y="84" width="${W - PAD * 2}" height="26" rx="10" fill="${t.track}" opacity="0.8"/>
-    <text x="12" y="102" font-size="11" fill="${t.muted}" font-family="Segoe UI, Ubuntu, Arial">${esc(lang)}</text>
+    <rect x="0" y="72" width="${W - PAD * 2}" height="26" rx="10" fill="${t.track}" opacity="0.8"/>
+    <text x="12" y="90" font-size="11" fill="${t.muted}" font-family="Segoe UI, Ubuntu, Arial">${esc(lang)}</text>
 
-    <text x="170" y="102" font-size="11" fill="${t.muted}" font-family="Segoe UI, Ubuntu, Arial">★ ${stars}</text>
-    <text x="240" y="102" font-size="11" fill="${t.muted}" font-family="Segoe UI, Ubuntu, Arial">⑂ ${forks}</text>
-    <text x="310" y="102" font-size="11" fill="${t.muted}" font-family="Segoe UI, Ubuntu, Arial">! ${issues}</text>
+    <text x="170" y="90" font-size="11" fill="${t.muted}" font-family="Segoe UI, Ubuntu, Arial">★ ${stars}</text>
+    <text x="240" y="90" font-size="11" fill="${t.muted}" font-family="Segoe UI, Ubuntu, Arial">⑂ ${forks}</text>
+    <text x="310" y="90" font-size="11" fill="${t.muted}" font-family="Segoe UI, Ubuntu, Arial">! ${issues}</text>
 
-    <text x="${W - PAD * 2 - 10}" y="102" text-anchor="end" font-size="11" fill="${t.muted}" font-family="Segoe UI, Ubuntu, Arial">updated ${esc(pushed)}</text>
+    <text x="${W - PAD * 2 - 10}" y="90" text-anchor="end" font-size="11" fill="${t.muted}" font-family="Segoe UI, Ubuntu, Arial">updated ${esc(pushed)}</text>
   </g>
 </svg>`;
 }
