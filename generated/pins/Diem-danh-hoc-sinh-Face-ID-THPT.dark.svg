@@ -1,28 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="495" height="120" viewBox="0 0 495 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="TranDangKhoaTechnology/Diem-danh-hoc-sinh-Face-ID-THPT">
+<svg width="495" height="216" viewBox="0 0 495 216" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="TranDangKhoaTechnology/Diem-danh-hoc-sinh-Face-ID-THPT">
+  
   <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1a1b26" />
+      <stop offset="100%" stop-color="#141524" />
+    </linearGradient>
+    <linearGradient id="borderGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#7aa2f7" />
+      <stop offset="100%" stop-color="#9ece6a" />
+    </linearGradient>
     <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="rgba(0,0,0,0.30)"/>
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="rgba(0,0,0,0.40)"/>
     </filter>
   </defs>
+  <rect x="0.5" y="0.5" width="494" height="215" rx="14"
+        fill="url(#bgGrad)" stroke="url(#borderGrad)" stroke-width="1.2" filter="url(#shadow)"/>
+  
+  <g transform="translate(16,16)">
+    <circle cx="10" cy="10" r="10" fill="rgba(255,255,255,0.07)"/>
+    <text x="10" y="14" text-anchor="middle" font-size="12" fill="#9ece6a" font-family="Segoe UI, Ubuntu, Arial">⌁</text>
 
-  <rect x="0.5" y="0.5" width="494" height="119" rx="14"
-        fill="#040f0f" stroke="rgba(12,245,116,0.22)" stroke-width="1.2" filter="url(#shadow)"/>
-
-  <g transform="translate(16,14)">
-    <text x="0" y="16" font-size="16" font-weight="900" fill="#2f97c1" font-family="Segoe UI, Ubuntu, Arial">Diem-danh-hoc-sinh-Face-ID-THPT</text>
-    <text x="0" y="32" font-size="11" fill="rgba(12,245,116,0.78)" font-family="Segoe UI, Ubuntu, Arial">TranDangKhoaTechnology</text>
-
-    <text x="0" y="50" font-size="12" fill="#0cf574" font-family="Segoe UI, Ubuntu, Arial">Automated student attendance using real-time</text>
-    <text x="0" y="66" font-size="12" fill="#0cf574" font-family="Segoe UI, Ubuntu, Arial">face recognition with optional data sync to a w…</text>
-
-    <rect x="0" y="72" width="463" height="26" rx="10" fill="rgba(255,255,255,0.09)" opacity="0.8"/>
-    <text x="12" y="90" font-size="11" fill="rgba(12,245,116,0.78)" font-family="Segoe UI, Ubuntu, Arial">PHP</text>
-
-    <text x="170" y="90" font-size="11" fill="rgba(12,245,116,0.78)" font-family="Segoe UI, Ubuntu, Arial">★ 1</text>
-    <text x="240" y="90" font-size="11" fill="rgba(12,245,116,0.78)" font-family="Segoe UI, Ubuntu, Arial">⑂ 0</text>
-    <text x="310" y="90" font-size="11" fill="rgba(12,245,116,0.78)" font-family="Segoe UI, Ubuntu, Arial">! 0</text>
-
-    <text x="453" y="90" text-anchor="end" font-size="11" fill="rgba(12,245,116,0.78)" font-family="Segoe UI, Ubuntu, Arial">updated 2025-07-26</text>
-  </g>
+    <text x="30" y="14" font-size="14" font-weight="900" fill="#7aa2f7" font-family="Segoe UI, Ubuntu, Arial">Diem-danh-hoc-sinh-Face-ID-THPT</text>
+    <text x="30" y="32" font-size="11" fill="rgba(192,202,245,0.72)" font-family="Segoe UI, Ubuntu, Arial">TranDangKhoaTechnology</text>
+    <text x="463" y="14" text-anchor="end" font-size="11" fill="rgba(192,202,245,0.72)" font-family="Segoe UI, Ubuntu, Arial">TranDangKhoaTechnology/Diem-danh-hoc-sinh-Face-ID-THPT</text>
+  </g><text x="16" y="72" font-size="12" fill="#c0caf5" font-family="Segoe UI, Ubuntu, Arial">Automated student attendance using real-time face recognition</text><text x="16" y="88" font-size="12" fill="#c0caf5" font-family="Segoe UI, Ubuntu, Arial">with optional data sync to a website</text>
+      <g>
+        <rect x="16" y="96" width="39" height="22" rx="11" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.06)"/>
+        
+        <text x="26" y="111" font-size="11" fill="rgba(192,202,245,0.72)" font-family="Segoe UI, Ubuntu, Arial">#ai</text>
+      </g>
+    
+      <g>
+        <rect x="63" y="96" width="125" height="22" rx="11" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.06)"/>
+        
+        <text x="73" y="111" font-size="11" fill="rgba(192,202,245,0.72)" font-family="Segoe UI, Ubuntu, Arial">#face-recognition</text>
+      </g>
+    
+      <g>
+        <rect x="196" y="96" width="51" height="22" rx="11" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.06)"/>
+        
+        <text x="206" y="111" font-size="11" fill="rgba(192,202,245,0.72)" font-family="Segoe UI, Ubuntu, Arial">#thpt</text>
+      </g>
+    <rect x="16" y="122" width="463" height="1" fill="rgba(255,255,255,0.12)" opacity="0.9"/>
+      <g>
+        <rect x="16" y="134" width="39" height="22" rx="11" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.06)"/>
+        
+        <text x="26" y="149" font-size="11" fill="rgba(192,202,245,0.72)" font-family="Segoe UI, Ubuntu, Arial">★ 1</text>
+      </g>
+    
+      <g>
+        <rect x="63" y="134" width="39" height="22" rx="11" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.06)"/>
+        
+        <text x="73" y="149" font-size="11" fill="rgba(192,202,245,0.72)" font-family="Segoe UI, Ubuntu, Arial">⑂ 0</text>
+      </g>
+    
+      <g>
+        <rect x="110" y="134" width="39" height="22" rx="11" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.06)"/>
+        
+        <text x="120" y="149" font-size="11" fill="rgba(192,202,245,0.72)" font-family="Segoe UI, Ubuntu, Arial">! 0</text>
+      </g>
+    
+      <g>
+        <rect x="157" y="134" width="45" height="22" rx="11" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.06)"/>
+        
+        <text x="167" y="149" font-size="11" fill="rgba(192,202,245,0.72)" font-family="Segoe UI, Ubuntu, Arial">👁 1</text>
+      </g>
+    
+      <g>
+        <rect x="210" y="134" width="82" height="22" rx="11" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.06)"/>
+        <circle cx="220" cy="145" r="5" fill="#4F5D95" />
+        <text x="232" y="149" font-size="11" fill="rgba(192,202,245,0.72)" font-family="Segoe UI, Ubuntu, Arial">Lang PHP</text>
+      </g>
+    
+      <g>
+        <rect x="300" y="134" width="51" height="22" rx="11" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.06)"/>
+        
+        <text x="310" y="149" font-size="11" fill="rgba(192,202,245,0.72)" font-family="Segoe UI, Ubuntu, Arial">Lic —</text>
+      </g>
+    
+      <g>
+        <rect x="359" y="134" width="82" height="22" rx="11" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.06)"/>
+        
+        <text x="369" y="149" font-size="11" fill="rgba(192,202,245,0.72)" font-family="Segoe UI, Ubuntu, Arial">Size 13kKB</text>
+      </g>
+    
+      <g>
+        <rect x="16" y="164" width="94" height="22" rx="11" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.06)"/>
+        
+        <text x="26" y="179" font-size="11" fill="rgba(192,202,245,0.72)" font-family="Segoe UI, Ubuntu, Arial">↻ 2025-07-26</text>
+      </g>
+    <text x="16" y="196" font-size="10" fill="rgba(192,202,245,0.72)" font-family="Segoe UI, Ubuntu, Arial">self-built • actions → svg</text>
 </svg>
