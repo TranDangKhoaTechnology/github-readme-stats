@@ -30,7 +30,6 @@
   <g transform="translate(18,18)">
     <rect x="0.5" y="0.5" width="993" height="317" rx="16"
           fill="url(#bgGrad)" stroke="url(#borderGrad)" stroke-width="1.2" filter="url(#shadow)"/>
-
     <g clip-path="url(#cardClip)">
       
     <g opacity="0.55">
@@ -50,8 +49,8 @@
             fill="rgba(230,237,243,0.70)" font-family="Segoe UI, Ubuntu, Arial">Automation • Web Apps • AI</text>
     </g>
       <text x="26" y="88"
-                    font-size="13" fill="rgba(230,237,243,0.92)" font-family="Segoe UI, Ubuntu, Arial">Tôi xây hệ thống tự động hoá, landing page và chatbot để giúp bạn tăng doanh</text><text x="26" y="106"
-                    font-size="13" fill="rgba(230,237,243,0.92)" font-family="Segoe UI, Ubuntu, Arial">thu.</text>
+                    font-size="13" fill="rgba(230,237,243,0.92)" font-family="Segoe UI, Ubuntu, Arial">Tôi xây hệ thống tự động hoá, landing page và chatbot</text><text x="26" y="106"
+                    font-size="13" fill="rgba(230,237,243,0.92)" font-family="Segoe UI, Ubuntu, Arial">để giúp bạn tăng doanh thu.</text>
       
       <g>
         <rect x="26" y="140" width="131" height="22" rx="11"
@@ -123,27 +122,27 @@
     </g>
       
     <g>
-      <rect x="619" y="54" width="349" height="48" rx="12"
+      <rect x="619" y="82" width="349" height="48" rx="12"
             fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.06)"/>
-      <text x="631" y="70" font-size="11" fill="rgba(230,237,243,0.70)"
+      <text x="631" y="98" font-size="11" fill="rgba(230,237,243,0.70)"
             font-family="Segoe UI, Ubuntu, Arial">Projects</text>
-      <text x="631" y="88" font-size="16" font-weight="900"
+      <text x="631" y="116" font-size="16" font-weight="900"
             fill="#e6edf3" font-family="Segoe UI, Ubuntu, Arial">25+</text>
     </g>
     <g>
-      <rect x="619" y="112" width="349" height="48" rx="12"
+      <rect x="619" y="140" width="349" height="48" rx="12"
             fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.06)"/>
-      <text x="631" y="128" font-size="11" fill="rgba(230,237,243,0.70)"
+      <text x="631" y="156" font-size="11" fill="rgba(230,237,243,0.70)"
             font-family="Segoe UI, Ubuntu, Arial">Response</text>
-      <text x="631" y="146" font-size="16" font-weight="900"
+      <text x="631" y="174" font-size="16" font-weight="900"
             fill="#e6edf3" font-family="Segoe UI, Ubuntu, Arial">&lt;24h</text>
     </g>
     <g>
-      <rect x="619" y="170" width="349" height="48" rx="12"
+      <rect x="619" y="198" width="349" height="48" rx="12"
             fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.06)"/>
-      <text x="631" y="186" font-size="11" fill="rgba(230,237,243,0.70)"
+      <text x="631" y="214" font-size="11" fill="rgba(230,237,243,0.70)"
             font-family="Segoe UI, Ubuntu, Arial">Clients</text>
-      <text x="631" y="204" font-size="16" font-weight="900"
+      <text x="631" y="232" font-size="16" font-weight="900"
             fill="#e6edf3" font-family="Segoe UI, Ubuntu, Arial">10+</text>
     </g>
     </g>
