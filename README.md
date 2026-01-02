@@ -1,210 +1,362 @@
-<!-- PROFILE README — TranDangKhoaTechnology / Trần Đăng Khoa -->
-<!-- Put your avatar here: assets/avt.png (use ./assets/avt.png) -->
+# GitHub README Cards Generator (SVG)
 
-<p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:319795,100:0ea5e9&height=190&section=header&text=Tr%E1%BA%A7n%20%C4%90%C4%83ng%20Khoa&fontSize=44&fontAlignY=35&desc=Automation%20Engineer%20%E2%80%A2%20Robotics%20Enthusiast&descAlignY=60" alt="header" />
-</p>
+Repo này dùng **GitHub Actions + Node.js** để tự động tạo các thẻ **SVG** (stats / top langs / repo pins / marketing hero) và commit vào thư mục `generated/`, sau đó bạn chỉ việc nhúng vào `README.md` (profile hoặc project).
 
-<p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=18&pause=900&color=319795&center=true&vCenter=true&width=780&lines=Bridging+Hardware+%26+Software+to+shape+the+future;Automation+%7C+Embedded+%7C+IoT+%7C+Robotics+%7C+Web;Lu%C3%B4n+h%E1%BB%8Dc+h%E1%BB%8Fi+%E2%80%A2+Lu%C3%B4n+x%C3%A2y+d%E1%BB%B1ng+%E2%80%A2+Lu%C3%B4n+t%E1%BB%91i+%C6%B0u" alt="typing" />
-</p>
+> Mục tiêu: README nhìn “xịn”, cập nhật tự động, không phải sửa tay.
 
-<!-- IMPORTANT:
-GitHub Markdown will show HTML as CODE if you indent lines with 4 spaces or wrap them in ``` blocks.
-So below, all HTML lines start at column 0 (no indentation).
--->
+---
 
-<table align="center" cellpadding="0" cellspacing="0">
-  <tr>
-    <td width="210" align="center" valign="top">
-      <img src="https://github.com/TranDangKhoaTechnology/trandangkhoatechnology/raw/main/assets/avt.png" width="180" alt="Tran Dang Khoa Avatar" style="border-radius:50%; border: 3px solid #319795;" />
-      <br/><br/>
-      <img src="https://komarev.com/ghpvc/?username=TranDangKhoaTechnology&style=flat-square&color=319795" alt="profile views" />
-      <br/><br/>
-      <img src="https://img.shields.io/badge/From-Vietnam-319795?style=flat-square" alt="From Vietnam" />
-    </td>
-    <td width="560" valign="top">
-      <h2>👋 Xin chào, mình là Trần Đăng Khoa</h2>
-      <p>
-        <b>Automation Engineer</b> • <b>Robotics Enthusiast</b><br/>
-        <i>Mình thích biến ý tưởng thành hệ thống chạy “mượt – ổn – hiệu quả”.</i>
-      </p>
-      <p>
-        🌟 <b>Điểm mạnh</b><br/>
-        • Tư duy thực tế, ưu tiên giải pháp dùng được ngay và dễ bảo trì.<br/>
-        • Kết nối <b>phần cứng – firmware – phần mềm</b> để tạo thành hệ thống hoàn chỉnh.<br/>
-        • Quan tâm tới <b>AI ứng dụng</b> trong tự động hoá và nhà máy thông minh.
-      </p>
-      <p>
-        <a href="https://github.com/TranDangKhoaTechnology" target="_blank">
-          <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" />
-        </a>
-        <a href="https://youtube.com/@TranDangKhoaTechnology" target="_blank">
-          <img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="YouTube" />
-        </a>
-        <a href="https://www.facebook.com/OfficialTranDangKhoa" target="_blank">
-          <img src="https://img.shields.io/badge/Facebook-1976D2?style=for-the-badge&logo=facebook&logoColor=white" alt="Facebook" />
-        </a>
-        <a href="mailto:trandangkhoa31122006@gmail.com">
-          <img src="https://img.shields.io/badge/Email-319795?style=for-the-badge&logo=gmail&logoColor=white" alt="Email" />
-        </a>
-      </p>
-      <p>
-        <b>💬 Mình đang tập trung vào:</b><br/>
-        • Tự động hoá công nghiệp (PLC/SCADA/IIoT) & tích hợp hệ thống<br/>
-        • Embedded/IoT, thiết kế mạch & tối ưu firmware<br/>
-        • Robotics & prototype ứng dụng trong đời sống/giáo dục
-      </p>
-    </td>
-  </tr>
-</table>
+## 0. Ảnh demo (hiển thị ngay trong README)
 
-<hr/>
+> Các ảnh dưới đây sẽ hiện **ngay** nếu repo đã có file trong `generated/`.  
+> Nếu bạn chưa chạy workflow, hãy chạy GitHub Actions một lần để sinh ảnh.
 
-<h2>✨ Điều mình theo đuổi</h2>
+### Hero (marketing banner)
 
-<table width="100%" cellpadding="0" cellspacing="0">
-  <tr>
-    <td width="50%" valign="top" style="padding:8px;">
-      <h3>🎯 Triết lý làm việc</h3>
-      <ul>
-        <li><b>Đúng nhu cầu</b> → làm cái cần làm</li>
-        <li><b>Đúng chất lượng</b> → chạy ổn định, dễ mở rộng</li>
-        <li><b>Đúng tốc độ</b> → tối ưu hiệu suất & trải nghiệm</li>
-      </ul>
-    </td>
-    <td width="50%" valign="top" style="padding:8px;">
-      <h3>💡 Sở thích chuyên môn</h3>
-      <ul>
-        <li>🤖 Robotics & Embedded Systems</li>
-        <li>🏭 Industrial Automation & PLC</li>
-        <li>🌐 IoT & Smart Factory</li>
-        <li>🧠 AI trong tự động hoá</li>
-      </ul>
-    </td>
-  </tr>
-</table>
+![Hero](generated/hero.dark.svg#gh-dark-mode-only)
+![Hero](generated/hero.light.svg#gh-light-mode-only)
 
-<hr/>
+### Stats + Top Langs (2 cột)
 
-<h2>🧰 Tech Stack</h2>
+<div align="center">
+  <img src="generated/stats.dark.svg#gh-dark-mode-only" height="165" />
+  <img src="generated/top-langs.dark.svg#gh-dark-mode-only" height="165" />
+</div>
 
-<p align="center">
-  <img src="https://skillicons.dev/icons?i=c,cpp,python,php,js,html,css,git,github,vscode,arduino,raspberrypi&perline=12" alt="skill icons" />
-</p>
+<div align="center">
+  <img src="generated/stats.light.svg#gh-light-mode-only" height="165" />
+  <img src="generated/top-langs.light.svg#gh-light-mode-only" height="165" />
+</div>
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Embedded-319795?style=flat-square" alt="Embedded"/>
-  <img src="https://img.shields.io/badge/IoT-0ea5e9?style=flat-square" alt="IoT"/>
-  <img src="https://img.shields.io/badge/Automation-22c55e?style=flat-square" alt="Automation"/>
-  <img src="https://img.shields.io/badge/System%20Integration-0288D1?style=flat-square" alt="System Integration"/>
-  <img src="https://img.shields.io/badge/PCB%20Design-009688?style=flat-square" alt="PCB Design"/>
-  <img src="https://img.shields.io/badge/Robotics-f59e0b?style=flat-square" alt="Robotics"/>
-</p>
+### Repo Pins (ví dụ)
 
-<hr/>
+> Đổi `github-readme-stats` thành tên repo thật của bạn trong thư mục `generated/pins/`.
 
-<h2>📈 GitHub Analytics</h2>
+<div align="center">
+  <img src="generated/pins/github-readme-stats.dark.svg#gh-dark-mode-only" height="120" />
+  <img src="generated/pins/github-readme-stats.light.svg#gh-light-mode-only" height="120" />
+</div>
 
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/TranDangKhoaTechnology/github-readme-stats/main/generated/stats.dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/TranDangKhoaTechnology/github-readme-stats/main/generated/stats.light.svg">
-    <img alt="GitHub Stats" src="https://raw.githubusercontent.com/TranDangKhoaTechnology/github-readme-stats/main/generated/stats.dark.svg">
-  </picture>
-</p>
 
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/TranDangKhoaTechnology/github-readme-stats/main/generated/top-langs.dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/TranDangKhoaTechnology/github-readme-stats/main/generated/top-langs.light.svg">
-    <img alt="Top Languages" src="https://raw.githubusercontent.com/TranDangKhoaTechnology/github-readme-stats/main/generated/top-langs.dark.svg">
-  </picture>
-</p>
+---
 
-<p align="center">
-  <img src="https://streak-stats.demolab.com/?user=TranDangKhoaTechnology&hide_border=true&border_radius=10" alt="GitHub Streak" />
-</p>
+## Mục lục
 
-<p align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=TranDangKhoaTechnology&bg_color=00000000&color=319795&line=0ea5e9&point=319795&area=true&hide_border=true" alt="activity graph"/>
-</p>
+- [1. Demo nhanh](#1-demo-nhanh)
+- [2. Tính năng](#2-tính-năng)
+- [3. Cấu trúc thư mục](#3-cấu-trúc-thư-mục)
+- [4. Chạy bằng GitHub Actions](#4-chạy-bằng-github-actions)
+- [5. Chạy local để test](#5-chạy-local-để-test)
+- [6. Cách nhúng vào README](#6-cách-nhúng-vào-readme)
+- [7. Marketing Hero Card](#7-marketing-hero-card)
+- [8. Tuỳ biến theme / layout](#8-tuỳ-biến-theme--layout)
+- [9. Troubleshooting](#9-troubleshooting)
+- [10. FAQ](#10-faq)
+- [11. License](#11-license)
 
-<hr/>
+---
 
-<h2>🏆 Dự án nổi bật</h2>
+## 1. Demo nhanh (tham chiếu)
 
-<!-- IMPORTANT FIX: Use TABLE + width=100% inside each cell to avoid overflow/overlap -->
-<table align="center" width="100%" cellspacing="0" cellpadding="0">
-  <tr>
-    <td width="50%" style="padding:10px;" valign="top">
-      <a href="https://github.com/TranDangKhoaTechnology/FaceAutoVN">
-        <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/TranDangKhoaTechnology/github-readme-stats/main/generated/pins/FaceAutoVN.dark.svg">
-          <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/TranDangKhoaTechnology/github-readme-stats/main/generated/pins/FaceAutoVN.light.svg">
-          <img alt="FaceAutoVN" width="100%" src="https://raw.githubusercontent.com/TranDangKhoaTechnology/github-readme-stats/main/generated/pins/FaceAutoVN.dark.svg">
-        </picture>
-      </a>
-    </td>
-    <td width="50%" style="padding:10px;" valign="top">
-      <a href="https://github.com/TranDangKhoaTechnology/Diem-danh-hoc-sinh-Face-ID-THPT">
-        <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/TranDangKhoaTechnology/github-readme-stats/main/generated/pins/Diem-danh-hoc-sinh-Face-ID-THPT.dark.svg">
-          <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/TranDangKhoaTechnology/github-readme-stats/main/generated/pins/Diem-danh-hoc-sinh-Face-ID-THPT.light.svg">
-          <img alt="Diem-danh-hoc-sinh-Face-ID-THPT" width="100%" src="https://raw.githubusercontent.com/TranDangKhoaTechnology/github-readme-stats/main/generated/pins/Diem-danh-hoc-sinh-Face-ID-THPT.dark.svg">
-        </picture>
-      </a>
-    </td>
-  </tr>
+Nếu bạn đã xem phần **Ảnh demo** ở trên, đây là phần tóm tắt đường dẫn file.
 
-  <tr>
-    <td width="50%" style="padding:10px;" valign="top">
-      <a href="https://github.com/TranDangKhoaTechnology/Styled-Google-Translate-Widget">
-        <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/TranDangKhoaTechnology/github-readme-stats/main/generated/pins/Styled-Google-Translate-Widget.dark.svg">
-          <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/TranDangKhoaTechnology/github-readme-stats/main/generated/pins/Styled-Google-Translate-Widget.light.svg">
-          <img alt="Styled-Google-Translate-Widget" width="100%" src="https://raw.githubusercontent.com/TranDangKhoaTechnology/github-readme-stats/main/generated/pins/Styled-Google-Translate-Widget.dark.svg">
-        </picture>
-      </a>
-    </td>
-    <td width="50%" style="padding:10px;" valign="top">
-      <a href="https://github.com/TranDangKhoaTechnology/Altium_Library">
-        <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/TranDangKhoaTechnology/github-readme-stats/main/generated/pins/Altium_Library.dark.svg">
-          <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/TranDangKhoaTechnology/github-readme-stats/main/generated/pins/Altium_Library.light.svg">
-          <img alt="Altium_Library" width="100%" src="https://raw.githubusercontent.com/TranDangKhoaTechnology/github-readme-stats/main/generated/pins/Altium_Library.dark.svg">
-        </picture>
-      </a>
-    </td>
-  </tr>
-</table>
 
-<hr/>
+Sau khi chạy workflow, bạn sẽ có file như:
 
-<h2>📫 Kết nối với mình</h2>
+- `generated/stats.dark.svg`
+- `generated/stats.light.svg`
+- `generated/top-langs.dark.svg`
+- `generated/top-langs.light.svg`
+- `generated/pins/<repo>.dark.svg`
+- `generated/pins/<repo>.light.svg`
+- `generated/hero.dark.svg`
+- `generated/hero.light.svg`
 
-<p align="center">
-  <a href="https://github.com/TranDangKhoaTechnology" target="_blank">
-    <img src="https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="Follow on GitHub" />
-  </a>
-  <a href="https://youtube.com/@TranDangKhoaTechnology" target="_blank">
-    <img src="https://img.shields.io/badge/Subscribe%20YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="Subscribe YouTube" />
-  </a>
-  <a href="https://www.facebook.com/OfficialTranDangKhoa" target="_blank">
-    <img src="https://img.shields.io/badge/Connect%20Facebook-1976D2?style=for-the-badge&logo=facebook&logoColor=white" alt="Connect Facebook" />
-  </a>
-  <a href="mailto:trandangkhoa31122006@gmail.com">
-    <img src="https://img.shields.io/badge/Email%20me-319795?style=for-the-badge&logo=gmail&logoColor=white" alt="Email me" />
-  </a>
-</p>
+Nhúng vào README:
 
-<hr/>
+```md
+![Stats](generated/stats.dark.svg#gh-dark-mode-only)
+![Stats](generated/stats.light.svg#gh-light-mode-only)
 
-<p align="center">
-  <b>“Make it work, make it right, make it fast.”</b><br/>
-  <i>— Kent Beck</i>
-</p>
+![Top Langs](generated/top-langs.dark.svg#gh-dark-mode-only)
+![Top Langs](generated/top-langs.light.svg#gh-light-mode-only)
+```
 
-<p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=rect&color=0:319795,100:0ea5e9&height=3&section=footer" alt="footer line" />
-</p>
+---
+
+## 2. Tính năng
+
+- ✅ Tạo **stats card** (tổng stars, commits, PRs, issues… tuỳ repo cài).
+- ✅ Tạo **top languages** (lọc ngôn ngữ, số lượng repo scan…).
+- ✅ Tạo **repo pins** (thẻ cho từng repo) – tự động theo danh sách repo của owner.
+- ✅ Tạo **marketing hero card** (headline + bullets + CTA) cho profile README.
+- ✅ Hỗ trợ **dark/light mode**.
+- ✅ Workflow tự chạy theo lịch (cron) + chạy khi push + chạy tay.
+- ✅ Output là SVG → load nhanh, nhúng trực tiếp trong README.
+
+---
+
+## 3. Cấu trúc thư mục
+
+```
+.
+├─ .github/workflows/
+│  └─ cards.yml              # GitHub Actions build & commit generated/*
+├─ scripts/
+│  ├─ stats.mjs              # tạo stats SVG
+│  ├─ top-langs.mjs          # tạo top languages SVG
+│  ├─ pin-card.mjs           # tạo pin card cho 1 repo
+│  ├─ pins-auto.mjs          # tạo pin cards tự động theo owner
+│  ├─ pins-auto-runner.mjs   # runner hỗ trợ pins-auto
+│  ├─ theme.mjs              # theme + helper (ước lượng width chữ, wrap, màu…)
+│  └─ marketing.mjs          # tạo hero marketing SVG
+├─ generated/
+│  ├─ *.svg
+│  └─ pins/*.svg
+├─ README.md                 # (file này) hướng dẫn
+└─ package.json              # dependencies
+```
+
+> Lưu ý: thư mục `generated/` thường được commit để README load trực tiếp từ repo.
+
+---
+
+## 4. Chạy bằng GitHub Actions
+
+### 4.1. Bật workflow
+
+Mở tab **Actions** trong repo → enable workflow (nếu GitHub đang tắt mặc định).
+
+### 4.2. Quyền commit
+Workflow sẽ commit các file SVG vào repo.  
+Bạn cần đảm bảo workflow có quyền **Read and write permissions**:
+
+- Repo → **Settings** → **Actions** → **General**
+- **Workflow permissions** → chọn **Read and write permissions**
+
+### 4.3. Trigger workflow
+Workflow thường có các trigger:
+
+- `push` lên branch `main`
+- `schedule` (cron)
+- `workflow_dispatch` (chạy tay)
+
+Bạn có thể sửa `cards.yml` để đổi lịch cron theo nhu cầu.
+
+### 4.4. Lưu ý về token
+Workflow có thể dùng:
+- `secrets.GITHUB_TOKEN` (mặc định của GitHub Actions) – đủ cho phần lớn nhu cầu.
+- Hoặc `PAT` (Personal Access Token) nếu bạn muốn quyền rộng hơn / tránh rate limit.
+
+Nếu dùng PAT:
+- Tạo PAT có quyền đọc repo (và write nếu cần commit từ workflow).
+- Thêm vào repo secrets: `GH_TOKEN` hoặc `GITHUB_TOKEN_CUSTOM`.
+- Sửa workflow để dùng secret đó.
+
+---
+
+## 5. Chạy local để test
+
+### 5.1. Yêu cầu
+- Node.js **>= 20**
+- Có token GitHub (khuyến nghị) để tránh rate limit.
+
+### 5.2. Cài dependencies
+```bash
+npm install
+```
+
+### 5.3. Set token
+```bash
+export GITHUB_TOKEN="YOUR_TOKEN"
+# Windows PowerShell: $env:GITHUB_TOKEN="YOUR_TOKEN"
+```
+
+### 5.4. Chạy stats
+```bash
+node scripts/stats.mjs \
+  --username TranDangKhoaTechnology \
+  --theme tokyonight \
+  --out generated/stats.dark.svg
+```
+
+### 5.5. Chạy top langs
+```bash
+node scripts/top-langs.mjs \
+  --username TranDangKhoaTechnology \
+  --theme tokyonight \
+  --langs_count 8 \
+  --max_repos 40 \
+  --out generated/top-langs.dark.svg
+```
+
+### 5.6. Chạy pin-card (1 repo)
+```bash
+node scripts/pin-card.mjs \
+  --owner TranDangKhoaTechnology \
+  --repo YourRepoName \
+  --theme tokyonight \
+  --out generated/pins/YourRepoName.dark.svg
+```
+
+### 5.7. Chạy pins-auto (tự động nhiều repo)
+```bash
+node scripts/pins-auto.mjs \
+  --owner TranDangKhoaTechnology \
+  --out_dir generated/pins \
+  --theme_dark tokyonight \
+  --theme_light solarized-light \
+  --max_repos 200 \
+  --include_forks false \
+  --sort updated
+```
+
+---
+
+## 6. Cách nhúng vào README
+
+### 6.1. Nhúng dark/light bằng `#gh-dark-mode-only`
+GitHub hỗ trợ suffix để hiển thị theo theme:
+
+```md
+![Stats](generated/stats.dark.svg#gh-dark-mode-only)
+![Stats](generated/stats.light.svg#gh-light-mode-only)
+```
+
+Tương tự cho `top-langs` và `hero`.
+
+### 6.2. Nhúng pins
+Ví dụ 1 repo:
+
+```md
+![Repo Pin](generated/pins/YourRepoName.dark.svg#gh-dark-mode-only)
+![Repo Pin](generated/pins/YourRepoName.light.svg#gh-light-mode-only)
+```
+
+### 6.3. Layout gợi ý (2 cột)
+Bạn có thể dùng HTML để đặt 2 ảnh cạnh nhau:
+
+```html
+<div align="center">
+  <img src="generated/stats.dark.svg#gh-dark-mode-only" height="165" />
+  <img src="generated/top-langs.dark.svg#gh-dark-mode-only" height="165" />
+</div>
+```
+
+---
+
+## 7. Marketing Hero Card
+
+Hero card giúp README “marketing” hơn (headline + offer + CTA).
+
+### 7.1. Generate dark/light (local)
+```bash
+node scripts/marketing.mjs --style clean --out generated/hero.dark.svg \
+  --title "Trần Đăng Khoa" \
+  --tagline "Automation • Web Apps • AI" \
+  --desc "Tôi xây hệ thống tự động hoá, landing page và chatbot để giúp bạn tăng doanh thu." \
+  --badges "Open for freelance,Remote,Fast delivery" \
+  --points "Tự động hoá quy trình (Sheets/CRM/Zapier),Landing page SEO + Analytics,Chatbot + API tích hợp" \
+  --stats "Projects|25+,Response|<24h,Clients|10+" \
+  --cta_text "Contact me" \
+  --cta_url "mailto:trandangkhoa.automation@gmail.com" \
+  --links "GitHub|https://github.com/TranDangKhoaTechnology,Email|mailto:trandangkhoa.automation@gmail.com"
+```
+
+```bash
+node scripts/marketing.mjs --style cleanlight --out generated/hero.light.svg \
+  --title "Trần Đăng Khoa" \
+  --tagline "Automation • Web Apps • AI" \
+  --desc "Tôi xây hệ thống tự động hoá, landing page và chatbot để giúp bạn tăng doanh thu." \
+  --badges "Open for freelance,Remote,Fast delivery" \
+  --points "Tự động hoá quy trình (Sheets/CRM/Zapier),Landing page SEO + Analytics,Chatbot + API tích hợp" \
+  --stats "Projects|25+,Response|<24h,Clients|10+" \
+  --cta_text "Contact me" \
+  --cta_url "mailto:trandangkhoa.automation@gmail.com" \
+  --links "GitHub|https://github.com/TranDangKhoaTechnology,Email|mailto:trandangkhoa.automation@gmail.com"
+```
+
+### 7.2. Nhúng vào README
+```md
+![Hero](generated/hero.dark.svg#gh-dark-mode-only)
+![Hero](generated/hero.light.svg#gh-light-mode-only)
+```
+
+### 7.3. Thêm vào GitHub Actions (không bị lỗi xuống dòng)
+Trong workflow, dùng `run: >-` để đảm bảo lệnh là 1 dòng:
+
+```yml
+- name: Generate hero (dark)
+  run: >-
+    node scripts/marketing.mjs
+    --style clean
+    --out generated/hero.dark.svg
+    --title "Trần Đăng Khoa"
+    --tagline "Automation • Web Apps • AI"
+    --desc "..."
+    --badges "..."
+    --points "..."
+    --stats "Projects|25+,Response|<24h,Clients|10+"
+    --cta_text "Contact me"
+    --cta_url "mailto:you@gmail.com"
+    --links "GitHub|https://github.com/...,Email|mailto:you@gmail.com"
+```
+
+---
+
+## 8. Tuỳ biến theme / layout
+
+### 8.1. Theme
+Bạn có thể đổi theme bằng `--theme <name>` (stats/top-langs/pin-card) hoặc `--style <preset>` (hero).
+
+Ví dụ:
+```bash
+node scripts/top-langs.mjs --theme dracula --out generated/top-langs.dark.svg
+```
+
+### 8.2. Giới hạn wrap chữ
+Nếu text bị dài:
+- giảm `langs_count`
+- giảm số `badges`
+- rút ngắn `desc`
+- rút ngắn `points`
+
+### 8.3. Thêm/bớt thông tin trên pin-card
+Thông thường pin-card có `--show` / `--hide` (tuỳ repo).
+
+---
+
+## 9. Troubleshooting
+
+### 9.1. Lỗi `--out: command not found` (Actions)
+Nguyên nhân: YAML xuống dòng sai, `--out` bị hiểu là command mới.
+
+✅ Cách đúng:
+- Dùng `run: >-` như ví dụ ở trên, hoặc
+- Dùng `run: |` + backslash `\` và đảm bảo `\` là ký tự **cuối dòng** (không có dấu cách sau nó).
+
+### 9.2. SVG bị tràn / bị cắt
+- Nếu **bị tràn ngang**: thường do tính width cột sai → cần trừ padding 2 bên.
+- Nếu **bị cắt dưới**: cần tăng chiều cao card theo nội dung (CTA / bullets).
+- Với hero: stats phải bắt đầu **sau** header cột phải (tránh đè chữ).
+
+### 9.3. Bị rate limit GitHub API
+- Dùng token (`GITHUB_TOKEN` hoặc PAT)
+- Giảm `max_repos`
+- Giảm tần suất cron
+
+---
+
+## 10. FAQ
+
+**Q: Có cần commit `generated/` không?**  
+A: Nên commit để README load nhanh và ổn định.
+
+**Q: Mình muốn 2 ảnh cùng hàng?**  
+A: Dùng HTML `<img ... height="...">` để cân.
+
+---
+
+## 11. License
+
+Xem file `LICENSE` trong repo.
