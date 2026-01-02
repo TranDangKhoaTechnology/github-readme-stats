@@ -20,25 +20,41 @@ jobs:
         with:
           node-version: "20"
 
+      # Cho phép step này fail nhưng job vẫn chạy tiếp để commit fallback SVG
       - name: Generate top langs (dark)
+        continue-on-error: true
         run: node scripts/top-langs.mjs --username TranDangKhoaTechnology --theme blue-green --hide css --langs_count 8 --max_repos 40 --out generated/top-langs.dark.svg
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Generate top langs (light)
+        continue-on-error: true
         run: node scripts/top-langs.mjs --username TranDangKhoaTechnology --theme solarized-light --hide css --langs_count 8 --max_repos 40 --out generated/top-langs.light.svg
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Generate pin cards (dark + light)
+        continue-on-error: true
         run: node scripts/pins.mjs --owner TranDangKhoaTechnology --dark_theme blue-green --light_theme solarized-light --outdir generated/pins
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      # LUÔN chạy commit, kể cả các step trên fail
       - name: Commit & push
+        if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add generated/*.svg generated/pins/*.svg
+
+          # tránh lỗi "pathspec did not match any files"
+          shopt -s nullglob
+          files=(generated/*.svg generated/pins/*.svg)
+
+          if [ ${#files[@]} -eq 0 ]; then
+            echo "No SVG generated. Nothing to commit."
+            exit 0
+          fi
+
+          git add "${files[@]}"
           git commit -m "chore: update cards" || exit 0
           git push

@@ -275,7 +275,7 @@ async function main() {
 </svg>`;
     fs.mkdirSync(path.dirname(outFile), { recursive: true });
     fs.writeFileSync(outFile, fallback, "utf8");
-    process.exitCode = 1;
+    process.exitCode = 0;
   }
 }
 
