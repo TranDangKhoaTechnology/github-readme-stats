@@ -48,6 +48,37 @@ jobs:
           node --check scripts/pins-auto.mjs
           node --check scripts/pin-card.mjs
           node --check scripts/theme.mjs
+          
+      # ===== Marketing Hero =====
+      - name: Generate hero (dark)
+        run: >
+          node scripts/marketing.mjs
+          --theme tokyonight
+          --title "Trần Đăng Khoa"
+          --tagline "Automation • Web Apps • AI"
+          --desc "Tôi xây hệ thống tự động hoá, landing page và chatbot để giúp bạn tăng doanh thu."
+          --badges "Open for freelance,Remote,Fast delivery"
+          --points "Tự động hoá quy trình (Sheets/CRM/Zapier),Landing page SEO + Analytics,Chatbot + API tích hợp"
+          --stats "Projects|25+,Response|<24h,Clients|10+"
+          --cta_text "Contact me"
+          --cta_url "mailto:trandangkhoa.automation@gmail.com"
+          --links "GitHub|https://github.com/TranDangKhoaTechnology,Email|mailto:trandangkhoa.automation@gmail.com"
+          --out generated/hero.dark.svg
+
+      - name: Generate hero (light)
+        run: >
+          node scripts/marketing.mjs
+          --theme solarized-light
+          --title "Trần Đăng Khoa"
+          --tagline "Automation • Web Apps • AI"
+          --desc "Tôi xây hệ thống tự động hoá, landing page và chatbot để giúp bạn tăng doanh thu."
+          --badges "Open for freelance,Remote,Fast delivery"
+          --points "Tự động hoá quy trình (Sheets/CRM/Zapier),Landing page SEO + Analytics,Chatbot + API tích hợp"
+          --stats "Projects|25+,Response|<24h,Clients|10+"
+          --cta_text "Contact me"
+          --cta_url "mailto:trandangkhoa.automation@gmail.com"
+          --links "GitHub|https://github.com/TranDangKhoaTechnology,Email|mailto:trandangkhoa.automation@gmail.com"
+          --out generated/hero.light.svg
 
       # ===== Pins (AUTO: ALL repos) =====
       - name: Generate pins (all repos)
