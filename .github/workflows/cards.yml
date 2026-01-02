@@ -4,15 +4,11 @@ on:
   push:
     branches: [ "main" ]
   schedule:
-    - cron: "*/5 * * * *"   # 5 phút/lần (UTC)
+    - cron: "*/5 * * * *"   # 5 phút/lần (GitHub best-effort)
   workflow_dispatch:
 
 permissions:
   contents: write
-
-concurrency:
-  group: readme-cards
-  cancel-in-progress: true
 
 jobs:
   build:
@@ -24,18 +20,20 @@ jobs:
         with:
           node-version: "20"
 
+      # ===== Stats (giữ scripts/stats.mjs của bạn) =====
       - name: Generate stats (dark)
-        run: node scripts/stats.mjs --username TranDangKhoaTechnology --theme blue-green --out generated/stats.dark.svg
+        run: node scripts/stats.mjs --username TranDangKhoaTechnology --theme tokyonight --hide "" --out generated/stats.dark.svg
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Generate stats (light)
-        run: node scripts/stats.mjs --username TranDangKhoaTechnology --theme solarized-light --out generated/stats.light.svg
+        run: node scripts/stats.mjs --username TranDangKhoaTechnology --theme solarized-light --hide "" --out generated/stats.light.svg
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      # ===== Top langs (giữ scripts/top-langs.mjs của bạn) =====
       - name: Generate top langs (dark)
-        run: node scripts/top-langs.mjs --username TranDangKhoaTechnology --theme blue-green --hide css --langs_count 8 --max_repos 40 --out generated/top-langs.dark.svg
+        run: node scripts/top-langs.mjs --username TranDangKhoaTechnology --theme tokyonight --hide css --langs_count 8 --max_repos 40 --out generated/top-langs.dark.svg
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -44,14 +42,17 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Generate pins (dark/light)
+      # ===== Pins (AUTO: ALL repos) =====
+      - name: Generate pins (all repos)
         run: |
-          node -p "JSON.parse(require('fs').readFileSync('scripts/pins.json','utf8')).repos.join('\n')" > /tmp/repos.txt
-
-          while IFS= read -r repo; do
-            node scripts/pins.mjs --username TranDangKhoaTechnology --repo "$repo" --theme blue-green --out "generated/pins/$repo.dark.svg"
-            node scripts/pins.mjs --username TranDangKhoaTechnology --repo "$repo" --theme solarized-light --out "generated/pins/$repo.light.svg"
-          done < /tmp/repos.txt
+          node scripts/pins-auto.mjs \
+            --username TranDangKhoaTechnology \
+            --theme_dark tokyonight \
+            --theme_light solarized-light \
+            --out_dir generated/pins \
+            --max_repos 500 \
+            --sort updated \
+            --show "stars,forks,issues,language,license,topics,updated"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
