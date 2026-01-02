@@ -1,0 +1,13 @@
+{
+  "name": "github-readme-cards",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "top-langs": "node scripts/top-langs.mjs",
+    "pin": "node scripts/pin-card.mjs",
+    "pins": "node scripts/pins.mjs"
+  }
+}
