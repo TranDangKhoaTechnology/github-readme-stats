@@ -1,7 +1,9 @@
 // scripts/marketing.mjs
 // Generate a marketing/hero SVG banner for README.
 //
-// Usage example:
+// style: clean | cleanlight | default
+//
+// Example:
 // node scripts/marketing.mjs --style clean --out generated/hero.dark.svg \
 //   --title "Trần Đăng Khoa" \
 //   --tagline "Automation • Web Apps • AI" \
@@ -12,9 +14,6 @@
 //   --cta_text "Contact me" \
 //   --cta_url "mailto:trandangkhoa.automation@gmail.com" \
 //   --links "GitHub|https://github.com/TranDangKhoaTechnology,Email|mailto:trandangkhoa.automation@gmail.com"
-//
-// style: clean | cleanlight | default
-// theme: still supported, but style overrides for better marketing look.
 
 import fs from "node:fs";
 import path from "node:path";
@@ -54,7 +53,7 @@ function clampToWidth(text, maxW, fontSize) {
   return s.replace(/\s+$/, "") + "…";
 }
 
-// Wrap by pixel width (prevents text from spilling into right column)
+// Wrap by pixel width + small balancing to avoid a super-short last line
 function wrapPx(text, maxW, fontSize, maxLines = 2) {
   const words = String(text || "").trim().split(/\s+/).filter(Boolean);
   if (!words.length) return [];
@@ -73,24 +72,56 @@ function wrapPx(text, maxW, fontSize, maxLines = 2) {
       line = candidate;
       continue;
     }
+
     if (!line) {
-      // one single very long word -> clamp
+      // single too-long word
       lines.push(clampToWidth(w, maxW, fontSize));
-      continue;
+    } else {
+      pushLine();
+      line = w;
     }
-    pushLine();
-    line = w;
 
     if (lines.length >= maxLines) break;
   }
   if (lines.length < maxLines && line.trim()) pushLine();
 
+  // trim to maxLines
   if (lines.length > maxLines) lines.length = maxLines;
-  if (lines.length === maxLines && words.length) {
-    // if still content remaining, ellipsis last line
-    const last = lines[maxLines - 1];
-    lines[maxLines - 1] = clampToWidth(last, maxW, fontSize);
+
+  // balance: if 2 lines and last line is too short, move a word from line1 -> line2
+  if (lines.length === 2) {
+    const w2 = estTextW(lines[1], fontSize);
+    const tooShort = w2 < maxW * 0.28;
+    if (tooShort) {
+      const w1Parts = lines[0].split(/\s+/);
+      const w2Parts = lines[1].split(/\s+/);
+      while (w1Parts.length > 3) {
+        const moved = w1Parts.pop();
+        if (!moved) break;
+        w2Parts.unshift(moved);
+        const new1 = w1Parts.join(" ");
+        const new2 = w2Parts.join(" ");
+        if (estTextW(new1, fontSize) <= maxW && estTextW(new2, fontSize) <= maxW) {
+          lines[0] = new1;
+          lines[1] = new2;
+          if (estTextW(lines[1], fontSize) >= maxW * 0.34) break;
+        } else {
+          // revert move if it breaks width
+          w1Parts.push(moved);
+          w2Parts.shift();
+          break;
+        }
+      }
+    }
   }
+
+  // if content likely truncated, ellipsis last line
+  // (simple heuristic: original words more than joined lines words)
+  const joined = lines.join(" ").split(/\s+/).filter(Boolean).length;
+  if (joined < words.length && lines.length) {
+    lines[lines.length - 1] = clampToWidth(lines[lines.length - 1], maxW, fontSize);
+  }
+
   return lines;
 }
 
@@ -209,7 +240,6 @@ function applyStyle(t, style) {
     };
   }
 
-  // default: use theme as-is, but provide missing tokens
   return {
     ...t,
     bg2: t.bg2 || t.bg,
@@ -235,11 +265,11 @@ function renderHero(opts) {
   const OUT = 18;
   const W = CANVAS_W - OUT * 2;
 
-  const PAD = 26;      // padding inside card
-  const GAP = 26;      // gap between columns
-  const R = 16;        // radius
+  const PAD = 26;  // padding inside card
+  const GAP = 26;  // gap between columns
+  const R = 16;
 
-  // columns
+  // columns: compute with both side paddings so it never overflows
   const contentW = W - PAD * 2;
   const leftW = Math.floor((contentW - GAP) * 0.62);
   const rightW = (contentW - GAP) - leftW;
@@ -247,24 +277,24 @@ function renderHero(opts) {
   const xL = PAD;
   const rx = PAD + leftW + GAP;
 
-  // text
-  const title = opts.title;
-  const tagline = opts.tagline;
+  const title = opts.title || "Your Name";
+  const tagline = opts.tagline || "";
 
+  // desc wraps within left column width (pixel-safe)
   const descFs = 13;
   const descLines = wrapPx(opts.desc, leftW, descFs, 2);
 
-  const badges = opts.badges.slice(0, 6);
-  const points = opts.points.slice(0, 3);
-  const stats = opts.stats.slice(0, 3);
-  const links = opts.links.slice(0, 3);
+  const badges = (opts.badges || []).slice(0, 6);
+  const points = (opts.points || []).slice(0, 3);
+  const stats = (opts.stats || []).slice(0, 3);
+  const links = (opts.links || []).slice(0, 3);
 
-  // vertical layout measure
+  // left layout
   const headerY = 22;
   const headerH = 66;
 
-  const descY = headerY + headerH;                // 88
-  const descH = descLines.length * 18;            // line height 18
+  const descY = headerY + headerH;
+  const descH = descLines.length * 18;
   const afterDescY = descY + descH + 16;
 
   const badgesH = badges.length ? 30 : 0;
@@ -273,9 +303,8 @@ function renderHero(opts) {
   const dividerY = afterBadgesY;
   const afterDividerY = dividerY + 16;
 
-  // bullets (each can be 1-2 lines)
+  // bullets
   const bulletFs = 12;
-  const bulletLineH = 16;
   const bulletGap = 6;
 
   let bulletsY = afterDividerY;
@@ -298,21 +327,21 @@ function renderHero(opts) {
   const ctaY = afterBulletsY;
   const bottomPad = 26;
 
-  // right side measure
+  // RIGHT layout (FIX: tránh đè chữ)
+  const rightHeaderY = 24;
+  const rightHeaderH = 46;                // đủ cho 2 dòng text + icon
+  const rightCardTop = rightHeaderY + rightHeaderH + 12; // ✅ bắt đầu stats sau header
+
   const statH = 48;
   const statGap = 10;
-  const rightCardTop = 54;
+  const statsTotalH = stats.length ? stats.length * statH + (stats.length - 1) * statGap : 0;
 
-  const statsTotalH =
-    stats.length ? stats.length * statH + (stats.length - 1) * statGap : 0;
-
+  // final height: ensure CTA + stats are not clipped
   const leftRequiredH = ctaY + CTA_H + bottomPad;
   const rightRequiredH = rightCardTop + statsTotalH + bottomPad;
-
   const H_INNER = Math.max(220, leftRequiredH, rightRequiredH);
   const CANVAS_H = H_INNER + OUT * 2;
 
-  // defs
   const defs = `
   <defs>
     <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
@@ -339,7 +368,6 @@ function renderHero(opts) {
     </clipPath>
   </defs>`;
 
-  // blobs (clipped)
   const blob = `
     <g opacity="0.55">
       <circle cx="${W - 70}" cy="46" r="40" fill="${t.grad2}" opacity="0.22"/>
@@ -347,7 +375,6 @@ function renderHero(opts) {
       <circle cx="90" cy="${H_INNER - 30}" r="70" fill="${t.grad1}" opacity="0.10"/>
     </g>`;
 
-  // monogram
   const monogram =
     (title || "DK")
       .split(/\s+/)
@@ -356,7 +383,6 @@ function renderHero(opts) {
       .map((s) => s[0]?.toUpperCase?.() || "")
       .join("") || "DK";
 
-  // header
   const header = `
     <g transform="translate(${xL},${headerY})">
       <circle cx="18" cy="18" r="18" fill="${t.pillBg}"/>
@@ -371,7 +397,6 @@ function renderHero(opts) {
             fill="${t.muted}" font-family="Segoe UI, Ubuntu, Arial">${esc(tagline)}</text>
     </g>`;
 
-  // desc
   let descSvg = "";
   for (let i = 0; i < descLines.length; i++) {
     descSvg += `<text x="${xL}" y="${descY + i * 18}"
@@ -380,7 +405,6 @@ function renderHero(opts) {
     )}</text>`;
   }
 
-  // badges
   let badgesSvg = "";
   if (badges.length) {
     let bx = xL;
@@ -393,10 +417,8 @@ function renderHero(opts) {
     }
   }
 
-  // divider
   const divider = `<rect x="${xL}" y="${dividerY}" width="${leftW}" height="1" fill="${t.track}" opacity="0.95"/>`;
 
-  // CTA + links
   const cta = button({
     x: xL,
     y: ctaY,
@@ -428,9 +450,8 @@ function renderHero(opts) {
     }
   }
 
-  // right header
   const rightHeader = `
-    <g transform="translate(${rx},24)">
+    <g transform="translate(${rx},${rightHeaderY})">
       <circle cx="18" cy="18" r="18" fill="${t.pillBg}" />
       <text x="18" y="24" text-anchor="middle" font-size="14" font-weight="900"
             fill="${t.title}" font-family="Segoe UI, Ubuntu, Arial">⚡</text>
@@ -440,7 +461,6 @@ function renderHero(opts) {
             fill="${t.muted}" font-family="Segoe UI, Ubuntu, Arial">${esc(opts.rightNote)}</text>
     </g>`;
 
-  // stats
   let statsSvg = "";
   let sy = rightCardTop;
   for (const { a, b } of stats) {
@@ -456,7 +476,6 @@ function renderHero(opts) {
   <g transform="translate(${OUT},${OUT})">
     <rect x="0.5" y="0.5" width="${W - 1}" height="${H_INNER - 1}" rx="${R}"
           fill="url(#bgGrad)" stroke="url(#borderGrad)" stroke-width="1.2" filter="url(#shadow)"/>
-
     <g clip-path="url(#cardClip)">
       ${blob}
       ${header}
@@ -488,7 +507,7 @@ async function main() {
   const stats = listPairs(arg("stats", "Projects|25+,Response|<24h,Clients|10+"));
   const ctaText = arg("cta_text", "Contact me");
   const ctaUrl = arg("cta_url", "");
-  const links = listPairs(arg("links", "")); // "Website|https://...,GitHub|https://..."
+  const links = listPairs(arg("links", ""));
   const rightNote = arg("right_note", "Let’s build something");
 
   const svg = renderHero({
