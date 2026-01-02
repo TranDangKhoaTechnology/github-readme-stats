@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="495" height="120" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="#040f0f"/>
+  <text x="16" y="32" fill="#2f97c1" font-size="16" font-family="Segoe UI, Ubuntu, Arial" font-weight="800">Pin Card</text>
+  <text x="16" y="60" fill="#0cf574" font-size="12" font-family="Segoe UI, Ubuntu, Arial">Build failed</text>
+  <text x="16" y="82" fill="#0cf574" font-size="10" font-family="Segoe UI, Ubuntu, Arial">404 Not Found {&quot;message&quot;:&quot;Not Found&quot;,&quot;documentation_url&quot;:&quot;https://docs.github.com/res</text>
+</svg>
