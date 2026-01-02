@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="495" height="190" viewBox="0 0 495 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="TranDangKhoaTechnology/Styled-Google-Translate-Widget">
+<svg width="495" height="190" viewBox="0 0 495 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="TranDangKhoaTechnology/Robot_DHTD18A2HN_2025">
   
   <defs>
     <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
@@ -21,10 +21,10 @@
     <circle cx="10" cy="10" r="10" fill="rgba(255,255,255,0.07)"/>
     <text x="10" y="14" text-anchor="middle" font-size="12" fill="#9ece6a" font-family="Segoe UI, Ubuntu, Arial">⌁</text>
 
-    <text x="30" y="14" font-size="14" font-weight="900" fill="#7aa2f7" font-family="Segoe UI, Ubuntu, Arial">Styled-Google-Translate-Widget</text>
+    <text x="30" y="14" font-size="16" font-weight="900" fill="#7aa2f7" font-family="Segoe UI, Ubuntu, Arial">Robot_DHTD18A2HN_2025</text>
     <text x="30" y="32" font-size="11" fill="rgba(192,202,245,0.72)" font-family="Segoe UI, Ubuntu, Arial">TranDangKhoaTechnology</text>
-    <text x="463" y="14" text-anchor="end" font-size="11" fill="rgba(192,202,245,0.72)" font-family="Segoe UI, Ubuntu, Arial">TranDangKhoaTechnology/Styled-Google-Translate-Widget</text>
-  </g><text x="16" y="72" font-size="12" fill="#c0caf5" font-family="Segoe UI, Ubuntu, Arial">A drop-in CSS/JS snippet to integrate Google Translate with a</text><text x="16" y="88" font-size="12" fill="#c0caf5" font-family="Segoe UI, Ubuntu, Arial">modern, clean, and logo-free UI</text><rect x="16" y="96" width="463" height="1" fill="rgba(255,255,255,0.12)" opacity="0.9"/>
+    <text x="463" y="14" text-anchor="end" font-size="11" fill="rgba(192,202,245,0.72)" font-family="Segoe UI, Ubuntu, Arial">TranDangKhoaTechnology/Robot_DHTD18A2HN_2025</text>
+  </g><text x="16" y="72" font-size="12" fill="#c0caf5" font-family="Segoe UI, Ubuntu, Arial">Robot Bluetooth ESP32 (2025) – UNETI, DHTD18A2HN. Điện thoại</text><text x="16" y="88" font-size="12" fill="#c0caf5" font-family="Segoe UI, Ubuntu, Arial">dùng app Bluetooth (SPP) kết nối trực tiếp ESP32, không cần…</text><rect x="16" y="96" width="463" height="1" fill="rgba(255,255,255,0.12)" opacity="0.9"/>
       <g>
         <rect x="16" y="108" width="39" height="22" rx="11" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.06)"/>
         
@@ -46,31 +46,31 @@
       <g>
         <rect x="157" y="108" width="45" height="22" rx="11" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.06)"/>
         
-        <text x="167" y="123" font-size="11" fill="rgba(192,202,245,0.72)" font-family="Segoe UI, Ubuntu, Arial">👁 1</text>
+        <text x="167" y="123" font-size="11" fill="rgba(192,202,245,0.72)" font-family="Segoe UI, Ubuntu, Arial">👁 0</text>
       </g>
     
       <g>
-        <rect x="210" y="108" width="88" height="22" rx="11" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.06)"/>
-        <circle cx="220" cy="119" r="5" fill="#e34c26" />
-        <text x="232" y="123" font-size="11" fill="rgba(192,202,245,0.72)" font-family="Segoe UI, Ubuntu, Arial">Lang HTML</text>
+        <rect x="210" y="108" width="82" height="22" rx="11" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.06)"/>
+        <circle cx="220" cy="119" r="5" fill="#f34b7d" />
+        <text x="232" y="123" font-size="11" fill="rgba(192,202,245,0.72)" font-family="Segoe UI, Ubuntu, Arial">Lang C++</text>
       </g>
     
       <g>
-        <rect x="306" y="108" width="64" height="22" rx="11" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.06)"/>
+        <rect x="300" y="108" width="64" height="22" rx="11" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.06)"/>
         
-        <text x="316" y="123" font-size="11" fill="rgba(192,202,245,0.72)" font-family="Segoe UI, Ubuntu, Arial">Lic MIT</text>
+        <text x="310" y="123" font-size="11" fill="rgba(192,202,245,0.72)" font-family="Segoe UI, Ubuntu, Arial">Lic MIT</text>
       </g>
     
       <g>
-        <rect x="378" y="108" width="82" height="22" rx="11" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.06)"/>
+        <rect x="372" y="108" width="82" height="22" rx="11" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.06)"/>
         
-        <text x="388" y="123" font-size="11" fill="rgba(192,202,245,0.72)" font-family="Segoe UI, Ubuntu, Arial">Size 150KB</text>
+        <text x="382" y="123" font-size="11" fill="rgba(192,202,245,0.72)" font-family="Segoe UI, Ubuntu, Arial">Size 26kKB</text>
       </g>
     
       <g>
         <rect x="16" y="138" width="94" height="22" rx="11" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.06)"/>
         
-        <text x="26" y="153" font-size="11" fill="rgba(192,202,245,0.72)" font-family="Segoe UI, Ubuntu, Arial">↻ 2025-08-13</text>
+        <text x="26" y="153" font-size="11" fill="rgba(192,202,245,0.72)" font-family="Segoe UI, Ubuntu, Arial">↻ 2025-11-12</text>
       </g>
     <text x="16" y="170" font-size="10" fill="rgba(192,202,245,0.72)" font-family="Segoe UI, Ubuntu, Arial">self-built • actions → svg</text>
 </svg>
