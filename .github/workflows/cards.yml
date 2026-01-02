@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "main" ]
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "*/5 * * * *"   # 5 phút/lần (UTC)
   workflow_dispatch:
 
 permissions:
@@ -25,39 +25,45 @@ jobs:
           node-version: "20"
 
       - name: Generate stats (dark)
-        run: node scripts/stats.mjs --username TranDangKhoaTechnology --theme tokyonight --days 365 --show_icons true --out generated/stats.dark.svg
+        run: node scripts/stats.mjs --username TranDangKhoaTechnology --theme blue-green --out generated/stats.dark.svg
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Generate stats (light)
-        run: node scripts/stats.mjs --username TranDangKhoaTechnology --theme solarized-light --days 365 --show_icons true --out generated/stats.light.svg
+        run: node scripts/stats.mjs --username TranDangKhoaTechnology --theme solarized-light --out generated/stats.light.svg
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Generate top langs (dark)
-        run: node scripts/top-langs.mjs --username TranDangKhoaTechnology --theme radical --hide css --langs_count 8 --max_repos 40 --stacked true --layout compact --show_icons true --out generated/top-langs.dark.svg
+        run: node scripts/top-langs.mjs --username TranDangKhoaTechnology --theme blue-green --hide css --langs_count 8 --max_repos 40 --out generated/top-langs.dark.svg
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Generate top langs (light)
-        run: node scripts/top-langs.mjs --username TranDangKhoaTechnology --theme solarized-light --hide css --langs_count 8 --max_repos 40 --stacked true --layout compact --show_icons true --out generated/top-langs.light.svg
+        run: node scripts/top-langs.mjs --username TranDangKhoaTechnology --theme solarized-light --hide css --langs_count 8 --max_repos 40 --out generated/top-langs.light.svg
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Generate pins (dark/light)
+        run: |
+          node - <<'NODE'
+          const fs = require("fs");
+          const cfg = JSON.parse(fs.readFileSync("scripts/pins.json","utf8"));
+          const { username, repos } = cfg;
+          const { execSync } = require("child_process");
+
+          for (const r of repos) {
+            execSync(`node scripts/pin.mjs --username ${username} --repo ${r} --theme blue-green --out generated/pins/${r}.dark.svg`, { stdio: "inherit" });
+            execSync(`node scripts/pin.mjs --username ${username} --repo ${r} --theme solarized-light --out generated/pins/${r}.light.svg`, { stdio: "inherit" });
+          }
+          NODE
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Commit & push
-        if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          shopt -s nullglob
-          files=(generated/*.svg)
-
-          if [ ${#files[@]} -eq 0 ]; then
-            echo "No SVG generated. Nothing to commit."
-            exit 0
-          fi
-
-          git add "${files[@]}"
+          git add generated/*.svg generated/pins/*.svg
           git commit -m "chore: update cards" || exit 0
           git push
