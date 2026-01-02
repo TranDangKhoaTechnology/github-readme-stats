@@ -17,7 +17,7 @@ So below, all HTML lines start at column 0 (no indentation).
 <table align="center" cellpadding="0" cellspacing="0">
   <tr>
     <td width="210" align="center" valign="top">
-      <img src="./assets/avt.png" width="180" alt="Tran Dang Khoa Avatar" style="border-radius:50%; border: 3px solid #319795;" />
+      <img src="https://github.com/TranDangKhoaTechnology/trandangkhoatechnology/raw/main/assets/avt.png" width="180" alt="Tran Dang Khoa Avatar" style="border-radius:50%; border: 3px solid #319795;" />
       <br/><br/>
       <img src="https://komarev.com/ghpvc/?username=TranDangKhoaTechnology&style=flat-square&color=319795" alt="profile views" />
       <br/><br/>
