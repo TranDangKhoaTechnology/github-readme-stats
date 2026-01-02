@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="495" height="120" viewBox="0 0 495 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="TranDangKhoaTechnology/Diem-danh-hoc-sinh-Face-ID-THPT">
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="rgba(0,0,0,0.18)"/>
+    </filter>
+  </defs>
+
+  <rect x="0.5" y="0.5" width="494" height="119" rx="14"
+        fill="#fdf6e3" stroke="rgba(88,110,117,0.25)" stroke-width="1.2" filter="url(#shadow)"/>
+
+  <g transform="translate(16,18)">
+    <text x="0" y="16" font-size="16" font-weight="900" fill="#268bd2" font-family="Segoe UI, Ubuntu, Arial">Diem-danh-hoc-sinh-Face-ID-THPT</text>
+    <text x="0" y="34" font-size="11" fill="rgba(88,110,117,0.75)" font-family="Segoe UI, Ubuntu, Arial">TranDangKhoaTechnology</text>
+
+    <text x="0" y="56" font-size="12" fill="#586e75" font-family="Segoe UI, Ubuntu, Arial">Automated student attendance using real-time</text>
+    <text x="0" y="72" font-size="12" fill="#586e75" font-family="Segoe UI, Ubuntu, Arial">face recognition with optional data sync to a w…</text>
+
+    <rect x="0" y="84" width="463" height="26" rx="10" fill="rgba(0,0,0,0.08)" opacity="0.8"/>
+    <text x="12" y="102" font-size="11" fill="rgba(88,110,117,0.75)" font-family="Segoe UI, Ubuntu, Arial">PHP</text>
+
+    <text x="170" y="102" font-size="11" fill="rgba(88,110,117,0.75)" font-family="Segoe UI, Ubuntu, Arial">★ 1</text>
+    <text x="240" y="102" font-size="11" fill="rgba(88,110,117,0.75)" font-family="Segoe UI, Ubuntu, Arial">⑂ 0</text>
+    <text x="310" y="102" font-size="11" fill="rgba(88,110,117,0.75)" font-family="Segoe UI, Ubuntu, Arial">! 0</text>
+
+    <text x="453" y="102" text-anchor="end" font-size="11" fill="rgba(88,110,117,0.75)" font-family="Segoe UI, Ubuntu, Arial">updated 2025-07-26</text>
+  </g>
+</svg>

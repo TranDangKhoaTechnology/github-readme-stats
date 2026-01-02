@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="495" height="290" viewBox="0 0 495 290" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="GitHub Stats">
+  <defs>
+    <linearGradient id="borderGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#268bd2"/>
+      <stop offset="100%" stop-color="#b58900"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="rgba(0,0,0,0.30)"/>
+    </filter>
+  </defs>
+
+  <rect x="0.5" y="0.5" width="494" height="289" rx="14"
+        fill="#fdf6e3" stroke="url(#borderGrad)" stroke-width="1.2" filter="url(#shadow)"/>
+
+  <g transform="translate(16,18)">
+    <circle cx="10" cy="10" r="10" fill="rgba(255,255,255,0.06)"/>
+    <text x="10" y="14" text-anchor="middle" font-size="12" fill="#268bd2" font-family="Segoe UI, Ubuntu, Arial">★</text>
+    <text x="30" y="14" font-size="18" font-weight="900" fill="#268bd2" font-family="Segoe UI, Ubuntu, Arial">GitHub Stats</text>
+    <text x="463" y="14" text-anchor="end" font-size="11" fill="rgba(88,110,117,0.75)" font-family="Segoe UI, Ubuntu, Arial">TranDangKhoaTechnology • updated 2026-01-02 07:20</text>
+  </g>
+
+  
+      <g transform="translate(16,52)">
+        <rect x="0" y="0" width="225" height="38" rx="10" fill="rgba(0,0,0,0.05)" stroke="rgba(255,255,255,0.04)"/>
+        <circle cx="16" cy="19" r="8" fill="#f5b700" opacity="0.95"/>
+        <text x="30" y="16" font-size="11" fill="rgba(88,110,117,0.75)" font-family="Segoe UI, Ubuntu, Arial">Total Stars</text>
+        <text x="30" y="30" font-size="15" font-weight="800" fill="#586e75" font-family="Segoe UI, Ubuntu, Arial">13</text>
+
+        <rect x="10" y="34" width="207" height="4" rx="2" fill="rgba(0,0,0,0.08)" opacity="0.9"/>
+        <rect x="10" y="34" width="13" height="4" rx="2" fill="#f5b700" opacity="0.95"/>
+      </g>
+    
+      <g transform="translate(253,52)">
+        <rect x="0" y="0" width="225" height="38" rx="10" fill="rgba(0,0,0,0.05)" stroke="rgba(255,255,255,0.04)"/>
+        <circle cx="16" cy="19" r="8" fill="#2f97c1" opacity="0.95"/>
+        <text x="30" y="16" font-size="11" fill="rgba(88,110,117,0.75)" font-family="Segoe UI, Ubuntu, Arial">Total Forks</text>
+        <text x="30" y="30" font-size="15" font-weight="800" fill="#586e75" font-family="Segoe UI, Ubuntu, Arial">3</text>
+
+        <rect x="10" y="34" width="207" height="4" rx="2" fill="rgba(0,0,0,0.08)" opacity="0.9"/>
+        <rect x="10" y="34" width="8" height="4" rx="2" fill="#2f97c1" opacity="0.95"/>
+      </g>
+    
+      <g transform="translate(16,96)">
+        <rect x="0" y="0" width="225" height="38" rx="10" fill="rgba(0,0,0,0.05)" stroke="rgba(255,255,255,0.04)"/>
+        <circle cx="16" cy="19" r="8" fill="#0cf574" opacity="0.95"/>
+        <text x="30" y="16" font-size="11" fill="rgba(88,110,117,0.75)" font-family="Segoe UI, Ubuntu, Arial">Followers</text>
+        <text x="30" y="30" font-size="15" font-weight="800" fill="#586e75" font-family="Segoe UI, Ubuntu, Arial">5</text>
+
+        <rect x="10" y="34" width="207" height="4" rx="2" fill="rgba(0,0,0,0.08)" opacity="0.9"/>
+        <rect x="10" y="34" width="21" height="4" rx="2" fill="#0cf574" opacity="0.95"/>
+      </g>
+    
+      <g transform="translate(253,96)">
+        <rect x="0" y="0" width="225" height="38" rx="10" fill="rgba(0,0,0,0.05)" stroke="rgba(255,255,255,0.04)"/>
+        <circle cx="16" cy="19" r="8" fill="#bd93f9" opacity="0.95"/>
+        <text x="30" y="16" font-size="11" fill="rgba(88,110,117,0.75)" font-family="Segoe UI, Ubuntu, Arial">Public Repos</text>
+        <text x="30" y="30" font-size="15" font-weight="800" fill="#586e75" font-family="Segoe UI, Ubuntu, Arial">22</text>
+
+        <rect x="10" y="34" width="207" height="4" rx="2" fill="rgba(0,0,0,0.08)" opacity="0.9"/>
+        <rect x="10" y="34" width="57" height="4" rx="2" fill="#bd93f9" opacity="0.95"/>
+      </g>
+    
+      <g transform="translate(16,140)">
+        <rect x="0" y="0" width="225" height="38" rx="10" fill="rgba(0,0,0,0.05)" stroke="rgba(255,255,255,0.04)"/>
+        <circle cx="16" cy="19" r="8" fill="#ff79c6" opacity="0.95"/>
+        <text x="30" y="16" font-size="11" fill="rgba(88,110,117,0.75)" font-family="Segoe UI, Ubuntu, Arial">Commits (1y)</text>
+        <text x="30" y="30" font-size="15" font-weight="800" fill="#586e75" font-family="Segoe UI, Ubuntu, Arial">118</text>
+
+        <rect x="10" y="34" width="207" height="4" rx="2" fill="rgba(0,0,0,0.08)" opacity="0.9"/>
+        <rect x="10" y="34" width="81" height="4" rx="2" fill="#ff79c6" opacity="0.95"/>
+      </g>
+    
+      <g transform="translate(253,140)">
+        <rect x="0" y="0" width="225" height="38" rx="10" fill="rgba(0,0,0,0.05)" stroke="rgba(255,255,255,0.04)"/>
+        <circle cx="16" cy="19" r="8" fill="#9ece6a" opacity="0.95"/>
+        <text x="30" y="16" font-size="11" fill="rgba(88,110,117,0.75)" font-family="Segoe UI, Ubuntu, Arial">Pull Requests (1y)</text>
+        <text x="30" y="30" font-size="15" font-weight="800" fill="#586e75" font-family="Segoe UI, Ubuntu, Arial">8</text>
+
+        <rect x="10" y="34" width="207" height="4" rx="2" fill="rgba(0,0,0,0.08)" opacity="0.9"/>
+        <rect x="10" y="34" width="21" height="4" rx="2" fill="#9ece6a" opacity="0.95"/>
+      </g>
+    
+      <g transform="translate(16,184)">
+        <rect x="0" y="0" width="225" height="38" rx="10" fill="rgba(0,0,0,0.05)" stroke="rgba(255,255,255,0.04)"/>
+        <circle cx="16" cy="19" r="8" fill="#e34c26" opacity="0.95"/>
+        <text x="30" y="16" font-size="11" fill="rgba(88,110,117,0.75)" font-family="Segoe UI, Ubuntu, Arial">Issues (1y)</text>
+        <text x="30" y="30" font-size="15" font-weight="800" fill="#586e75" font-family="Segoe UI, Ubuntu, Arial">0</text>
+
+        <rect x="10" y="34" width="207" height="4" rx="2" fill="rgba(0,0,0,0.08)" opacity="0.9"/>
+        <rect x="10" y="34" width="0" height="4" rx="2" fill="#e34c26" opacity="0.95"/>
+      </g>
+    
+      <g transform="translate(253,184)">
+        <rect x="0" y="0" width="225" height="38" rx="10" fill="rgba(0,0,0,0.05)" stroke="rgba(255,255,255,0.04)"/>
+        <circle cx="16" cy="19" r="8" fill="#3178c6" opacity="0.95"/>
+        <text x="30" y="16" font-size="11" fill="rgba(88,110,117,0.75)" font-family="Segoe UI, Ubuntu, Arial">Reviews (1y)</text>
+        <text x="30" y="30" font-size="15" font-weight="800" fill="#586e75" font-family="Segoe UI, Ubuntu, Arial">0</text>
+
+        <rect x="10" y="34" width="207" height="4" rx="2" fill="rgba(0,0,0,0.08)" opacity="0.9"/>
+        <rect x="10" y="34" width="0" height="4" rx="2" fill="#3178c6" opacity="0.95"/>
+      </g>
+    
+      <g transform="translate(16,228)">
+        <rect x="0" y="0" width="225" height="38" rx="10" fill="rgba(0,0,0,0.05)" stroke="rgba(255,255,255,0.04)"/>
+        <circle cx="16" cy="19" r="8" fill="#b58900" opacity="0.95"/>
+        <text x="30" y="16" font-size="11" fill="rgba(88,110,117,0.75)" font-family="Segoe UI, Ubuntu, Arial">Contributions (1y)</text>
+        <text x="30" y="30" font-size="15" font-weight="800" fill="#586e75" font-family="Segoe UI, Ubuntu, Arial">307</text>
+
+        <rect x="10" y="34" width="207" height="4" rx="2" fill="rgba(0,0,0,0.08)" opacity="0.9"/>
+        <rect x="10" y="34" width="159" height="4" rx="2" fill="#b58900" opacity="0.95"/>
+      </g>
+    
+      <g transform="translate(253,228)">
+        <rect x="0" y="0" width="225" height="38" rx="10" fill="rgba(0,0,0,0.05)" stroke="rgba(255,255,255,0.04)"/>
+        <circle cx="16" cy="19" r="8" fill="#41b883" opacity="0.95"/>
+        <text x="30" y="16" font-size="11" fill="rgba(88,110,117,0.75)" font-family="Segoe UI, Ubuntu, Arial">Contributed Repos (1y)</text>
+        <text x="30" y="30" font-size="15" font-weight="800" fill="#586e75" font-family="Segoe UI, Ubuntu, Arial">19</text>
+
+        <rect x="10" y="34" width="207" height="4" rx="2" fill="rgba(0,0,0,0.08)" opacity="0.9"/>
+        <rect x="10" y="34" width="131" height="4" rx="2" fill="#41b883" opacity="0.95"/>
+      </g>
+    
+
+  <text x="16" y="280" font-size="10" fill="rgba(88,110,117,0.75)" font-family="Segoe UI, Ubuntu, Arial">
+    hide=∅ • repos_counted=22
+  </text>
+</svg>
