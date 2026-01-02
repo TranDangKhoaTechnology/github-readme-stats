@@ -1,18 +1,18 @@
 // scripts/theme.mjs
 export const THEMES = {
-  "blue-green": {
-    bg: "#040f0f",
-    bg2: "#061a1a",
-    title: "#2f97c1",
-    text: "#0cf574",
-    muted: "rgba(12,245,116,0.75)",
-    border: "rgba(12,245,116,0.22)",
-    track: "rgba(255,255,255,0.10)",
-    chipBg: "rgba(255,255,255,0.07)",
-    accent: "#f5b700",
-    shadow: "rgba(0,0,0,0.30)",
-    grad1: "#2f97c1",
-    grad2: "#0cf574",
+  tokyonight: {
+    bg: "#1a1b26",
+    bg2: "#141524",
+    title: "#7aa2f7",
+    text: "#c0caf5",
+    muted: "rgba(192,202,245,0.72)",
+    border: "rgba(122,162,247,0.28)",
+    track: "rgba(255,255,255,0.12)",
+    chipBg: "rgba(255,255,255,0.08)",
+    accent: "#9ece6a",
+    shadow: "rgba(0,0,0,0.40)",
+    grad1: "#7aa2f7",
+    grad2: "#9ece6a",
   },
   "solarized-light": {
     bg: "#fdf6e3",
@@ -28,6 +28,20 @@ export const THEMES = {
     grad1: "#268bd2",
     grad2: "#b58900",
   },
+  "blue-green": {
+    bg: "#040f0f",
+    bg2: "#061a1a",
+    title: "#2f97c1",
+    text: "#0cf574",
+    muted: "rgba(12,245,116,0.75)",
+    border: "rgba(12,245,116,0.22)",
+    track: "rgba(255,255,255,0.10)",
+    chipBg: "rgba(255,255,255,0.07)",
+    accent: "#f5b700",
+    shadow: "rgba(0,0,0,0.30)",
+    grad1: "#2f97c1",
+    grad2: "#0cf574",
+  },
   dracula: {
     bg: "#282a36",
     bg2: "#1f2230",
@@ -41,20 +55,6 @@ export const THEMES = {
     shadow: "rgba(0,0,0,0.35)",
     grad1: "#bd93f9",
     grad2: "#ff79c6",
-  },
-  tokyonight: {
-    bg: "#1a1b26",
-    bg2: "#141524",
-    title: "#7aa2f7",
-    text: "#c0caf5",
-    muted: "rgba(192,202,245,0.70)",
-    border: "rgba(122,162,247,0.28)",
-    track: "rgba(255,255,255,0.12)",
-    chipBg: "rgba(255,255,255,0.08)",
-    accent: "#9ece6a",
-    shadow: "rgba(0,0,0,0.40)",
-    grad1: "#7aa2f7",
-    grad2: "#9ece6a",
   },
   radical: {
     bg: "#141321",
@@ -105,6 +105,10 @@ export const KNOWN_LANG_COLORS = {
   Vue: "#41b883",
 };
 
+export function resolveTheme(name) {
+  return THEMES[name] || THEMES.tokyonight;
+}
+
 export function esc(s) {
   return String(s ?? "")
     .replaceAll("&", "&amp;")
@@ -112,6 +116,13 @@ export function esc(s) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
+}
+
+export function listLowerCSV(v) {
+  return String(v || "")
+    .split(",")
+    .map((s) => s.trim().toLowerCase())
+    .filter(Boolean);
 }
 
 export function fmtCompact(n) {
@@ -132,27 +143,26 @@ export function toDateShort(iso) {
 
 export function wrapLines(text, maxLen = 60, maxLines = 2) {
   const s = String(text || "").trim();
-  if (!s) return ["No description"];
+  if (!s) return [];
   const words = s.split(/\s+/);
-  const lines = [];
+  const out = [];
   let cur = "";
   for (const w of words) {
     const next = cur ? `${cur} ${w}` : w;
     if (next.length <= maxLen) cur = next;
     else {
-      lines.push(cur || w);
+      out.push(cur || w);
       cur = w;
-      if (lines.length >= maxLines) break;
+      if (out.length >= maxLines) break;
     }
   }
-  if (lines.length < maxLines && cur) lines.push(cur);
-  // ellipsis if truncated
-  const joined = lines.join(" ");
-  if (joined.length < s.length) {
-    lines[lines.length - 1] = lines[lines.length - 1].replace(/\s+$/, "");
-    if (!lines[lines.length - 1].endsWith("…")) lines[lines.length - 1] += "…";
+  if (out.length < maxLines && cur) out.push(cur);
+
+  const joined = out.join(" ");
+  if (joined.length < s.length && out.length) {
+    if (!out[out.length - 1].endsWith("…")) out[out.length - 1] += "…";
   }
-  return lines.slice(0, maxLines);
+  return out.slice(0, maxLines);
 }
 
 export function hashColor(str) {
@@ -161,25 +171,19 @@ export function hashColor(str) {
   const hue = h % 360;
   return `hsl(${hue} 72% 52%)`;
 }
+
 export function langColor(name) {
   return KNOWN_LANG_COLORS[name] || hashColor(String(name || "lang"));
 }
 
-// width estimate: đủ tốt để layout chip
+// gần đúng để layout chip
 export function estTextW(text, fontSize = 11) {
   return String(text || "").length * fontSize * 0.56;
 }
 
-export function listCSV(v) {
-  return String(v || "")
-    .split(",")
-    .map(s => s.trim())
-    .filter(Boolean);
-}
-export function listLowerCSV(v) {
-  return listCSV(v).map(s => s.toLowerCase());
-}
-
-export function resolveTheme(name) {
-  return THEMES[name] || THEMES["blue-green"];
+export function clampRepoTitle(repo) {
+  const s = String(repo || "");
+  if (s.length <= 26) return { text: s, size: 16 };
+  if (s.length <= 34) return { text: s, size: 14 };
+  return { text: s.slice(0, 33) + "…", size: 13 };
 }

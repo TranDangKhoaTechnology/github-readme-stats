@@ -1,21 +1,24 @@
 // scripts/pins-auto.mjs
 // Node 20+
-// Generate ALL repos pins (dark+light) without json.
+// Generate pins for ALL repos (dark + light), no JSON needed.
+//
 // Example:
-// node scripts/pins-auto.mjs --username TranDangKhoaTechnology --theme_dark tokyonight --theme_light solarized-light --out_dir generated/pins --max_repos 500 --sort updated
+// node scripts/pins-auto.mjs --owner TranDangKhoaTechnology --out_dir generated/pins --theme_dark tokyonight --theme_light solarized-light --max_repos 500 --include_forks false
+//
 // Options:
-// --username / --owner (default TranDangKhoaTechnology)
+// --owner / --username
+// --out_dir (default generated/pins)
 // --theme_dark (default tokyonight)
 // --theme_light (default solarized-light)
-// --out_dir (default generated/pins)
 // --max_repos (default 500)
 // --include_forks (default false)
-// --exclude_repo (csv repo names)
-// --sort (stars|updated|pushed) (default updated)
-// --show (same as pin-card.mjs)
+// --exclude_repo "repo1,repo2"
+// --sort updated|pushed|stars  (default updated)
+// --show (same as pin-card)
 
 import fs from "node:fs";
 import path from "node:path";
+import { writePinPair } from "./pin-card.mjs";
 
 function arg(name, fallback = null) {
   const i = process.argv.indexOf(`--${name}`);
@@ -35,7 +38,7 @@ function argBool(name, fallback = false) {
 function listLowerCSV(v) {
   return String(v || "")
     .split(",")
-    .map(s => s.trim().toLowerCase())
+    .map((s) => s.trim().toLowerCase())
     .filter(Boolean);
 }
 
@@ -55,16 +58,16 @@ async function gh(url) {
   return res.json();
 }
 
-async function fetchUserRepos(username, maxRepos, includeForks, excludeSet, sort) {
+async function fetchRepos(owner, maxRepos, includeForks, excludeSet, sort) {
   const per = 100;
   let page = 1;
-  const out = [];
+  const repos = [];
 
-  // GitHub supports sort: created, updated, pushed, full_name
-  const sortParam = sort === "pushed" ? "pushed" : "updated";
+  // API sort: created, updated, pushed, full_name (no stars)
+  const apiSort = sort === "pushed" ? "pushed" : "updated";
 
-  while (out.length < maxRepos) {
-    const url = `https://api.github.com/users/${encodeURIComponent(username)}/repos?per_page=${per}&page=${page}&sort=${sortParam}&direction=desc`;
+  while (repos.length < maxRepos) {
+    const url = `https://api.github.com/users/${encodeURIComponent(owner)}/repos?per_page=${per}&page=${page}&sort=${apiSort}&direction=desc`;
     const batch = await gh(url);
     if (!Array.isArray(batch) || batch.length === 0) break;
 
@@ -74,64 +77,85 @@ async function fetchUserRepos(username, maxRepos, includeForks, excludeSet, sort
       const name = String(r.name || "");
       if (!name) continue;
       if (excludeSet.has(name.toLowerCase())) continue;
-      out.push(name);
-      if (out.length >= maxRepos) break;
+
+      repos.push({
+        name,
+        stars: r.stargazers_count ?? 0,
+        pushed_at: r.pushed_at || "",
+        updated_at: r.updated_at || "",
+      });
+
+      if (repos.length >= maxRepos) break;
     }
     page++;
   }
 
-  return out;
+  if (sort === "stars") {
+    repos.sort((a, b) => (b.stars - a.stars) || String(b.updated_at).localeCompare(String(a.updated_at)));
+  }
+
+  return repos.map((r) => r.name);
 }
 
-// small concurrency limiter
 async function mapLimit(items, limit, fn) {
-  const res = [];
+  const out = new Array(items.length);
   let i = 0;
   const workers = Array.from({ length: limit }, async () => {
-    while (i < items.length) {
+    while (true) {
       const idx = i++;
-      res[idx] = await fn(items[idx], idx);
+      if (idx >= items.length) break;
+      out[idx] = await fn(items[idx], idx);
     }
   });
   await Promise.all(workers);
-  return res;
+  return out;
 }
 
 async function main() {
-  const username = arg("username", arg("owner", "TranDangKhoaTechnology"));
+  const owner = arg("owner", arg("username", "TranDangKhoaTechnology"));
+  const outDir = arg("out_dir", "generated/pins");
   const themeDark = arg("theme_dark", "tokyonight");
   const themeLight = arg("theme_light", "solarized-light");
-  const outDir = arg("out_dir", "generated/pins");
   const maxRepos = argInt("max_repos", 500);
-
   const includeForks = argBool("include_forks", false);
-  const excludeSet = new Set(listLowerCSV(arg("exclude_repo", "")));
   const sort = String(arg("sort", "updated")).toLowerCase();
-
-  const show = arg("show", "stars,forks,issues,language,license,topics,updated");
+  const show = arg("show", "stars,forks,issues,watchers,language,license,topics,updated,size");
+  const hide = arg("hide", "");
+  const excludeSet = new Set(listLowerCSV(arg("exclude_repo", "")));
 
   fs.mkdirSync(outDir, { recursive: true });
 
-  // 1) list repos
-  const names = await fetchUserRepos(username, maxRepos, includeForks, excludeSet, sort);
+  const repoNames = await fetchRepos(owner, maxRepos, includeForks, excludeSet, sort);
 
-  // 2) render each repo (dark+light)
-  const limit = 6;
-  await mapLimit(names, limit, async (repo) => {
+  const limit = 5; // đừng cao quá để tránh rate limit
+  await mapLimit(repoNames, limit, async (repo) => {
     const safe = repo.replaceAll("/", "-");
     const outDark = path.join(outDir, `${safe}.dark.svg`);
     const outLight = path.join(outDir, `${safe}.light.svg`);
 
-    // call pin-card generator in-process by dynamic import (no spawn)
-    const { default: runOne } = await import("./pins-auto-runner.mjs").catch(() => ({ default: null }));
-
-    if (!runOne) {
-      // fallback spawnless: import pin-card.mjs main is not exportable, so we generate by running node inline
-      // => easiest reliable is spawn; but we keep it simple: run node as command
-      const { execSync } = await import("node:child_process");
-      execSync(`node scripts/pin-card.mjs --owner ${username} --repo "${repo}" --theme ${themeDark} --show "${show}" --out "${outDark}"`, { stdio: "inherit" });
-      execSync(`node scripts/pin-card.mjs --owner ${username} --repo "${repo}" --theme ${themeLight} --show "${show}" --out "${outLight}"`, { stdio: "inherit" });
-      return;
+    try {
+      await writePinPair({
+        owner,
+        repo,
+        outDark,
+        outLight,
+        themeDark,
+        themeLight,
+        show,
+        hide,
+      });
+      return true;
+    } catch (e) {
+      // không fail cả job vì 1 repo
+      console.error(`[pin fail] ${repo}: ${String(e?.message || e)}`);
+      return false;
     }
+  });
 
-    await runOne({ owner: username, repo
+  console.log(`Done. Generated pins for ${repoNames.length} repos into ${outDir}`);
+}
+
+main().catch((e) => {
+  console.error(e);
+  process.exit(1);
+});

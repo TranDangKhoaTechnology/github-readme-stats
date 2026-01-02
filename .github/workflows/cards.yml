@@ -42,17 +42,25 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Debug (list scripts)
+        run: |
+          ls -la scripts
+          node --check scripts/pins-auto.mjs
+          node --check scripts/pin-card.mjs
+          node --check scripts/theme.mjs
+
       # ===== Pins (AUTO: ALL repos) =====
       - name: Generate pins (all repos)
         run: |
           node scripts/pins-auto.mjs \
-            --username TranDangKhoaTechnology \
+            --owner TranDangKhoaTechnology \
+            --out_dir generated/pins \
             --theme_dark tokyonight \
             --theme_light solarized-light \
-            --out_dir generated/pins \
             --max_repos 500 \
+            --include_forks false \
             --sort updated \
-            --show "stars,forks,issues,language,license,topics,updated"
+            --show "stars,forks,issues,watchers,language,license,topics,updated,size"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

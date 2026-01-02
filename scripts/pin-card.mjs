@@ -2,19 +2,20 @@
 // Node 20+
 // Example:
 // node scripts/pin-card.mjs --owner TranDangKhoaTechnology --repo FaceAutoVN --theme tokyonight --out generated/pins/FaceAutoVN.dark.svg
+//
 // Options:
 // --owner / --username
 // --repo (required)
 // --theme (default: tokyonight)
-// --out (required)
-// --show (default: "stars,forks,issues,language,license,topics,updated")
-// --hide (default: "")  # ẩn owner/desc/topics/footer nếu muốn: owner,desc,topics,footer
+// --out  (required)
+// --show (default: "stars,forks,issues,watchers,language,license,topics,updated,size")
+// --hide (default: "")  // owner,desc,topics,footer
 
 import fs from "node:fs";
 import path from "node:path";
 import {
   esc, fmtCompact, toDateShort, wrapLines, estTextW,
-  langColor, listLowerCSV, resolveTheme
+  langColor, listLowerCSV, resolveTheme, clampRepoTitle
 } from "./theme.mjs";
 
 function arg(name, fallback = null) {
@@ -23,7 +24,7 @@ function arg(name, fallback = null) {
   return process.argv[i + 1] ?? fallback;
 }
 
-async function gh(url) {
+export async function gh(url) {
   const token = process.env.GITHUB_TOKEN || "";
   const headers = {
     Accept: "application/vnd.github+json",
@@ -45,10 +46,13 @@ function chip({ x, y, text, t, colorDot = null }) {
   const h = 22;
   const dotW = colorDot ? 12 : 0;
   const w = Math.ceil(dotW + padX * 2 + estTextW(text, fs));
+
   const dot = colorDot
     ? `<circle cx="${x + 10}" cy="${y + 11}" r="5" fill="${colorDot}" />`
     : "";
+
   const tx = x + padX + (colorDot ? 12 : 0);
+
   return {
     w,
     svg: `
@@ -61,13 +65,15 @@ function chip({ x, y, text, t, colorDot = null }) {
   };
 }
 
-function render({ owner, repo, themeName, data, show, hide }) {
+export function renderPinCard({ owner, repo, themeName, data, show, hide }) {
   const t = resolveTheme(themeName);
   const W = 495;
   const PAD = 16;
   const GAP = 8;
 
   const full = `${owner}/${repo}`;
+  const title = clampRepoTitle(repo);
+
   const descLines = hide.includes("desc") ? [] : wrapLines(data.description || "", 62, 2);
   const topics = (Array.isArray(data.topics) ? data.topics : []).slice(0, 3);
 
@@ -75,33 +81,22 @@ function render({ owner, repo, themeName, data, show, hide }) {
   const langDot = langColor(lang);
 
   const pieces = [];
+
   if (show.includes("stars")) pieces.push(`★ ${fmtCompact(data.stargazers_count)}`);
   if (show.includes("forks")) pieces.push(`⑂ ${fmtCompact(data.forks_count)}`);
   if (show.includes("issues")) pieces.push(`! ${fmtCompact(data.open_issues_count)}`);
+  if (show.includes("watchers")) pieces.push(`👁 ${fmtCompact(data.subscribers_count ?? data.watchers_count ?? 0)}`);
   if (show.includes("language")) pieces.push(`Lang ${lang}`);
   if (show.includes("license")) pieces.push(`Lic ${(data.license?.spdx_id && data.license.spdx_id !== "NOASSERTION") ? data.license.spdx_id : "—"}`);
+  if (show.includes("size")) pieces.push(`Size ${fmtCompact((data.size ?? 0))}KB`);
   if (show.includes("updated")) pieces.push(`↻ ${toDateShort(data.pushed_at || data.updated_at)}`);
 
-  // Layout Y
+  // ===== layout compute =====
   let y = 16;
-
-  // Header
   const headerH = hide.includes("owner") ? 28 : 42;
-  // Desc
   const descH = descLines.length ? (descLines.length * 16 + 6) : 0;
-  // Topics row
   const topicsH = (!hide.includes("topics") && show.includes("topics") && topics.length) ? 26 : 0;
 
-  // Chips rows (auto wrap)
-  const chipRowsMax = 2;
-  const chipH = 22;
-  const chipRowGap = 8;
-
-  // we’ll compute chips later but reserve up to 2 rows
-  let chipsRows = 1;
-
-  // Total H computed after building chips
-  // Build SVG parts:
   const defs = `
   <defs>
     <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
@@ -117,38 +112,33 @@ function render({ owner, repo, themeName, data, show, hide }) {
     </filter>
   </defs>`;
 
-  let body = "";
-
-  // Header render
-  body += `
+  let body = `
   <g transform="translate(${PAD},${y})">
     <circle cx="10" cy="10" r="10" fill="rgba(255,255,255,0.07)"/>
     <text x="10" y="14" text-anchor="middle" font-size="12" fill="${t.accent}" font-family="Segoe UI, Ubuntu, Arial">⌁</text>
 
-    <text x="30" y="14" font-size="16" font-weight="900" fill="${t.title}" font-family="Segoe UI, Ubuntu, Arial">${esc(repo)}</text>
+    <text x="30" y="14" font-size="${title.size}" font-weight="900" fill="${t.title}" font-family="Segoe UI, Ubuntu, Arial">${esc(title.text)}</text>
     ${hide.includes("owner") ? "" : `<text x="30" y="32" font-size="11" fill="${t.muted}" font-family="Segoe UI, Ubuntu, Arial">${esc(owner)}</text>`}
-
     <text x="${W - PAD * 2}" y="14" text-anchor="end" font-size="11" fill="${t.muted}" font-family="Segoe UI, Ubuntu, Arial">${esc(full)}</text>
   </g>`;
 
   y += headerH;
 
-  // Description
+  // description
   if (descLines.length) {
     const baseY = y;
     for (let i = 0; i < descLines.length; i++) {
-      body += `
-      <text x="${PAD}" y="${baseY + 14 + i * 16}" font-size="12" fill="${t.text}" font-family="Segoe UI, Ubuntu, Arial">${esc(descLines[i])}</text>`;
+      body += `<text x="${PAD}" y="${baseY + 14 + i * 16}" font-size="12" fill="${t.text}" font-family="Segoe UI, Ubuntu, Arial">${esc(descLines[i])}</text>`;
     }
     y += descH;
   }
 
-  // Topics chips
+  // topics chips
   if (!hide.includes("topics") && show.includes("topics") && topics.length) {
     let x = PAD;
     const ty = y;
     for (const topic of topics) {
-      const c = chip({ x, y: ty, text: `#${topic}`, t, colorDot: null });
+      const c = chip({ x, y: ty, text: `#${topic}`, t });
       if (x + c.w > W - PAD) break;
       body += c.svg;
       x += c.w + GAP;
@@ -156,14 +146,15 @@ function render({ owner, repo, themeName, data, show, hide }) {
     y += topicsH;
   }
 
-  // Divider
+  // divider
   body += `<rect x="${PAD}" y="${y}" width="${W - PAD * 2}" height="1" fill="${t.track}" opacity="0.9"/>`;
   y += 12;
 
-  // Stats chips (auto wrap max 2 rows)
-  let cx = PAD;
-  let cy = y;
-  let row = 1;
+  // stats chips (wrap max 2 rows)
+  let cx = PAD, cy = y, row = 1;
+  const chipRowsMax = 2;
+  const chipH = 22, chipRowGap = 8;
+
   for (const p of pieces) {
     const isLang = p.startsWith("Lang ");
     const c = chip({ x: cx, y: cy, text: p, t, colorDot: isLang ? langDot : null });
@@ -181,10 +172,9 @@ function render({ owner, repo, themeName, data, show, hide }) {
       cx += c.w + GAP;
     }
   }
-  chipsRows = row;
+
   y = cy + chipH;
 
-  // Footer
   if (!hide.includes("footer")) {
     y += 10;
     body += `<text x="${PAD}" y="${y}" font-size="10" fill="${t.muted}" font-family="Segoe UI, Ubuntu, Arial">self-built • actions → svg</text>`;
@@ -193,7 +183,7 @@ function render({ owner, repo, themeName, data, show, hide }) {
     y += 8;
   }
 
-  const H = Math.max(120, y + 10); // luôn đủ cao để không bị cắt
+  const H = Math.max(120, y + 10); // ✅ không bao giờ bị cắt đáy
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${esc(full)}">
@@ -204,39 +194,46 @@ function render({ owner, repo, themeName, data, show, hide }) {
 </svg>`;
 }
 
+export async function writePinPair({ owner, repo, outDark, outLight, themeDark, themeLight, show, hide }) {
+  const data = await gh(`https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}`);
+  const showList = listLowerCSV(show);
+  const hideList = listLowerCSV(hide);
+
+  const dark = renderPinCard({ owner, repo, themeName: themeDark, data, show: showList, hide: hideList });
+  const light = renderPinCard({ owner, repo, themeName: themeLight, data, show: showList, hide: hideList });
+
+  fs.mkdirSync(path.dirname(outDark), { recursive: true });
+  fs.writeFileSync(outDark, dark, "utf8");
+  fs.writeFileSync(outLight, light, "utf8");
+}
+
+// CLI
 async function main() {
   const owner = arg("owner", arg("username", "TranDangKhoaTechnology"));
   const repo = arg("repo", null);
   const theme = arg("theme", "tokyonight");
   const outFile = arg("out", null);
-
-  const show = listLowerCSV(arg("show", "stars,forks,issues,language,license,topics,updated"));
-  const hide = listLowerCSV(arg("hide", ""));
+  const show = arg("show", "stars,forks,issues,watchers,language,license,topics,updated,size");
+  const hide = arg("hide", "");
 
   if (!repo) throw new Error("Missing --repo");
   if (!outFile) throw new Error("Missing --out");
 
-  try {
-    const url = `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}`;
-    const data = await gh(url);
-    const svg = render({ owner, repo, themeName: theme, data, show, hide });
+  const data = await gh(`https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}`);
+  const svg = renderPinCard({
+    owner, repo, themeName: theme, data,
+    show: listLowerCSV(show),
+    hide: listLowerCSV(hide),
+  });
 
-    fs.mkdirSync(path.dirname(outFile), { recursive: true });
-    fs.writeFileSync(outFile, svg, "utf8");
-    console.log(`Wrote ${outFile}`);
-  } catch (e) {
-    const msg = String(e?.message || e);
-    const fallback = `<?xml version="1.0" encoding="UTF-8"?>
-<svg width="495" height="120" xmlns="http://www.w3.org/2000/svg">
-  <rect width="100%" height="100%" fill="#111"/>
-  <text x="16" y="32" fill="#7aa2f7" font-size="16" font-family="Segoe UI, Ubuntu, Arial" font-weight="800">Pin Card</text>
-  <text x="16" y="60" fill="#c0caf5" font-size="12" font-family="Segoe UI, Ubuntu, Arial">Build failed</text>
-  <text x="16" y="84" fill="#c0caf5" font-size="10" font-family="Segoe UI, Ubuntu, Arial">${esc(msg).slice(0, 160)}</text>
-</svg>`;
-    fs.mkdirSync(path.dirname(outFile), { recursive: true });
-    fs.writeFileSync(outFile, fallback, "utf8");
-    process.exitCode = 0; // không làm fail cả workflow
-  }
+  fs.mkdirSync(path.dirname(outFile), { recursive: true });
+  fs.writeFileSync(outFile, svg, "utf8");
+  console.log(`Wrote ${outFile}`);
 }
 
-main();
+if (process.argv[1]?.endsWith("pin-card.mjs")) {
+  main().catch((e) => {
+    console.error(e);
+    process.exit(1);
+  });
+}
