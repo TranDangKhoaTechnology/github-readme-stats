@@ -20,9 +20,9 @@ const THEMES = {
     text: "#0cf574",
     muted: "rgba(12,245,116,0.78)",
     border: "rgba(12,245,116,0.22)",
-    grad1: "#2f97c1",
-    grad2: "#0cf574",
-    chipBg: "rgba(255,255,255,0.06)",
+    track: "rgba(255,255,255,0.09)",
+    accent: "#f5b700",
+    shadow: "rgba(0,0,0,0.30)",
   },
   "solarized-light": {
     bg: "#fdf6e3",
@@ -30,57 +30,42 @@ const THEMES = {
     text: "#586e75",
     muted: "rgba(88,110,117,0.75)",
     border: "rgba(88,110,117,0.25)",
-    grad1: "#268bd2",
-    grad2: "#b58900",
-    chipBg: "rgba(0,0,0,0.05)",
+    track: "rgba(0,0,0,0.08)",
+    accent: "#b58900",
+    shadow: "rgba(0,0,0,0.18)",
   },
-  "dracula": {
+  dracula: {
     bg: "#282a36",
     title: "#bd93f9",
     text: "#f8f8f2",
     muted: "rgba(248,248,242,0.75)",
     border: "rgba(189,147,249,0.28)",
-    grad1: "#bd93f9",
-    grad2: "#ff79c6",
-    chipBg: "rgba(255,255,255,0.07)",
+    track: "rgba(255,255,255,0.10)",
+    accent: "#ffb86c",
+    shadow: "rgba(0,0,0,0.35)",
   },
 };
 
-const KNOWN_LANG_COLORS = {
-  JavaScript: "#f1e05a",
-  TypeScript: "#3178c6",
-  HTML: "#e34c26",
-  CSS: "#563d7c",
-  Python: "#3572A5",
-  PHP: "#4F5D95",
-  Go: "#00ADD8",
-  Rust: "#dea584",
-  "C++": "#f34b7d",
-  C: "#555555",
-  Pascal: "#E3F171",
-};
-
-function hashColor(str) {
-  let h = 0;
-  for (let i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) >>> 0;
-  const hue = h % 360;
-  return `hsl(${hue} 72% 52%)`;
-}
-function langColor(name) {
-  return KNOWN_LANG_COLORS[name] || hashColor(name);
-}
 function esc(s) {
-  return String(s)
+  return String(s ?? "")
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
 }
-function clampText(s, max = 90) {
-  const x = String(s || "").trim();
-  if (x.length <= max) return x;
-  return x.slice(0, max - 1).trimEnd() + "…";
+
+// wrap text into 2 lines safely (no foreignObject)
+function wrap2(text, maxLen = 48) {
+  const s = String(text || "").trim();
+  if (!s) return ["No description", ""];
+  if (s.length <= maxLen) return [s, ""];
+  const cut = s.slice(0, maxLen);
+  const lastSpace = cut.lastIndexOf(" ");
+  const a = (lastSpace > 20 ? cut.slice(0, lastSpace) : cut).trim();
+  const bRaw = s.slice(a.length).trim();
+  const b = bRaw.length > maxLen ? (bRaw.slice(0, maxLen - 1).trimEnd() + "…") : bRaw;
+  return [a, b];
 }
 
 async function ghRest(url) {
@@ -100,16 +85,15 @@ async function ghRest(url) {
   return res.json();
 }
 
-function renderPin({ themeKey, owner, repo, info }) {
-  const t = THEMES[themeKey] || THEMES["blue-green"];
+function renderPin({ owner, repo, theme, info }) {
+  const t = THEMES[theme] || THEMES["blue-green"];
   const W = 495;
   const H = 120;
   const PAD = 16;
 
-  const name = `${owner}/${repo}`;
-  const desc = clampText(info.description || "No description");
+  const full = `${owner}/${repo}`;
+  const desc = wrap2(info.description || "");
   const lang = info.language || "N/A";
-  const langDot = langColor(lang);
 
   const stars = info.stargazers_count ?? 0;
   const forks = info.forks_count ?? 0;
@@ -117,42 +101,31 @@ function renderPin({ themeKey, owner, repo, info }) {
   const pushed = (info.pushed_at || "").slice(0, 10);
 
   return `<?xml version="1.0" encoding="UTF-8"?>
-<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${esc(name)}">
+<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${esc(full)}">
   <defs>
-    <linearGradient id="borderGrad" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="${t.grad1}"/>
-      <stop offset="100%" stop-color="${t.grad2}"/>
-    </linearGradient>
     <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="rgba(0,0,0,0.28)"/>
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="${t.shadow}"/>
     </filter>
   </defs>
 
   <rect x="0.5" y="0.5" width="${W - 1}" height="${H - 1}" rx="14"
-        fill="${t.bg}" stroke="url(#borderGrad)" stroke-width="1.2" filter="url(#shadow)"/>
+        fill="${t.bg}" stroke="${t.border}" stroke-width="1.2" filter="url(#shadow)"/>
 
   <g transform="translate(${PAD},18)">
-    <text x="0" y="14" font-size="16" font-weight="900" fill="${t.title}" font-family="Segoe UI, Ubuntu, Arial">${esc(repo)}</text>
-    <text x="0" y="32" font-size="11" fill="${t.muted}" font-family="Segoe UI, Ubuntu, Arial">${esc(owner)}</text>
+    <text x="0" y="16" font-size="16" font-weight="900" fill="${t.title}" font-family="Segoe UI, Ubuntu, Arial">${esc(repo)}</text>
+    <text x="0" y="34" font-size="11" fill="${t.muted}" font-family="Segoe UI, Ubuntu, Arial">${esc(owner)}</text>
 
-    <foreignObject x="0" y="42" width="${W - PAD * 2}" height="34">
-      <div xmlns="http://www.w3.org/1999/xhtml"
-           style="font-family: Segoe UI, Ubuntu, Arial; font-size: 12px; color: ${t.text}; opacity: 0.95; line-height: 1.25;">
-        ${esc(desc)}
-      </div>
-    </foreignObject>
+    <text x="0" y="56" font-size="12" fill="${t.text}" font-family="Segoe UI, Ubuntu, Arial">${esc(desc[0])}</text>
+    ${desc[1] ? `<text x="0" y="72" font-size="12" fill="${t.text}" font-family="Segoe UI, Ubuntu, Arial">${esc(desc[1])}</text>` : ""}
 
-    <g transform="translate(0,88)">
-      <rect x="0" y="-14" width="${W - PAD * 2}" height="28" rx="10" fill="${t.chipBg}" />
-      <circle cx="14" cy="0" r="5" fill="${langDot}" />
-      <text x="24" y="4" font-size="11" fill="${t.muted}" font-family="Segoe UI, Ubuntu, Arial">${esc(lang)}</text>
+    <rect x="0" y="84" width="${W - PAD * 2}" height="26" rx="10" fill="${t.track}" opacity="0.8"/>
+    <text x="12" y="102" font-size="11" fill="${t.muted}" font-family="Segoe UI, Ubuntu, Arial">${esc(lang)}</text>
 
-      <text x="170" y="4" font-size="11" fill="${t.muted}" font-family="Segoe UI, Ubuntu, Arial">★ ${stars}</text>
-      <text x="240" y="4" font-size="11" fill="${t.muted}" font-family="Segoe UI, Ubuntu, Arial">⑂ ${forks}</text>
-      <text x="310" y="4" font-size="11" fill="${t.muted}" font-family="Segoe UI, Ubuntu, Arial">! ${issues}</text>
+    <text x="170" y="102" font-size="11" fill="${t.muted}" font-family="Segoe UI, Ubuntu, Arial">★ ${stars}</text>
+    <text x="240" y="102" font-size="11" fill="${t.muted}" font-family="Segoe UI, Ubuntu, Arial">⑂ ${forks}</text>
+    <text x="310" y="102" font-size="11" fill="${t.muted}" font-family="Segoe UI, Ubuntu, Arial">! ${issues}</text>
 
-      <text x="${W - PAD * 2 - 10}" y="4" text-anchor="end" font-size="11" fill="${t.muted}" font-family="Segoe UI, Ubuntu, Arial">updated ${esc(pushed)}</text>
-    </g>
+    <text x="${W - PAD * 2 - 10}" y="102" text-anchor="end" font-size="11" fill="${t.muted}" font-family="Segoe UI, Ubuntu, Arial">updated ${esc(pushed)}</text>
   </g>
 </svg>`;
 }
@@ -160,14 +133,14 @@ function renderPin({ themeKey, owner, repo, info }) {
 async function main() {
   const owner = arg("username", "TranDangKhoaTechnology");
   const repo = arg("repo", "");
-  const themeKey = arg("theme", "blue-green");
+  const theme = arg("theme", "blue-green");
   const outFile = arg("out", `generated/pins/${repo}.svg`);
 
   if (!repo) throw new Error("Missing --repo");
 
   try {
     const info = await ghRest(`https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}`);
-    const svg = renderPin({ themeKey, owner, repo, info });
+    const svg = renderPin({ owner, repo, theme, info });
 
     fs.mkdirSync(path.dirname(outFile), { recursive: true });
     fs.writeFileSync(outFile, svg, "utf8");
@@ -176,10 +149,10 @@ async function main() {
     const msg = String(e?.message || e);
     const fallback = `<?xml version="1.0" encoding="UTF-8"?>
 <svg width="495" height="120" xmlns="http://www.w3.org/2000/svg">
-  <rect width="100%" height="100%" fill="#040f0f"/>
-  <text x="16" y="32" fill="#2f97c1" font-size="16" font-family="Segoe UI, Ubuntu, Arial" font-weight="800">Repo Pin</text>
-  <text x="16" y="60" fill="#0cf574" font-size="12" font-family="Segoe UI, Ubuntu, Arial">Build failed</text>
-  <text x="16" y="82" fill="#0cf574" font-size="10" font-family="Segoe UI, Ubuntu, Arial">${esc(msg).slice(0, 140)}</text>
+  <rect width="100%" height="100%" fill="#111"/>
+  <text x="16" y="32" fill="#7aa2f7" font-size="16" font-family="Segoe UI, Ubuntu, Arial" font-weight="800">Repo Pin</text>
+  <text x="16" y="60" fill="#c0caf5" font-size="12" font-family="Segoe UI, Ubuntu, Arial">Build failed</text>
+  <text x="16" y="84" fill="#c0caf5" font-size="10" font-family="Segoe UI, Ubuntu, Arial">${esc(msg).slice(0, 160)}</text>
 </svg>`;
     fs.mkdirSync(path.dirname(outFile), { recursive: true });
     fs.writeFileSync(outFile, fallback, "utf8");

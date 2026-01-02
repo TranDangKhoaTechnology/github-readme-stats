@@ -46,17 +46,12 @@ jobs:
 
       - name: Generate pins (dark/light)
         run: |
-          node - <<'NODE'
-          const fs = require("fs");
-          const cfg = JSON.parse(fs.readFileSync("scripts/pins.json","utf8"));
-          const { username, repos } = cfg;
-          const { execSync } = require("child_process");
+          node -p "JSON.parse(require('fs').readFileSync('scripts/pins.json','utf8')).repos.join('\n')" > /tmp/repos.txt
 
-          for (const r of repos) {
-            execSync(`node scripts/pin.mjs --username ${username} --repo ${r} --theme blue-green --out generated/pins/${r}.dark.svg`, { stdio: "inherit" });
-            execSync(`node scripts/pin.mjs --username ${username} --repo ${r} --theme solarized-light --out generated/pins/${r}.light.svg`, { stdio: "inherit" });
-          }
-          NODE
+          while IFS= read -r repo; do
+            node scripts/pin.mjs --username TranDangKhoaTechnology --repo "$repo" --theme blue-green --out "generated/pins/$repo.dark.svg"
+            node scripts/pin.mjs --username TranDangKhoaTechnology --repo "$repo" --theme solarized-light --out "generated/pins/$repo.light.svg"
+          done < /tmp/repos.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
