@@ -14,11 +14,11 @@
 // --include_forks (default false)
 // --exclude_repo "repo1,repo2"
 // --sort updated|pushed|stars  (default updated)
-// --show (same as pin-card)
+// --show / --hide (forward to pin-card.mjs)
 
 import fs from "node:fs";
 import path from "node:path";
-import { writePinPair } from "./pin-card.mjs";
+import { execSync } from "node:child_process";
 
 function arg(name, fallback = null) {
   const i = process.argv.indexOf(`--${name}`);
@@ -63,7 +63,6 @@ async function fetchRepos(owner, maxRepos, includeForks, excludeSet, sort) {
   let page = 1;
   const repos = [];
 
-  // API sort: created, updated, pushed, full_name (no stars)
   const apiSort = sort === "pushed" ? "pushed" : "updated";
 
   while (repos.length < maxRepos) {
@@ -81,7 +80,6 @@ async function fetchRepos(owner, maxRepos, includeForks, excludeSet, sort) {
       repos.push({
         name,
         stars: r.stargazers_count ?? 0,
-        pushed_at: r.pushed_at || "",
         updated_at: r.updated_at || "",
       });
 
@@ -90,25 +88,26 @@ async function fetchRepos(owner, maxRepos, includeForks, excludeSet, sort) {
     page++;
   }
 
-  if (sort === "stars") {
-    repos.sort((a, b) => (b.stars - a.stars) || String(b.updated_at).localeCompare(String(a.updated_at)));
-  }
+  if (sort === "stars") repos.sort((a, b) => (b.stars - a.stars) || String(b.updated_at).localeCompare(String(a.updated_at)));
 
   return repos.map((r) => r.name);
 }
 
 async function mapLimit(items, limit, fn) {
-  const out = new Array(items.length);
   let i = 0;
   const workers = Array.from({ length: limit }, async () => {
     while (true) {
       const idx = i++;
       if (idx >= items.length) break;
-      out[idx] = await fn(items[idx], idx);
+      await fn(items[idx], idx);
     }
   });
   await Promise.all(workers);
-  return out;
+}
+
+function shQuote(s) {
+  // safe for bash on ubuntu runner
+  return `"${String(s).replaceAll('"', '\\"')}"`;
 }
 
 async function main() {
@@ -127,28 +126,24 @@ async function main() {
 
   const repoNames = await fetchRepos(owner, maxRepos, includeForks, excludeSet, sort);
 
-  const limit = 5; // đừng cao quá để tránh rate limit
+  const limit = 4; // giảm để tránh rate-limit
   await mapLimit(repoNames, limit, async (repo) => {
     const safe = repo.replaceAll("/", "-");
     const outDark = path.join(outDir, `${safe}.dark.svg`);
     const outLight = path.join(outDir, `${safe}.light.svg`);
 
     try {
-      await writePinPair({
-        owner,
-        repo,
-        outDark,
-        outLight,
-        themeDark,
-        themeLight,
-        show,
-        hide,
-      });
-      return true;
+      execSync(
+        `node scripts/pin-card.mjs --owner ${shQuote(owner)} --repo ${shQuote(repo)} --theme ${shQuote(themeDark)} --show ${shQuote(show)} --hide ${shQuote(hide)} --out ${shQuote(outDark)}`,
+        { stdio: "inherit" }
+      );
+      execSync(
+        `node scripts/pin-card.mjs --owner ${shQuote(owner)} --repo ${shQuote(repo)} --theme ${shQuote(themeLight)} --show ${shQuote(show)} --hide ${shQuote(hide)} --out ${shQuote(outLight)}`,
+        { stdio: "inherit" }
+      );
     } catch (e) {
-      // không fail cả job vì 1 repo
       console.error(`[pin fail] ${repo}: ${String(e?.message || e)}`);
-      return false;
+      // không fail cả job
     }
   });
 
