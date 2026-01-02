@@ -1,8 +1,26 @@
 // scripts/marketing.mjs
+// Generate a marketing/hero SVG banner for README.
+//
+// Usage example:
+// node scripts/marketing.mjs --style clean --out generated/hero.dark.svg \
+//   --title "Trần Đăng Khoa" \
+//   --tagline "Automation • Web Apps • AI" \
+//   --desc "Tôi xây hệ thống tự động hoá, landing page và chatbot để giúp bạn tăng doanh thu." \
+//   --badges "Open for freelance,Remote,Fast delivery" \
+//   --points "Tự động hoá quy trình (Sheets/CRM/Zapier),Landing page SEO + Analytics,Chatbot + API tích hợp" \
+//   --stats "Projects|25+,Response|<24h,Clients|10+" \
+//   --cta_text "Contact me" \
+//   --cta_url "mailto:trandangkhoa.automation@gmail.com" \
+//   --links "GitHub|https://github.com/TranDangKhoaTechnology,Email|mailto:trandangkhoa.automation@gmail.com"
+//
+// style: clean | cleanlight | default
+// theme: still supported, but style overrides for better marketing look.
+
 import fs from "node:fs";
 import path from "node:path";
-import { resolveTheme, esc, wrapLines, estTextW } from "./theme.mjs";
+import { resolveTheme, esc, estTextW } from "./theme.mjs";
 
+// -------------------- CLI helpers --------------------
 function arg(name, fallback = null) {
   const i = process.argv.indexOf(`--${name}`);
   if (i === -1) return fallback;
@@ -20,6 +38,7 @@ function listCSV(v) {
     .filter(Boolean);
 }
 function listPairs(v) {
+  // "Label|Value,Label|Value"
   return listCSV(v)
     .map((x) => {
       const [a, b] = x.split("|").map((s) => (s ?? "").trim());
@@ -35,6 +54,53 @@ function clampToWidth(text, maxW, fontSize) {
   return s.replace(/\s+$/, "") + "…";
 }
 
+// Wrap by pixel width (prevents text from spilling into right column)
+function wrapPx(text, maxW, fontSize, maxLines = 2) {
+  const words = String(text || "").trim().split(/\s+/).filter(Boolean);
+  if (!words.length) return [];
+
+  const lines = [];
+  let line = "";
+
+  const pushLine = () => {
+    if (line.trim()) lines.push(line.trim());
+    line = "";
+  };
+
+  for (const w of words) {
+    const candidate = line ? `${line} ${w}` : w;
+    if (estTextW(candidate, fontSize) <= maxW) {
+      line = candidate;
+      continue;
+    }
+    if (!line) {
+      // one single very long word -> clamp
+      lines.push(clampToWidth(w, maxW, fontSize));
+      continue;
+    }
+    pushLine();
+    line = w;
+
+    if (lines.length >= maxLines) break;
+  }
+  if (lines.length < maxLines && line.trim()) pushLine();
+
+  if (lines.length > maxLines) lines.length = maxLines;
+  if (lines.length === maxLines && words.length) {
+    // if still content remaining, ellipsis last line
+    const last = lines[maxLines - 1];
+    lines[maxLines - 1] = clampToWidth(last, maxW, fontSize);
+  }
+  return lines;
+}
+
+// -------------------- Components --------------------
+function linkWrap(url, inner) {
+  if (!url) return inner;
+  const safe = esc(url);
+  return `<a xlink:href="${safe}" href="${safe}" target="_blank" rel="noopener noreferrer">${inner}</a>`;
+}
+
 function chip({ x, y, text, t }) {
   const fs = 11;
   const padX = 10;
@@ -45,17 +111,11 @@ function chip({ x, y, text, t }) {
     svg: `
       <g>
         <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="11"
-              fill="${t.chipBg}" stroke="rgba(0,0,0,0.06)"/>
+              fill="${t.chipBg}" stroke="${t.pillStroke}"/>
         <text x="${x + padX}" y="${y + 15}" font-size="${fs}"
               fill="${t.muted}" font-family="Segoe UI, Ubuntu, Arial">${esc(text)}</text>
       </g>`,
   };
-}
-
-function linkWrap(url, inner) {
-  if (!url) return inner;
-  const safe = esc(url);
-  return `<a xlink:href="${safe}" href="${safe}" target="_blank" rel="noopener noreferrer">${inner}</a>`;
 }
 
 function button({ x, y, w, h, t, label, url }) {
@@ -67,22 +127,28 @@ function button({ x, y, w, h, t, label, url }) {
       <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${Math.floor(h / 2)}"
             fill="url(#ctaGrad)" stroke="${t.border}"/>
       <text x="${tx}" y="${y + Math.floor(h * 0.68)}" font-size="${fs}" font-weight="900"
-            fill="${t.buttonText || "#0b1020"}" font-family="Segoe UI, Ubuntu, Arial">${esc(label)}</text>
+            fill="${t.buttonText}" font-family="Segoe UI, Ubuntu, Arial">${esc(label)}</text>
     </g>`;
   return linkWrap(url, inner);
 }
 
-function featureRow({ x, y, t, text }) {
+function featureRow({ x, y, t, textLines }) {
   const fs = 12;
+  const lineH = 16;
+
   const icon = `
     <g transform="translate(${x},${y})">
       <circle cx="6" cy="6" r="6" fill="${t.accent}" opacity="0.95"/>
       <text x="6" y="10" text-anchor="middle" font-size="10" font-weight="900"
-            fill="${t.okText || "#ffffff"}" font-family="Segoe UI, Ubuntu, Arial">✓</text>
+            fill="${t.okText}" font-family="Segoe UI, Ubuntu, Arial">✓</text>
     </g>`;
-  const label = `<text x="${x + 18}" y="${y + 11}" font-size="${fs}"
-                  fill="${t.text}" font-family="Segoe UI, Ubuntu, Arial">${esc(text)}</text>`;
-  return icon + label;
+
+  let svg = icon;
+  for (let i = 0; i < textLines.length; i++) {
+    svg += `<text x="${x + 18}" y="${y + 11 + i * lineH}" font-size="${fs}"
+              fill="${t.text}" font-family="Segoe UI, Ubuntu, Arial">${esc(textLines[i])}</text>`;
+  }
+  return { svg, height: Math.max(14, textLines.length * lineH) };
 }
 
 function statPill({ x, y, w, h, t, k, v }) {
@@ -97,8 +163,8 @@ function statPill({ x, y, w, h, t, k, v }) {
     </g>`;
 }
 
+// -------------------- Styling --------------------
 function applyStyle(t, style) {
-  // “clean” = màu marketing kiểu corporate, ít chói
   if (style === "clean") {
     return {
       ...t,
@@ -121,7 +187,6 @@ function applyStyle(t, style) {
     };
   }
 
-  // “cleanlight” = light mode nhìn sạch + không chói
   if (style === "cleanlight") {
     return {
       ...t,
@@ -144,18 +209,25 @@ function applyStyle(t, style) {
     };
   }
 
-  // default
+  // default: use theme as-is, but provide missing tokens
   return {
     ...t,
-    pillBg: "rgba(255,255,255,0.06)",
-    pillStroke: "rgba(255,255,255,0.06)",
-    buttonText: t.bg, // như bạn đang dùng
-    okText: t.bg,
+    bg2: t.bg2 || t.bg,
+    pillBg: t.pillBg || "rgba(255,255,255,0.06)",
+    pillStroke: t.pillStroke || "rgba(255,255,255,0.06)",
+    border: t.border || "rgba(255,255,255,0.14)",
+    track: t.track || "rgba(255,255,255,0.10)",
+    chipBg: t.chipBg || "rgba(255,255,255,0.06)",
+    grad1: t.grad1 || t.title,
+    grad2: t.grad2 || t.accent,
+    shadow: t.shadow || "rgba(0,0,0,0.35)",
+    buttonText: t.buttonText || t.bg,
+    okText: t.okText || t.bg,
   };
 }
 
+// -------------------- Render --------------------
 function renderHero(opts) {
-  // theme vẫn dùng được, nhưng style sẽ override cho đẹp hơn
   let t = resolveTheme(opts.theme);
   t = applyStyle(t, opts.style);
 
@@ -163,70 +235,119 @@ function renderHero(opts) {
   const OUT = 18;
   const W = CANVAS_W - OUT * 2;
 
-  const PAD = 26;
+  const PAD = 26;      // padding inside card
+  const GAP = 26;      // gap between columns
+  const R = 16;        // radius
 
-  // ✅ FIX TRÀN: đã translate(OUT,OUT) rồi => INNER_X/Y phải = 0
-  const INNER_X = 0;
-  const INNER_Y = 0;
+  // columns
+  const contentW = W - PAD * 2;
+  const leftW = Math.floor((contentW - GAP) * 0.62);
+  const rightW = (contentW - GAP) - leftW;
 
-  const leftW = Math.floor(W * 0.62);
-  const rightW = W - leftW - PAD;
+  const xL = PAD;
+  const rx = PAD + leftW + GAP;
 
+  // text
   const title = opts.title;
   const tagline = opts.tagline;
-  const descLines = wrapLines(opts.desc, 68, 2);
+
+  const descFs = 13;
+  const descLines = wrapPx(opts.desc, leftW, descFs, 2);
 
   const badges = opts.badges.slice(0, 6);
   const points = opts.points.slice(0, 3);
   const stats = opts.stats.slice(0, 3);
   const links = opts.links.slice(0, 3);
 
-  let y = 22;
+  // vertical layout measure
+  const headerY = 22;
+  const headerH = 66;
 
-  const rightCardTop = 54;
+  const descY = headerY + headerH;                // 88
+  const descH = descLines.length * 18;            // line height 18
+  const afterDescY = descY + descH + 16;
+
+  const badgesH = badges.length ? 30 : 0;
+  const afterBadgesY = afterDescY + badgesH;
+
+  const dividerY = afterBadgesY;
+  const afterDividerY = dividerY + 16;
+
+  // bullets (each can be 1-2 lines)
+  const bulletFs = 12;
+  const bulletLineH = 16;
+  const bulletGap = 6;
+
+  let bulletsY = afterDividerY;
+  let bulletsSvg = "";
+  let bulletBlockH = 0;
+
+  for (const p of points) {
+    const lines = wrapPx(p, leftW - 22, bulletFs, 2);
+    const row = featureRow({ x: xL, y: bulletsY, t, textLines: lines });
+    bulletsSvg += row.svg;
+    const rowH = row.height;
+    bulletsY += rowH + bulletGap;
+    bulletBlockH += rowH + bulletGap;
+  }
+  if (points.length) bulletBlockH = Math.max(0, bulletBlockH - bulletGap);
+
+  const afterBulletsY = afterDividerY + bulletBlockH + 12;
+
+  const CTA_H = 34;
+  const ctaY = afterBulletsY;
+  const bottomPad = 26;
+
+  // right side measure
   const statH = 48;
   const statGap = 10;
-  const rightMinH = rightCardTop + stats.length * (statH + statGap) + 52;
+  const rightCardTop = 54;
 
-  const leftMinH = 210;
-  const H_INNER = Math.max(leftMinH, rightMinH);
+  const statsTotalH =
+    stats.length ? stats.length * statH + (stats.length - 1) * statGap : 0;
+
+  const leftRequiredH = ctaY + CTA_H + bottomPad;
+  const rightRequiredH = rightCardTop + statsTotalH + bottomPad;
+
+  const H_INNER = Math.max(220, leftRequiredH, rightRequiredH);
   const CANVAS_H = H_INNER + OUT * 2;
 
+  // defs
   const defs = `
   <defs>
     <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="${t.bg}" />
-      <stop offset="100%" stop-color="${t.bg2 || t.bg}" />
+      <stop offset="100%" stop-color="${t.bg2}" />
     </linearGradient>
 
     <linearGradient id="borderGrad" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="${t.grad1 || t.title}" />
-      <stop offset="100%" stop-color="${t.grad2 || t.accent}" />
+      <stop offset="0%" stop-color="${t.grad1}" />
+      <stop offset="100%" stop-color="${t.grad2}" />
     </linearGradient>
 
     <linearGradient id="ctaGrad" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="${t.grad1 || t.title}" />
-      <stop offset="100%" stop-color="${t.grad2 || t.accent}" />
+      <stop offset="0%" stop-color="${t.grad1}" />
+      <stop offset="100%" stop-color="${t.grad2}" />
     </linearGradient>
 
     <filter id="shadow" x="-18%" y="-22%" width="140%" height="170%">
       <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="${t.shadow}"/>
     </filter>
 
-    <!-- ✅ Clip để blob/nội dung không lòi ra ngoài bo góc -->
     <clipPath id="cardClip">
-      <rect x="0" y="0" width="${W}" height="${H_INNER}" rx="16" />
+      <rect x="0" y="0" width="${W}" height="${H_INNER}" rx="${R}" />
     </clipPath>
   </defs>`;
 
-  // blob nền (đã giảm opacity + sẽ bị clip)
+  // blobs (clipped)
   const blob = `
     <g opacity="0.55">
-      <circle cx="${W - 70}" cy="46" r="40" fill="${t.grad2 || t.accent}" opacity="0.22"/>
-      <circle cx="${W - 140}" cy="90" r="64" fill="${t.grad1 || t.title}" opacity="0.16"/>
-      <circle cx="90" cy="${H_INNER - 30}" r="70" fill="${t.grad1 || t.title}" opacity="0.10"/>
+      <circle cx="${W - 70}" cy="46" r="40" fill="${t.grad2}" opacity="0.22"/>
+      <circle cx="${W - 140}" cy="90" r="64" fill="${t.grad1}" opacity="0.16"/>
+      <circle cx="90" cy="${H_INNER - 30}" r="70" fill="${t.grad1}" opacity="0.10"/>
     </g>`;
 
+  // monogram
   const monogram =
     (title || "DK")
       .split(/\s+/)
@@ -235,58 +356,52 @@ function renderHero(opts) {
       .map((s) => s[0]?.toUpperCase?.() || "")
       .join("") || "DK";
 
+  // header
   const header = `
-    <g transform="translate(${INNER_X + PAD},${INNER_Y + y})">
-      <circle cx="18" cy="18" r="18" fill="rgba(255,255,255,0.07)"/>
+    <g transform="translate(${xL},${headerY})">
+      <circle cx="18" cy="18" r="18" fill="${t.pillBg}"/>
       <text x="18" y="24" text-anchor="middle" font-size="14" font-weight="900"
             fill="${t.title}" font-family="Segoe UI, Ubuntu, Arial">${esc(monogram)}</text>
 
       <text x="48" y="18" font-size="22" font-weight="900"
-            fill="${t.title}" font-family="Segoe UI, Ubuntu, Arial">${esc(clampToWidth(title, leftW - 70, 22))}</text>
+            fill="${t.title}" font-family="Segoe UI, Ubuntu, Arial">${esc(
+              clampToWidth(title, leftW - 70, 22)
+            )}</text>
       <text x="48" y="40" font-size="12"
             fill="${t.muted}" font-family="Segoe UI, Ubuntu, Arial">${esc(tagline)}</text>
     </g>`;
 
-  y += 66;
-
+  // desc
   let descSvg = "";
   for (let i = 0; i < descLines.length; i++) {
-    descSvg += `<text x="${INNER_X + PAD}" y="${INNER_Y + y + i * 18}"
-                    font-size="13" fill="${t.text}" font-family="Segoe UI, Ubuntu, Arial">${esc(descLines[i])}</text>`;
+    descSvg += `<text x="${xL}" y="${descY + i * 18}"
+                    font-size="${descFs}" fill="${t.text}" font-family="Segoe UI, Ubuntu, Arial">${esc(
+      descLines[i]
+    )}</text>`;
   }
-  y += descLines.length * 18 + 16;
 
+  // badges
   let badgesSvg = "";
   if (badges.length) {
-    let bx = INNER_X + PAD;
-    const by = INNER_Y + y;
+    let bx = xL;
+    const by = afterDescY;
     for (const b of badges) {
       const c = chip({ x: bx, y: by, text: b, t });
-      if (bx + c.w > INNER_X + PAD + leftW - 10) break;
+      if (bx + c.w > xL + leftW) break;
       badgesSvg += c.svg;
       bx += c.w + 8;
     }
-    y += 30;
   }
 
-  const divider = `<rect x="${INNER_X + PAD}" y="${INNER_Y + y}" width="${leftW}" height="1" fill="${t.track}" opacity="0.95"/>`;
-  y += 16;
+  // divider
+  const divider = `<rect x="${xL}" y="${dividerY}" width="${leftW}" height="1" fill="${t.track}" opacity="0.95"/>`;
 
-  let pointsSvg = "";
-  let py = INNER_Y + y;
-  for (const p of points) {
-    pointsSvg += featureRow({ x: INNER_X + PAD, y: py, t, text: p });
-    py += 22;
-  }
-  y += points.length * 22 + 12;
-
-  const ctaX = INNER_X + PAD;
-  const ctaY = INNER_Y + y;
+  // CTA + links
   const cta = button({
-    x: ctaX,
+    x: xL,
     y: ctaY,
     w: 150,
-    h: 34,
+    h: CTA_H,
     t,
     label: opts.ctaText,
     url: opts.ctaUrl,
@@ -294,11 +409,13 @@ function renderHero(opts) {
 
   let linksSvg = "";
   if (links.length) {
-    let lx = ctaX + 160;
+    let lx = xL + 160;
     const ly = ctaY + 6;
     for (const { a, b } of links) {
       const label = `@${a}`;
       const w = Math.ceil(18 + estTextW(label, 11) + 18);
+      if (lx + w > xL + leftW) break;
+
       const inner = `
         <g>
           <rect x="${lx}" y="${ly}" width="${w}" height="22" rx="11"
@@ -308,14 +425,12 @@ function renderHero(opts) {
         </g>`;
       linksSvg += linkWrap(b, inner);
       lx += w + 8;
-      if (lx > INNER_X + PAD + leftW - 60) break;
     }
   }
 
-  const rx = INNER_X + PAD + leftW + PAD;
-
+  // right header
   const rightHeader = `
-    <g transform="translate(${rx},${INNER_Y + 24})">
+    <g transform="translate(${rx},24)">
       <circle cx="18" cy="18" r="18" fill="${t.pillBg}" />
       <text x="18" y="24" text-anchor="middle" font-size="14" font-weight="900"
             fill="${t.title}" font-family="Segoe UI, Ubuntu, Arial">⚡</text>
@@ -325,16 +440,13 @@ function renderHero(opts) {
             fill="${t.muted}" font-family="Segoe UI, Ubuntu, Arial">${esc(opts.rightNote)}</text>
     </g>`;
 
+  // stats
   let statsSvg = "";
-  let sy = INNER_Y + 54;
-  const statW = rightW;
+  let sy = rightCardTop;
   for (const { a, b } of stats) {
-    statsSvg += statPill({ x: rx, y: sy, w: statW, h: 48, t, k: a, v: b });
-    sy += 48 + 10;
+    statsSvg += statPill({ x: rx, y: sy, w: rightW, h: statH, t, k: a, v: b });
+    sy += statH + statGap;
   }
-
-  const footer = `<text x="${INNER_X + PAD}" y="${INNER_Y + H_INNER - 16}"
-                   font-size="10" fill="${t.muted}" font-family="Segoe UI, Ubuntu, Arial">self-built • actions → svg</text>`;
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <svg width="${CANVAS_W}" height="${CANVAS_H}" viewBox="0 0 ${CANVAS_W} ${CANVAS_H}"
@@ -342,27 +454,26 @@ function renderHero(opts) {
      role="img" aria-label="${esc(title)}">
   ${defs}
   <g transform="translate(${OUT},${OUT})">
-    <rect x="0.5" y="0.5" width="${W - 1}" height="${H_INNER - 1}" rx="16"
+    <rect x="0.5" y="0.5" width="${W - 1}" height="${H_INNER - 1}" rx="${R}"
           fill="url(#bgGrad)" stroke="url(#borderGrad)" stroke-width="1.2" filter="url(#shadow)"/>
 
-    <!-- ✅ Tất cả thứ dễ “tràn” nằm trong clip -->
     <g clip-path="url(#cardClip)">
       ${blob}
       ${header}
       ${descSvg}
       ${badgesSvg}
       ${divider}
-      ${pointsSvg}
+      ${bulletsSvg}
       ${cta}
       ${linksSvg}
       ${rightHeader}
       ${statsSvg}
-      ${footer}
     </g>
   </g>
 </svg>`;
 }
 
+// -------------------- Main --------------------
 async function main() {
   const theme = arg("theme", "tokyonight");
   const style = arg("style", "clean"); // clean | cleanlight | default
@@ -377,7 +488,7 @@ async function main() {
   const stats = listPairs(arg("stats", "Projects|25+,Response|<24h,Clients|10+"));
   const ctaText = arg("cta_text", "Contact me");
   const ctaUrl = arg("cta_url", "");
-  const links = listPairs(arg("links", ""));
+  const links = listPairs(arg("links", "")); // "Website|https://...,GitHub|https://..."
   const rightNote = arg("right_note", "Let’s build something");
 
   const svg = renderHero({
