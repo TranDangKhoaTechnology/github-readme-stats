@@ -19,7 +19,7 @@
     <circle cx="8" cy="8" r="8" fill="rgba(245,183,0,0.18)"/>
     <text x="8" y="11" text-anchor="middle" font-size="10" fill="#9ece6a" font-family="Segoe UI, Ubuntu, Arial">⌁</text>
     <text x="24" y="12" font-size="16" font-weight="800" fill="#7aa2f7" font-family="Segoe UI, Ubuntu, Arial">Top Languages</text>
-    <text x="463" y="12" text-anchor="end" font-size="11" fill="rgba(192,202,245,0.70)" font-family="Segoe UI, Ubuntu, Arial">TranDangKhoaTechnology • 22 repos</text>
+    <text x="463" y="12" text-anchor="end" font-size="11" fill="rgba(192,202,245,0.70)" font-family="Segoe UI, Ubuntu, Arial">TranDangKhoaTechnology • 23 repos</text>
   </g>
 
   
@@ -97,5 +97,5 @@
         </g>
       
 
-  <text x="16" y="216" font-size="10" fill="rgba(192,202,245,0.70)" font-family="Segoe UI, Ubuntu, Arial">theme=tokyonight • hide=css • langs=8 • updated=2026-01-20T03:00Z</text>
+  <text x="16" y="216" font-size="10" fill="rgba(192,202,245,0.70)" font-family="Segoe UI, Ubuntu, Arial">theme=tokyonight • hide=css • langs=8 • updated=2026-01-20T04:12Z</text>
 </svg>
