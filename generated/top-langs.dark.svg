@@ -37,7 +37,7 @@
           <text x="16" y="13" font-size="12" font-weight="700" fill="#c0caf5" font-family="Segoe UI, Ubuntu, Arial">Python</text>
           <text x="223" y="13" text-anchor="end" font-size="11" fill="rgba(192,202,245,0.70)" font-family="Segoe UI, Ubuntu, Arial">48.4%</text>
           <rect x="0" y="20" width="221" height="6" rx="3" fill="rgba(255,255,255,0.10)" />
-          <rect x="0" y="20" width="107.01271858244004" height="6" rx="3" fill="#3572A5" />
+          <rect x="0" y="20" width="107.02093327570573" height="6" rx="3" fill="#3572A5" />
         </g>
       
         <g transform="translate(253,76)">
@@ -45,7 +45,7 @@
           <text x="16" y="13" font-size="12" font-weight="700" fill="#c0caf5" font-family="Segoe UI, Ubuntu, Arial">C</text>
           <text x="223" y="13" text-anchor="end" font-size="11" fill="rgba(192,202,245,0.70)" font-family="Segoe UI, Ubuntu, Arial">33.5%</text>
           <rect x="0" y="20" width="221" height="6" rx="3" fill="rgba(255,255,255,0.10)" />
-          <rect x="0" y="20" width="73.96777678615206" height="6" rx="3" fill="#555555" />
+          <rect x="0" y="20" width="73.96198886260134" height="6" rx="3" fill="#555555" />
         </g>
       
         <g transform="translate(16,110)">
@@ -53,7 +53,7 @@
           <text x="16" y="13" font-size="12" font-weight="700" fill="#c0caf5" font-family="Segoe UI, Ubuntu, Arial">PHP</text>
           <text x="223" y="13" text-anchor="end" font-size="11" fill="rgba(192,202,245,0.70)" font-family="Segoe UI, Ubuntu, Arial">6.3%</text>
           <rect x="0" y="20" width="221" height="6" rx="3" fill="rgba(255,255,255,0.10)" />
-          <rect x="0" y="20" width="13.939486072322044" height="6" rx="3" fill="#4F5D95" />
+          <rect x="0" y="20" width="13.938395317898586" height="6" rx="3" fill="#4F5D95" />
         </g>
       
         <g transform="translate(253,110)">
@@ -61,7 +61,7 @@
           <text x="16" y="13" font-size="12" font-weight="700" fill="#c0caf5" font-family="Segoe UI, Ubuntu, Arial">HTML</text>
           <text x="223" y="13" text-anchor="end" font-size="11" fill="rgba(192,202,245,0.70)" font-family="Segoe UI, Ubuntu, Arial">3.5%</text>
           <rect x="0" y="20" width="221" height="6" rx="3" fill="rgba(255,255,255,0.10)" />
-          <rect x="0" y="20" width="7.800421745782373" height="6" rx="3" fill="#e34c26" />
+          <rect x="0" y="20" width="7.799811368579087" height="6" rx="3" fill="#e34c26" />
         </g>
       
         <g transform="translate(16,144)">
@@ -69,7 +69,7 @@
           <text x="16" y="13" font-size="12" font-weight="700" fill="#c0caf5" font-family="Segoe UI, Ubuntu, Arial">QML</text>
           <text x="223" y="13" text-anchor="end" font-size="11" fill="rgba(192,202,245,0.70)" font-family="Segoe UI, Ubuntu, Arial">3.5%</text>
           <rect x="0" y="20" width="221" height="6" rx="3" fill="rgba(255,255,255,0.10)" />
-          <rect x="0" y="20" width="7.775574772753351" height="6" rx="3" fill="hsl(24 72% 52%)" />
+          <rect x="0" y="20" width="7.774966339807236" height="6" rx="3" fill="hsl(24 72% 52%)" />
         </g>
       
         <g transform="translate(253,144)">
@@ -77,7 +77,7 @@
           <text x="16" y="13" font-size="12" font-weight="700" fill="#c0caf5" font-family="Segoe UI, Ubuntu, Arial">JavaScript</text>
           <text x="223" y="13" text-anchor="end" font-size="11" fill="rgba(192,202,245,0.70)" font-family="Segoe UI, Ubuntu, Arial">2.1%</text>
           <rect x="0" y="20" width="221" height="6" rx="3" fill="rgba(255,255,255,0.10)" />
-          <rect x="0" y="20" width="4.672865568819913" height="6" rx="3" fill="#f1e05a" />
+          <rect x="0" y="20" width="4.672499920562655" height="6" rx="3" fill="#f1e05a" />
         </g>
       
         <g transform="translate(16,178)">
@@ -85,7 +85,7 @@
           <text x="16" y="13" font-size="12" font-weight="700" fill="#c0caf5" font-family="Segoe UI, Ubuntu, Arial">Pascal</text>
           <text x="223" y="13" text-anchor="end" font-size="11" fill="rgba(192,202,245,0.70)" font-family="Segoe UI, Ubuntu, Arial">1.0%</text>
           <rect x="0" y="20" width="221" height="6" rx="3" fill="rgba(255,255,255,0.10)" />
-          <rect x="0" y="20" width="2.2650599737423214" height="6" rx="3" fill="hsl(236 72% 52%)" />
+          <rect x="0" y="20" width="2.264882734483073" height="6" rx="3" fill="hsl(236 72% 52%)" />
         </g>
       
         <g transform="translate(253,178)">
@@ -93,9 +93,9 @@
           <text x="16" y="13" font-size="12" font-weight="700" fill="#c0caf5" font-family="Segoe UI, Ubuntu, Arial">Assembly</text>
           <text x="223" y="13" text-anchor="end" font-size="11" fill="rgba(192,202,245,0.70)" font-family="Segoe UI, Ubuntu, Arial">0.6%</text>
           <rect x="0" y="20" width="221" height="6" rx="3" fill="rgba(255,255,255,0.10)" />
-          <rect x="0" y="20" width="1.3165917433383192" height="6" rx="3" fill="hsl(182 72% 52%)" />
+          <rect x="0" y="20" width="1.3164887210130711" height="6" rx="3" fill="hsl(182 72% 52%)" />
         </g>
       
 
-  <text x="16" y="216" font-size="10" fill="rgba(192,202,245,0.70)" font-family="Segoe UI, Ubuntu, Arial">theme=tokyonight • hide=css • langs=8 • updated=2026-01-21T23:54Z</text>
+  <text x="16" y="216" font-size="10" fill="rgba(192,202,245,0.70)" font-family="Segoe UI, Ubuntu, Arial">theme=tokyonight • hide=css • langs=8 • updated=2026-01-22T01:50Z</text>
 </svg>
