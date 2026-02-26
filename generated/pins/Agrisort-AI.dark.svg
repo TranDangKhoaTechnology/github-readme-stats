@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="495" height="218" viewBox="0 0 495 218" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="TranDangKhoaTechnology/Agrisort-AI">
+  
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1a1b26" />
+      <stop offset="100%" stop-color="#141524" />
+    </linearGradient>
+    <linearGradient id="borderGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#7aa2f7" />
+      <stop offset="100%" stop-color="#9ece6a" />
+    </linearGradient>
+
+    <!-- shadow nhỏ hơn + nằm trong OUT padding -->
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="rgba(0,0,0,0.40)"/>
+    </filter>
+  </defs>
+  <g transform="translate(14,14)">
+    <rect x="0.5" y="0.5" width="466" height="189" rx="14"
+          fill="url(#bgGrad)" stroke="url(#borderGrad)" stroke-width="1.2" filter="url(#shadow)"/>
+    
+  <g transform="translate(16,16)">
+    <circle cx="10" cy="10" r="10" fill="rgba(255,255,255,0.07)"/>
+    <text x="10" y="14" text-anchor="middle" font-size="12" fill="#9ece6a" font-family="Segoe UI, Ubuntu, Arial">⌁</text>
+
+    <text x="30" y="14" font-size="16" font-weight="900" fill="#7aa2f7" font-family="Segoe UI, Ubuntu, Arial">Agrisort-AI</text>
+    <text x="30" y="32" font-size="11" fill="rgba(192,202,245,0.72)" font-family="Segoe UI, Ubuntu, Arial">TranDangKhoaTechnology</text>
+
+    <text x="435" y="14" text-anchor="end" font-size="11" fill="rgba(192,202,245,0.72)" font-family="Segoe UI, Ubuntu, Arial">Public</text>
+  </g><text x="16" y="72" font-size="12" fill="#c0caf5" font-family="Segoe UI, Ubuntu, Arial">Hệ thống phân loại nông sản thông minh tích hợp truy xuất</text><text x="16" y="88" font-size="12" fill="#c0caf5" font-family="Segoe UI, Ubuntu, Arial">nguồn gốc QR.</text><rect x="16" y="96" width="435" height="1" fill="rgba(255,255,255,0.12)" opacity="0.9"/>
+      <g>
+        <rect x="16" y="108" width="39" height="22" rx="11" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.06)"/>
+        
+        <text x="26" y="123" font-size="11" fill="rgba(192,202,245,0.72)" font-family="Segoe UI, Ubuntu, Arial">★ 0</text>
+      </g>
+    
+      <g>
+        <rect x="63" y="108" width="39" height="22" rx="11" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.06)"/>
+        
+        <text x="73" y="123" font-size="11" fill="rgba(192,202,245,0.72)" font-family="Segoe UI, Ubuntu, Arial">⑂ 0</text>
+      </g>
+    
+      <g>
+        <rect x="110" y="108" width="39" height="22" rx="11" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.06)"/>
+        
+        <text x="120" y="123" font-size="11" fill="rgba(192,202,245,0.72)" font-family="Segoe UI, Ubuntu, Arial">! 0</text>
+      </g>
+    
+      <g>
+        <rect x="157" y="108" width="45" height="22" rx="11" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.06)"/>
+        
+        <text x="167" y="123" font-size="11" fill="rgba(192,202,245,0.72)" font-family="Segoe UI, Ubuntu, Arial">👁 0</text>
+      </g>
+    
+      <g>
+        <rect x="210" y="108" width="69" height="22" rx="11" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.06)"/>
+        <circle cx="220" cy="119" r="5" fill="hsl(292 72% 52%)" />
+        <text x="232" y="123" font-size="11" fill="rgba(192,202,245,0.72)" font-family="Segoe UI, Ubuntu, Arial">Lang —</text>
+      </g>
+    
+      <g>
+        <rect x="287" y="108" width="64" height="22" rx="11" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.06)"/>
+        
+        <text x="297" y="123" font-size="11" fill="rgba(192,202,245,0.72)" font-family="Segoe UI, Ubuntu, Arial">Lic MIT</text>
+      </g>
+    
+      <g>
+        <rect x="359" y="108" width="70" height="22" rx="11" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.06)"/>
+        
+        <text x="369" y="123" font-size="11" fill="rgba(192,202,245,0.72)" font-family="Segoe UI, Ubuntu, Arial">Size 0KB</text>
+      </g>
+    
+      <g>
+        <rect x="16" y="138" width="94" height="22" rx="11" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.06)"/>
+        
+        <text x="26" y="153" font-size="11" fill="rgba(192,202,245,0.72)" font-family="Segoe UI, Ubuntu, Arial">↻ 2026-02-26</text>
+      </g>
+    <text x="16" y="170" font-size="10" fill="rgba(192,202,245,0.72)" font-family="Segoe UI, Ubuntu, Arial">self-built • actions → svg</text>
+  </g>
+</svg>
