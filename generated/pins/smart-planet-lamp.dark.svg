@@ -66,9 +66,9 @@
       </g>
     
       <g>
-        <rect x="372" y="108" width="70" height="22" rx="11" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.06)"/>
+        <rect x="372" y="108" width="76" height="22" rx="11" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.06)"/>
         
-        <text x="382" y="123" font-size="11" fill="rgba(192,202,245,0.72)" font-family="Segoe UI, Ubuntu, Arial">Size 0KB</text>
+        <text x="382" y="123" font-size="11" fill="rgba(192,202,245,0.72)" font-family="Segoe UI, Ubuntu, Arial">Size 42KB</text>
       </g>
     
       <g>
