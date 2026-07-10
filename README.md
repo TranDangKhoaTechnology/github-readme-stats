@@ -206,34 +206,6 @@ https://<service-name>.onrender.com/health
 https://<service-name>.onrender.com/api?username=octocat
 ```
 
-## Render GraphQL cron
-
-Scheduler nằm trong [src/render-cron.js](src/render-cron.js) và tự khởi động cùng Express. Khi được bật, scheduler chỉ gửi request POST `ownerSettings` đến `https://api.render.com/graphql`; nó không gọi `/health` hay endpoint nào khác.
-
-Mặc định scheduler gửi 4 request mỗi phút, cách nhau 15 giây. Có thể đổi thành 3 request mỗi phút bằng biến môi trường.
-
-Thêm các biến sau trong **Render Dashboard → Environment**:
-
-| Biến | Giá trị |
-| --- | --- |
-| `RENDER_CRON_ENABLED` | `true` |
-| `RENDER_CRON_REQUESTS_PER_MINUTE` | `3` hoặc `4` |
-| `RENDER_API_TOKEN` | Bearer token Render, không thêm chữ `Bearer` |
-| `RENDER_COOKIE` | Toàn bộ giá trị cookie của request |
-| `RENDER_OWNER_ID` | Owner/team ID, ví dụ `tea-xxxxxxxx` |
-| `RENDER_REFERER` | Không bắt buộc; mặc định `https://dashboard.render.com/` |
-
-Sau khi thêm hoặc thay đổi biến môi trường, redeploy service. Log có dạng:
-
-```text
-[render-cron] enabled requests_per_minute=4 interval_ms=15000
-[render-cron] timestamp=2026-01-01T00:00:15.000Z status=200 graphql_errors=0 duration_ms=250 success=true
-```
-
-Vì response GraphQL có thể chứa thông tin nhạy cảm, scheduler chỉ log HTTP status, số lỗi GraphQL, thời lượng và kết quả; không log response body, token hoặc cookie.
-
-Không đưa token/cookie thật vào Git, README hoặc source code. Token và cookie đã từng bị chia sẻ cần được thu hồi trước khi tạo giá trị mới.
-
 ## Biến môi trường
 
 | Biến | Bắt buộc | Mô tả |
@@ -248,13 +220,6 @@ Không đưa token/cookie thật vào Git, README hoặc source code. Token và 
 | `EXCLUDE_REPO` | Không | Danh sách repository bị loại trừ |
 | `FETCH_MULTI_PAGE_STARS` | Không | Đặt `true` để lấy thêm trang repository khi tính sao |
 | `NODE_ENV` | Không | Đặt `development` để tắt cache khi phát triển local |
-| `RENDER_CRON_ENABLED` | Không | Đặt `true` để bật Render GraphQL cron |
-| `RENDER_CRON_REQUESTS_PER_MINUTE` | Không | Số request mỗi phút, nhận `3` hoặc `4` |
-| `RENDER_API_TOKEN` | Khi bật cron | Render Bearer token |
-| `RENDER_COOKIE` | Khi bật cron | Cookie của Render Dashboard request |
-| `RENDER_OWNER_ID` | Khi bật cron | Render owner/team ID |
-| `RENDER_REFERER` | Không | Referer gửi kèm request GraphQL |
-
 Sau khi thay đổi biến môi trường trên Render, lưu thay đổi và redeploy service.
 
 Thời gian cache mặc định: Stats 1 ngày, Top Languages 6 ngày, Repository 10 ngày, Gist 2 ngày và WakaTime 1 ngày. `CACHE_SECONDS` sẽ ghi đè các giá trị này.
