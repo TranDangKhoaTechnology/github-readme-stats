@@ -29,9 +29,6 @@
 
 <p align="center">Maintained by TranDangKhoaTechnology.</p>
 
-> [!CAUTION]
-> **This repository is no longer maintained. Please use the successor project [GitHub Stats Extended](https://github.com/stats-organization/github-stats-extended) instead! GitHub Stats Extended is an actively maintained fork of this repository with additional features and improved stability. Alternatively you can also use [GitHub Readme Stats Action](https://github.com/stats-organization/github-readme-stats-action).**
-
 <details>
 <summary>Click here to view the outdated documentation. Kept for reference only.</summary>
 
