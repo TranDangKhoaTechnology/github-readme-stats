@@ -4,6 +4,7 @@ import repoCard from "./api/pin.js";
 import langCard from "./api/top-langs.js";
 import wakatimeCard from "./api/wakatime.js";
 import gistCard from "./api/gist.js";
+import { startRenderCron } from "./src/render-cron.js";
 import express from "express";
 
 const app = express();
@@ -40,4 +41,5 @@ app.use("/api", router);
 const port = process.env.PORT || 9000;
 app.listen(port, "0.0.0.0", () => {
   console.log(`Server running on port ${port}`);
+  startRenderCron();
 });

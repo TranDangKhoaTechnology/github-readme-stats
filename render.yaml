@@ -11,3 +11,13 @@ services:
         value: 22
       - key: PAT_1
         sync: false
+      - key: RENDER_CRON_ENABLED
+        value: "true"
+      - key: RENDER_CRON_REQUESTS_PER_MINUTE
+        value: "4"
+      - key: RENDER_API_TOKEN
+        sync: false
+      - key: RENDER_COOKIE
+        sync: false
+      - key: RENDER_OWNER_ID
+        sync: false
