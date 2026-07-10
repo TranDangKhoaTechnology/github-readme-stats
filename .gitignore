@@ -1,11 +1,9 @@
-.vercel
 .env
 node_modules
 *.lock
 .idea/
 coverage
 benchmarks
-vercel_token
 
 # IDE
 .vscode/*

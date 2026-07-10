@@ -9,6 +9,10 @@ import express from "express";
 const app = express();
 const router = express.Router();
 
+app.get("/health", (_req, res) => {
+  res.status(200).json({ status: "ok" });
+});
+
 router.get("/", statsCard);
 router.get("/pin", repoCard);
 router.get("/top-langs", langCard);
@@ -17,7 +21,7 @@ router.get("/gist", gistCard);
 
 app.use("/api", router);
 
-const port = process.env.PORT || process.env.port || 9000;
+const port = process.env.PORT || 9000;
 app.listen(port, "0.0.0.0", () => {
   console.log(`Server running on port ${port}`);
 });

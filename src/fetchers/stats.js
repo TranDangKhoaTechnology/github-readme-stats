@@ -144,7 +144,7 @@ const statsFetcher = async ({
       stats = res;
     }
 
-    // Disable multi page fetching on public Vercel instance due to rate limits.
+    // Multi-page fetching is opt-in to limit GitHub API usage.
     const repoNodesWithStars = repoNodes.filter(
       (node) => node.stargazers.totalCount !== 0,
     );

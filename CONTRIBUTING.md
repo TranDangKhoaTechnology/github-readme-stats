@@ -1,4 +1,4 @@
-# Contributing to [github-readme-stats](https://github.com/anuraghazra/github-readme-stats)
+# Contributing to GitHub Readme Stats (TranDangKhoaTechnology fork)
 
 We love your input! We want to make contributing to this project as easy and transparent as possible, whether it's:
 
@@ -27,16 +27,13 @@ Interested in diving deeper into understanding how github-readme-stats works?
 
 ## Local Development
 
-To run & test github-readme-stats, you need to follow a few simple steps:-
-_(make sure you already have a [Vercel](https://vercel.com/) account)_
+To run and test GitHub Readme Stats locally:
 
-1.  Install [Vercel CLI](https://vercel.com/download).
-2.  Fork the repository and clone the code to your local machine.
-3.  Run `npm install` in the repository root.
-4.  Run the command `vercel` in the root and follow the steps there.
-5.  Run the command `vercel dev` to start a development server at <http://localhost:3000>.
-6.  Create a `.env` file in the root and add the following line `NODE_ENV=development`, this will disable caching for local development.
-7.  The cards will then be available from this local endpoint (i.e. `http://localhost:3000/api?username=anuraghazra`).
+1.  Fork the repository and clone the code to your local machine.
+2.  Run `npm install` in the repository root.
+3.  Create a `.env` file in the root and add the following line: `NODE_ENV=development`.
+4.  Run `npm start` to start a development server at <http://localhost:9000>.
+5.  The cards will be available at `http://localhost:9000/api?username=anuraghazra`.
 
 > [!NOTE]
 > You can debug the package code in [Vscode](https://code.visualstudio.com/) by using the [Node.js: Attach to process](https://code.visualstudio.com/docs/nodejs/nodejs-debugging#_setting-up-an-attach-configuration) debug option. You can also debug any tests using the [VSCode Jest extension](https://marketplace.visualstudio.com/items?itemName=Orta.vscode-jest). For more information, see https://github.com/jest-community/vscode-jest/issues/912.
@@ -68,12 +65,12 @@ We use GitHub issues to track public bugs. Report a bug by [opening a new issue]
 
 > **Ans:** &hide=jupyter%20notebook
 
-**Q:** I could not figure out how to deploy on my own Vercel instance
+**Q:** I could not figure out how to deploy my own instance on Render
 
 > **Ans:**
 >
-> -   docs: <https://github.com/anuraghazra/github-readme-stats/#deploy-on-your-own-vercel-instance>
-> -   YT tutorial by codeSTACKr: <https://www.youtube.com/watch?v=n6d4KHSKqGk&feature=youtu.be&t=107>
+> -   Connect the repository as a Blueprint in the Render dashboard.
+> -   Add `PAT_1` as an environment variable, then deploy.
 
 **Q:** Language Card is incorrect
 

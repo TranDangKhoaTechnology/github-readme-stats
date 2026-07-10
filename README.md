@@ -25,12 +25,9 @@
   </a>
   <br />
   <br />
-  <a href="https://vercel.com?utm\_source=github\_readme\_stats\_team\&utm\_campaign=oss">
-    <img src="./powered-by-vercel.svg"/>
-  </a>
 </p>
 
-<p align="center">Love the project? Please consider <a href="https://www.paypal.me/anuraghazra">donating</a> to support the original creator!</p>
+<p align="center">Maintained by TranDangKhoaTechnology.</p>
 
 > [!CAUTION]
 > **This repository is no longer maintained. Please use the successor project [GitHub Stats Extended](https://github.com/stats-organization/github-stats-extended) instead! GitHub Stats Extended is an actively maintained fork of this repository with additional features and improved stability. Alternatively you can also use [GitHub Readme Stats Action](https://github.com/stats-organization/github-readme-stats-action).**
@@ -93,9 +90,9 @@
     - [Pinning repositories](#pinning-repositories)
 - [Deploy on your own](#deploy-on-your-own)
   - [GitHub Actions (Recommended)](#github-actions-recommended)
-  - [Self-hosted (Vercel/Other) (Recommended)](#self-hosted-vercelother-recommended)
+  - [Self-hosted on Render (Recommended)](#self-hosted-on-render-recommended)
     - [First step: get your Personal Access Token (PAT)](#first-step-get-your-personal-access-token-pat)
-    - [On Vercel](#on-vercel)
+    - [On Render](#on-render)
     - [:film\_projector: Check Out Step By Step Video Tutorial By @codeSTACKr](#film_projector-check-out-step-by-step-video-tutorial-by-codestackr)
     - [On other platforms](#on-other-platforms)
     - [Available environment variables](#available-environment-variables)
@@ -108,7 +105,7 @@
 <table><tr><td>
 ⚠️<b>Warning</b>
 
-The public Vercel instance at `https://github-readme-stats.vercel.app/api` is best-effort and can be unreliable due to rate limits and traffic spikes (see [#1471](https://github.com/anuraghazra/github-readme-stats/issues/1471)). We use caching to improve stability (see [common options](#common-options)), but for reliable cards we recommend [self-hosting](#deploy-on-your-own) (Vercel or other) or using the [GitHub Actions workflow](#github-actions-recommended) to generate cards in your [profile repository](https://docs.github.com/en/account-and-profile/how-tos/profile-customization/managing-your-profile-readme).
+Public instances are best-effort and can be affected by rate limits and traffic spikes. For reliable cards, [self-host on Render](#self-hosted-on-render-recommended) or use the [GitHub Actions workflow](#github-actions-recommended) to generate cards in your [profile repository](https://docs.github.com/en/account-and-profile/how-tos/profile-customization/managing-your-profile-readme).
 </td></tr></table>
 
 <table><tr><td>
@@ -896,7 +893,7 @@ Then embed from your profile README:
 
 See more options and examples in the [GitHub Readme Stats Action README](https://github.com/readme-tools/github-readme-stats-action#readme).
 
-## Self-hosted (Vercel/Other)
+## Self-hosted on Render (Recommended)
 
 Running your own instance avoids public rate limits and gives you full control over caching, tokens, and private stats.
 
@@ -935,11 +932,18 @@ This limits the scope to issues in your repositories and includes only public co
   * Pull requests: read-only
 * Click on `Generate token` and copy it.
 
-### On Vercel
+### On Render
+
+Deploy this fork as a Render Blueprint. The included `render.yaml` runs `npm ci`, starts the Express server with `npm start`, and checks `GET /health`.
+
+1. Fork or push this repository to your Git provider.
+2. In the [Render dashboard](https://dashboard.render.com/), select **New** → **Blueprint** and connect the repository.
+3. Set `PAT_1` to a GitHub Personal Access Token, then create the Blueprint.
+4. After deployment, use `https://<your-service>.onrender.com/api?username=<github-username>`.
 
 ### :film\_projector: [Check Out Step By Step Video Tutorial By @codeSTACKr](https://youtu.be/n6d4KHSKqGk?t=107)
 
-Since the GitHub API only allows 5k requests per hour, my `https://github-readme-stats.vercel.app/api` could possibly hit the rate limiter. If you host it on your own Vercel server, then you do not have to worry about anything. Click on the deploy button to get started!
+This legacy Vercel guide is retained only for historical context. Deploy this fork using the Render instructions above.
 
 <table><tr><td>
 ℹ️<b>Note</b>
@@ -950,13 +954,11 @@ Since [#58](https://github.com/anuraghazra/github-readme-stats/pull/58), we shou
 <table><tr><td>
 ℹ️<b>Note</b>
 
-If you are on the [Pro (i.e. paid)](https://vercel.com/pricing) Vercel plan, the [maxDuration](https://vercel.com/docs/concepts/projects/project-configuration#value-definition) value found in the [vercel.json](https://github.com/anuraghazra/github-readme-stats/blob/master/vercel.json) can be increased when your Vercel instance frequently times out during the card request. You are advised to keep this value lower than `30` seconds to prevent high memory usage.
+Render manages request handling for this deployment; configure the service plan and environment settings in the Render dashboard as needed.
 </td></tr></table>
 
-[![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/anuraghazra/github-readme-stats)
-
 <details>
- <summary><b>:hammer_and_wrench: Step-by-step guide on setting up your own Vercel instance</b></summary>
+ <summary><b>Legacy Vercel setup guide (not supported by this fork)</b></summary>
 
 1.  Go to [vercel.com](https://vercel.com/).
 2.  Click on `Log in`.
@@ -982,7 +984,7 @@ If you are on the [Pro (i.e. paid)](https://vercel.com/pricing) Vercel plan, the
 <table><tr><td>
 ⚠️<b>Warning</b>
 
-This way of using GRS is not officially supported and was added to cater to some particular use cases where Vercel could not be used (e.g. [#2341](https://github.com/anuraghazra/github-readme-stats/discussions/2341)). The support for this method, therefore, is limited.
+Render is the supported managed deployment target for this fork. Other platforms can run the same Express server with `npm start`.
 </td></tr></table>
 
 <details>
@@ -1038,7 +1040,7 @@ GitHub Readme Stats provides several environment variables that can be used to c
   </tbody>
 </table>
 
-See [the Vercel documentation](https://vercel.com/docs/concepts/projects/environment-variables) on adding these environment variables to your Vercel instance.
+Set these environment variables in the Render service's **Environment** settings, then redeploy the service.
 
 <table><tr><td>
 ⚠️<b>Warning</b>
@@ -1048,7 +1050,7 @@ Please remember to redeploy your instance after making any changes to the enviro
 
 ## Keep your fork up to date
 
-You can keep your fork, and thus your private Vercel instance up to date with the upstream using GitHub's [Sync Fork button](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork). You can also use the [pull](https://github.com/wei/pull) package created by [@wei](https://github.com/wei) to automate this process.
+You can keep your fork, including its Render deployment configuration, up to date with upstream using GitHub's [Sync Fork button](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork).
 
 # :sparkling\_heart: Support the project
 
@@ -1064,8 +1066,6 @@ However, if you are using this project and are happy with it or just want to enc
 Thanks! :heart:
 
 ***
-
-[![https://vercel.com?utm\_source=github\_readme\_stats\_team\&utm\_campaign=oss](powered-by-vercel.svg)](https://vercel.com?utm_source=github_readme_stats_team\&utm_campaign=oss)
 
 Contributions are welcome! <3
 
