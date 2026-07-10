@@ -198,6 +198,8 @@ Nếu không dùng Blueprint, hãy nhập đúng các thông số sau:
 | Start Command | `yarn start` |
 | Health Check Path | `/health` |
 
+Trong **Environment**, bắt buộc thêm `PAT_1` với giá trị là GitHub Personal Access Token. Tên biến phải viết chính xác là `PAT_1`; không dùng `GITHUB_TOKEN`, `TOKEN` hoặc Render API token thay thế.
+
 Sau khi deploy, kiểm tra:
 
 ```text
