@@ -18,11 +18,7 @@ Dự án cung cấp các endpoint tạo ảnh SVG từ dữ liệu GitHub và Wa
 
 Phiên bản này sử dụng Express, Node.js 22 và có sẵn cấu hình Render. Cấu hình Vercel cũ đã được loại bỏ.
 
-## Địa chỉ đang chạy
-
-Service hiện tại:
-
-**https://github-readme-stats-12.onrender.com**
+## Endpoint
 
 | Chức năng | Endpoint |
 | --- | --- |
@@ -34,6 +30,47 @@ Service hiện tại:
 | Thẻ gist | `/api/gist?id=<gist-id>` |
 | Thẻ WakaTime | `/api/wakatime?username=<username>` |
 
+## Hình mẫu
+
+<table>
+  <tr>
+    <td align="center">
+      <strong>GitHub Stats</strong><br><br>
+      <img alt="GitHub Stats mẫu" src="https://github-readme-stats-12.onrender.com/api?username=octocat&amp;show_icons=true" />
+    </td>
+    <td align="center">
+      <strong>GitHub Stats · Radical</strong><br><br>
+      <img alt="GitHub Stats theme radical" src="https://github-readme-stats-12.onrender.com/api?username=octocat&amp;show_icons=true&amp;theme=radical" />
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <strong>GitHub Stats · Dark</strong><br><br>
+      <img alt="GitHub Stats theme dark" src="https://github-readme-stats-12.onrender.com/api?username=octocat&amp;show_icons=true&amp;theme=github_dark" />
+    </td>
+    <td align="center">
+      <strong>GitHub Stats · Transparent</strong><br><br>
+      <img alt="GitHub Stats trong suốt" src="https://github-readme-stats-12.onrender.com/api?username=octocat&amp;show_icons=true&amp;theme=transparent" />
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <strong>Top Languages · Compact</strong><br><br>
+      <img alt="Top Languages compact" src="https://github-readme-stats-12.onrender.com/api/top-langs?username=octocat&amp;layout=compact&amp;theme=github_dark" />
+    </td>
+    <td align="center">
+      <strong>Top Languages · Donut</strong><br><br>
+      <img alt="Top Languages donut" src="https://github-readme-stats-12.onrender.com/api/top-langs?username=octocat&amp;layout=donut&amp;theme=radical" />
+    </td>
+  </tr>
+  <tr>
+    <td align="center" colspan="2">
+      <strong>Repository Card</strong><br><br>
+      <img alt="Repository Card mẫu" src="https://github-readme-stats-12.onrender.com/api/pin?username=TranDangKhoaTechnology&amp;repo=github-readme-stats&amp;show_owner=true&amp;theme=github_dark" />
+    </td>
+  </tr>
+</table>
+
 ## Sử dụng nhanh
 
 Thay `<username>`, `<repository>` và `<gist-id>` bằng thông tin của bạn.
@@ -41,25 +78,25 @@ Thay `<username>`, `<repository>` và `<gist-id>` bằng thông tin của bạn.
 ### Thẻ thống kê GitHub
 
 ```md
-![GitHub Stats](https://github-readme-stats-12.onrender.com/api?username=<username>&show_icons=true)
+![GitHub Stats](https://<your-service>.onrender.com/api?username=<username>&show_icons=true)
 ```
 
 ### Thẻ ngôn ngữ
 
 ```md
-![Top Languages](https://github-readme-stats-12.onrender.com/api/top-langs?username=<username>&layout=compact)
+![Top Languages](https://<your-service>.onrender.com/api/top-langs?username=<username>&layout=compact)
 ```
 
 ### Thẻ repository
 
 ```md
-![Repository](https://github-readme-stats-12.onrender.com/api/pin?username=<username>&repo=<repository>)
+![Repository](https://<your-service>.onrender.com/api/pin?username=<username>&repo=<repository>)
 ```
 
 ### Thẻ gist
 
 ```md
-![Gist](https://github-readme-stats-12.onrender.com/api/gist?id=<gist-id>)
+![Gist](https://<your-service>.onrender.com/api/gist?id=<gist-id>)
 ```
 
 ### Thẻ WakaTime
@@ -67,7 +104,7 @@ Thay `<username>`, `<repository>` và `<gist-id>` bằng thông tin của bạn.
 Tài khoản WakaTime phải có profile công khai.
 
 ```md
-![WakaTime](https://github-readme-stats-12.onrender.com/api/wakatime?username=<username>)
+![WakaTime](https://<your-service>.onrender.com/api/wakatime?username=<username>)
 ```
 
 ## Tùy chỉnh thẻ
@@ -94,7 +131,7 @@ Các tham số phổ biến có thể nối vào URL bằng `&`.
 Ví dụ:
 
 ```md
-![GitHub Stats](https://github-readme-stats-12.onrender.com/api?username=<username>&show_icons=true&theme=radical&hide_border=true)
+![GitHub Stats](https://<your-service>.onrender.com/api?username=<username>&show_icons=true&theme=radical&hide_border=true)
 ```
 
 ### Tùy chọn riêng cho thẻ thống kê
