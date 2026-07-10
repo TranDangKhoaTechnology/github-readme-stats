@@ -9,6 +9,22 @@ import express from "express";
 const app = express();
 const router = express.Router();
 
+app.get("/", (_req, res) => {
+  res.status(200).json({
+    name: "GitHub Readme Stats",
+    maintainer: "TranDangKhoaTechnology",
+    status: "online",
+    endpoints: {
+      stats: "/api?username=<github-username>",
+      languages: "/api/top-langs?username=<github-username>",
+      repository: "/api/pin?username=<github-username>&repo=<repository>",
+      gist: "/api/gist?id=<gist-id>",
+      wakatime: "/api/wakatime?username=<wakatime-username>",
+      health: "/health",
+    },
+  });
+});
+
 app.get("/health", (_req, res) => {
   res.status(200).json({ status: "ok" });
 });
