@@ -11,3 +11,19 @@ services:
         value: 22
       - key: PAT_1
         sync: false
+      - key: RENDER_SCHEDULER_ENABLED
+        value: "false"
+      - key: RENDER_GRAPHQL_URL
+        value: https://api.render.com/graphql
+      - key: RENDER_SCHEDULER_INTERVAL_MS
+        value: "15000"
+      - key: RENDER_SCHEDULER_TIMEOUT_MS
+        value: "10000"
+      - key: RENDER_SCHEDULER_INITIAL_DELAY_MS
+        value: "3000"
+      - key: RENDER_SCHEDULER_MAX_BACKOFF_MS
+        value: "300000"
+      - key: RENDER_TOKEN
+        sync: false
+      - key: RENDER_OWNER_ID
+        sync: false

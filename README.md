@@ -206,6 +206,48 @@ https://<service-name>.onrender.com/health
 https://<service-name>.onrender.com/api?username=octocat
 ```
 
+## Render background scheduler
+
+Tính năng này là tùy chọn. Khi bật, scheduler chạy trong cùng Node.js process với Express và gửi GraphQL operation `ownerSettings` đến Render. Scheduler không chặn event loop, dùng `fetch` bất đồng bộ cùng `setTimeout` đệ quy, không tạo request chồng lên nhau, và tự dừng khi process nhận `SIGTERM` hoặc `SIGINT`.
+
+Mặc định scheduler chạy khoảng 4 request/phút với interval `15000` ms. Đặt interval thành `20000` ms để chạy khoảng 3 request/phút. Scheduler chỉ khởi động khi `RENDER_SCHEDULER_ENABLED=true`.
+
+### Cấu hình trên Render
+
+1. Mở Web Service trong Render Dashboard.
+2. Mở **Environment**.
+3. Thêm các biến bên dưới bằng token Render mới tạo.
+4. Lưu thay đổi và redeploy/restart service.
+5. Kiểm tra log có dòng `[render-scheduler] started`, hoặc mở `/health/scheduler`.
+
+Không commit token thật, không đưa token vào README và không chia sẻ token trong log.
+
+| Variable | Required | Default | Description |
+| --- | --- | --- | --- |
+| `RENDER_SCHEDULER_ENABLED` | No | `false` | Enables the background scheduler when set to `true` |
+| `RENDER_TOKEN` | Yes when enabled | — | Render bearer token |
+| `RENDER_OWNER_ID` | Yes when enabled | — | Render owner/team ID |
+| `RENDER_GRAPHQL_URL` | No | `https://api.render.com/graphql` | GraphQL endpoint |
+| `RENDER_SCHEDULER_INTERVAL_MS` | No | `15000` | Scheduler interval; minimum `10000` ms |
+| `RENDER_SCHEDULER_TIMEOUT_MS` | No | `10000` | Timeout for one request |
+| `RENDER_SCHEDULER_INITIAL_DELAY_MS` | No | `3000` | Delay before the first request |
+| `RENDER_SCHEDULER_MAX_BACKOFF_MS` | No | `300000` | Maximum exponential failure backoff |
+
+Ví dụ Environment:
+
+```env
+RENDER_SCHEDULER_ENABLED=true
+RENDER_TOKEN=your_new_render_token_here
+RENDER_OWNER_ID=tea-xxxxxxxxxxxxxxxxxxxx
+RENDER_GRAPHQL_URL=https://api.render.com/graphql
+RENDER_SCHEDULER_INTERVAL_MS=15000
+RENDER_SCHEDULER_TIMEOUT_MS=10000
+RENDER_SCHEDULER_INITIAL_DELAY_MS=3000
+RENDER_SCHEDULER_MAX_BACKOFF_MS=300000
+```
+
+Endpoint `GET /health/scheduler` chỉ trả trạng thái không nhạy cảm, ví dụ interval, lần gọi gần nhất, số lỗi liên tiếp và delay tiếp theo. Nó không trả token, authorization header hay GraphQL response.
+
 ## Biến môi trường
 
 | Biến | Bắt buộc | Mô tả |
@@ -220,6 +262,14 @@ https://<service-name>.onrender.com/api?username=octocat
 | `EXCLUDE_REPO` | Không | Danh sách repository bị loại trừ |
 | `FETCH_MULTI_PAGE_STARS` | Không | Đặt `true` để lấy thêm trang repository khi tính sao |
 | `NODE_ENV` | Không | Đặt `development` để tắt cache khi phát triển local |
+| `RENDER_SCHEDULER_ENABLED` | Không | Bật scheduler nội bộ khi đặt `true` |
+| `RENDER_TOKEN` | Khi bật scheduler | Render bearer token; không commit token thật |
+| `RENDER_OWNER_ID` | Khi bật scheduler | Render owner/team ID |
+| `RENDER_GRAPHQL_URL` | Không | GraphQL endpoint, mặc định là Render API |
+| `RENDER_SCHEDULER_INTERVAL_MS` | Không | `15000` cho khoảng 4 request/phút, `20000` cho khoảng 3 request/phút |
+| `RENDER_SCHEDULER_TIMEOUT_MS` | Không | Timeout request, mặc định `10000` ms |
+| `RENDER_SCHEDULER_INITIAL_DELAY_MS` | Không | Delay ban đầu, mặc định `3000` ms |
+| `RENDER_SCHEDULER_MAX_BACKOFF_MS` | Không | Backoff tối đa, mặc định `300000` ms |
 Sau khi thay đổi biến môi trường trên Render, lưu thay đổi và redeploy service.
 
 Thời gian cache mặc định: Stats 1 ngày, Top Languages 6 ngày, Repository 10 ngày, Gist 2 ngày và WakaTime 1 ngày. `CACHE_SECONDS` sẽ ghi đè các giá trị này.
