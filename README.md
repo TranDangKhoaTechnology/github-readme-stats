@@ -206,6 +206,37 @@ https://<service-name>.onrender.com/health
 https://<service-name>.onrender.com/api?username=octocat
 ```
 
+## Giữ Render hoạt động bằng cron
+
+Workflow [keep-render-awake.yml](.github/workflows/keep-render-awake.yml) gửi request công khai đến `/health` mỗi 5 phút. GitHub Actions không hỗ trợ lịch chạy mỗi phút.
+
+Workflow hoạt động như sau:
+
+- Gửi một health check trong mỗi lần chạy.
+- Nếu request lỗi, tự thử lại tối đa 4 lần, mỗi lần cách nhau 15 giây.
+- Ghi timestamp, mã HTTP và response vào log GitHub Actions.
+- Có thể chạy thủ công bằng **Actions → Keep Render Awake → Run workflow**.
+- Không cần Render API token, cookie đăng nhập hoặc header lấy từ trình duyệt.
+
+Cron chỉ cần endpoint public:
+
+```text
+GET /health
+```
+
+Response thành công:
+
+```json
+{"status":"ok"}
+```
+
+Lưu ý:
+
+- Workflow scheduled chỉ chạy từ branch mặc định `main`.
+- Repository phải bật GitHub Actions.
+- `PAT_1` vẫn cần thiết cho các thẻ GitHub, nhưng không liên quan đến cron health check.
+- Không lưu Render Bearer token hoặc cookie vào repository. Nếu thông tin này từng bị chia sẻ, hãy thu hồi token và đăng xuất các phiên Render cũ.
+
 ## Biến môi trường
 
 | Biến | Bắt buộc | Mô tả |
