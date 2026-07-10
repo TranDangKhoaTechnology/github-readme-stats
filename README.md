@@ -931,12 +931,22 @@ This limits the scope to issues in your repositories and includes only public co
 
 ### On Render
 
-Deploy this fork as a Render Blueprint. The included `render.yaml` runs `npm ci`, starts the Express server with `npm start`, and checks `GET /health`.
+Deploy this fork on Render as a Blueprint, or create a Web Service manually. The included [`render.yaml`](render.yaml) uses the required configuration.
 
 1. Fork or push this repository to your Git provider.
 2. In the [Render dashboard](https://dashboard.render.com/), select **New** → **Blueprint** and connect the repository.
-3. Set `PAT_1` to a GitHub Personal Access Token, then create the Blueprint.
-4. After deployment, use `https://<your-service>.onrender.com/api?username=<github-username>`.
+3. Configure the service with the following values:
+
+   | Render setting | Value |
+   | --- | --- |
+   | Runtime | `Node` |
+   | Build Command | `yarn` |
+   | Start Command | `yarn start` |
+   | Health Check Path | `/health` |
+
+4. In **Environment**, add `PAT_1` with your GitHub Personal Access Token. Add any optional variables described in [Available environment variables](#available-environment-variables).
+5. Create the service and wait for the deployment to finish.
+6. Use `https://<your-service>.onrender.com/api?username=<github-username>` in your README. You can verify the service at `https://<your-service>.onrender.com/health`.
 
 ### :film\_projector: [Check Out Step By Step Video Tutorial By @codeSTACKr](https://youtu.be/n6d4KHSKqGk?t=107)
 
