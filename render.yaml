@@ -3,8 +3,8 @@ services:
     name: trandangkhoatechnology-github-readme-stats
     runtime: node
     plan: free
-    buildCommand: npm ci
-    startCommand: npm start
+    buildCommand: yarn
+    startCommand: yarn start
     healthCheckPath: /health
     envVars:
       - key: NODE_VERSION
