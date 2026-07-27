@@ -3,48 +3,44 @@
 /**
  * CLI script to generate a marketing hero/banner SVG card.
  *
+ * Layout:
+ *   ┌──────────────────────────────────────────────────────┐
+ *   │  Title                 [badge1] [badge2] [badge3]    │
+ *   │  Tagline                                              │
+ *   │  Description text...                                  │
+ *   │                                                       │
+ *   │  ┌─ Left column ──────┐  │  ┌─ Right column ──────┐  │
+ *   │  │ WHAT I DO          │  │  │ OVERVIEW             │  │
+ *   │  │ ▸ point 1          │  │  │  25+     Projects    │  │
+ *   │  │ ▸ point 2          │  │  │  <24h    Response    │  │
+ *   │  │ ▸ point 3          │  │  │  10+     Clients     │  │
+ *   │  └────────────────────┘  │  └──────────────────────┘  │
+ *   │                                                       │
+ *   │  GitHub  Email              [─── Contact me ───]      │
+ *   └──────────────────────────────────────────────────────┘
+ *
  * Usage:
  *   node scripts/marketing.mjs
  *     --style clean|cleanlight
- *     --out generated/hero.dark.svg
- *     --title "Trần Đăng Khoa"
- *     --tagline "Automation • Web Apps • AI"
- *     --desc "I build automation systems..."
- *     --badges "Open for freelance,Remote,Fast delivery"
- *     --points "Point 1,Point 2,Point 3"
- *     --stats "Projects|25+,Response|<24h,Clients|10+"
- *     --cta_text "Contact me"
- *     --cta_url "mailto:..."
- *     --links "GitHub|https://github.com/...,Email|mailto:..."
- *     --avatar "https://github.com/username.png"
+ *     --out path/to/card.svg
+ *     --title "..." --tagline "..." --desc "..."
+ *     --badges "tag1,tag2,tag3"
+ *     --points "Point 1,Point 2"
+ *     --stats "Label|value,Label2|value2"
+ *     --cta_text "Contact" --cta_url "mailto:..."
+ *     --links "GitHub|https://...,Email|mailto:..."
  */
 
 import { mkdir, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 
-const parseArgs = () => {
-  const args = process.argv.slice(2);
-  const opts = {};
-
-  for (let i = 0; i < args.length; i++) {
-    if (!args[i].startsWith("--")) continue;
-    const key = args[i].slice(2);
-    const val = args[i + 1];
-    if (val !== undefined && !val.startsWith("--")) {
-      opts[key] = val;
-      i++;
-    } else {
-      opts[key] = "true";
-    }
-  }
-
-  return opts;
-};
+// ═══════════════════════════════════════════════════════════
+//  THEMES
+// ═══════════════════════════════════════════════════════════
 
 const THEMES = {
   clean: {
     bg: "#0d1117",
-    cardBg: "#161b22",
     border: "#30363d",
     title: "#58a6ff",
     text: "#c9d1d9",
@@ -59,7 +55,6 @@ const THEMES = {
   },
   cleanlight: {
     bg: "#ffffff",
-    cardBg: "#f6f8fa",
     border: "#d0d7de",
     title: "#0969da",
     text: "#1f2328",
@@ -74,173 +69,198 @@ const THEMES = {
   },
 };
 
-const escapeXml = (str) =>
-  String(str)
+// ═══════════════════════════════════════════════════════════
+//  HELPERS
+// ═══════════════════════════════════════════════════════════
+
+const esc = (s) =>
+  String(s)
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
 
-const renderHero = (opts) => {
-  const style = opts.style || "clean";
-  const colors = THEMES[style] || THEMES.clean;
-
-  const title = escapeXml(opts.title || "Your Name");
-  const tagline = escapeXml(opts.tagline || "");
-  const desc = escapeXml(opts.desc || "");
-  const badges = (opts.badges || "").split(",").filter(Boolean);
-  const points = (opts.points || "").split(",").filter(Boolean);
-  const stats = (opts.stats || "").split(",").filter(Boolean);
-  const ctaText = escapeXml(opts.cta_text || "Contact me");
-  const ctaUrl = escapeXml(opts.cta_url || "#");
-  const links = (opts.links || "").split(",").filter(Boolean);
-
-  const width = 800;
-  const padX = 40;
-  let y = 50;
-  const lineGap = 32;
-
-  const badgeHeight = 28;
-  const badgeGap = 8;
-  const itemGap = 12;
-
-  const cardHeight = 100 + Math.max(
-    points.length * (lineGap + 4) + 40,
-    stats.length * 60 + 60,
-  );
-
-  let svg = `<svg
-  xmlns="http://www.w3.org/2000/svg"
-  width="${width}"
-  viewBox="0 0 ${width} ${cardHeight}"
-  fill="none"
->
-  <defs>
-    <style>
-      .title { fill: ${colors.title}; font-size: 28px; font-weight: 700; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
-      .tagline { fill: ${colors.accent}; font-size: 16px; font-weight: 600; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
-      .desc { fill: ${colors.text}; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
-      .muted { fill: ${colors.muted}; font-size: 13px; font-family: monospace; }
-      .badge-text { fill: ${colors.badgeText}; font-size: 12px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-weight: 500; }
-      .point-text { fill: ${colors.text}; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
-      .stats-label { fill: ${colors.statsLabel}; font-size: 12px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; text-transform: uppercase; letter-spacing: 1px; }
-      .stats-value { fill: ${colors.statsValue}; font-size: 22px; font-weight: 700; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
-      .link-text { fill: ${colors.title}; font-size: 13px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
-      .cta-text { fill: ${colors.ctaText}; font-size: 14px; font-weight: 600; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
-      a { text-decoration: none; }
-    </style>
-  </defs>
-
-  <!-- Background -->
-  <rect x="0" y="0" width="${width}" height="${cardHeight}" rx="10" fill="${colors.bg}" />
-  <rect x="0" y="0" width="${width}" height="${cardHeight}" rx="10" stroke="${colors.border}" stroke-width="1" fill="none" />
+const COLORS = (c) => `
+  .t  { fill:${c.title}; font-size:24px; font-weight:700; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; }
+  .tag{ fill:${c.accent}; font-size:15px; font-weight:600; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; }
+  .d  { fill:${c.text}; font-size:14px; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; }
+  .m  { fill:${c.muted}; font-size:11px; font-weight:600; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; text-transform:uppercase; letter-spacing:1px; }
+  .b  { fill:${c.badgeText}; font-size:12px; font-weight:500; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; }
+  .pt { fill:${c.text}; font-size:14px; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; }
+  .sv { fill:${c.statsValue}; font-size:22px; font-weight:700; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; }
+  .sl { fill:${c.statsLabel}; font-size:11px; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; text-transform:uppercase; letter-spacing:0.8px; }
+  .ct { fill:${c.ctaText}; font-size:14px; font-weight:600; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; }
+  .lk { fill:${c.title}; font-size:13px; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; }
+  a{text-decoration:none}
 `;
 
-  // ===== HEADER =====
-  if (opts.avatar) {
-    svg += `  <image href="${escapeXml(opts.avatar)}" x="${padX}" y="${y - 10}" width="48" height="48" rx="24" />\n`;
-    const nameX = padX + 60;
-    svg += `  <text x="${nameX}" y="${y + 16}" class="title">${title}</text>\n`;
-    if (tagline) {
-      svg += `  <text x="${nameX}" y="${y + 38}" class="tagline">${tagline}</text>\n`;
-    }
-  } else {
-    svg += `  <text x="${padX}" y="${y + 16}" class="title">${title}</text>\n`;
-    if (tagline) {
-      y += 6;
-      svg += `  <text x="${padX}" y="${y + 38}" class="tagline">${tagline}</text>\n`;
-    }
-  }
-
-  y += 70;
-
-  // ===== DESCRIPTION =====
-  if (desc) {
-    svg += `  <text x="${padX}" y="${y}" class="desc">${desc}</text>\n`;
-    y += 24;
-  }
-
-  // ===== BADGES =====
-  if (badges.length > 0) {
-    let bx = padX;
-    for (const badge of badges) {
-      const text = escapeXml(badge.trim());
-      const tw = text.length * 8 + 24;
-      svg += `  <rect x="${bx}" y="${y - 18}" width="${tw}" height="${badgeHeight}" rx="14" fill="${colors.badge}" />\n`;
-      svg += `  <text x="${bx + 12}" y="${y + 4}" class="badge-text">${text}</text>\n`;
-      bx += tw + badgeGap;
-    }
-    y += 40;
-  }
-
-  // ===== TWO COLUMNS: points | stats =====
-  const colMid = width / 2;
-
-  // Left column: points
-  if (points.length > 0) {
-    svg += `  <text x="${padX}" y="${y}" class="muted" font-weight="600">What I do</text>\n`;
-    y += 24;
-    for (const pt of points) {
-      svg += `  <text x="${padX + 8}" y="${y}" class="point-text">▸ ${escapeXml(pt.trim())}</text>\n`;
-      y += 24;
+const parseArgs = () => {
+  const args = process.argv.slice(2);
+  const opts = {};
+  for (let i = 0; i < args.length; i++) {
+    if (!args[i].startsWith("--")) continue;
+    const key = args[i].slice(2);
+    const val = args[i + 1];
+    if (val !== undefined && !val.startsWith("--")) {
+      opts[key] = val;
+      i++;
+    } else {
+      opts[key] = "true";
     }
   }
-
-  // Right column: stats
-  y = y - points.length * 24 - 24 + 40; // reset
-  if (stats.length > 0) {
-    let sx = colMid + 20;
-    svg += `  <text x="${sx}" y="${y - 18}" class="muted" font-weight="600">Overview</text>\n`;
-    for (const st of stats) {
-      const parts = st.split("|");
-      if (parts.length === 2) {
-        svg += `  <text x="${sx}" y="${y + 8}" class="stats-value">${escapeXml(parts[1].trim())}</text>\n`;
-        svg += `  <text x="${sx}" y="${y + 28}" class="stats-label">${escapeXml(parts[0].trim())}</text>\n`;
-        y += 50;
-      }
-    }
-  }
-
-  // ===== CTA BUTTON =====
-  const ctaY = cardHeight - 70;
-  const ctaW = 160;
-  const ctaH = 36;
-  const ctaX = width - padX - ctaW;
-
-  svg += `  <a href="${ctaUrl}">\n`;
-  svg += `    <rect x="${ctaX}" y="${ctaY}" width="${ctaW}" height="${ctaH}" rx="8" fill="${colors.ctaBg}" />\n`;
-  svg += `    <text x="${ctaX + ctaW / 2}" y="${ctaY + ctaH / 2 + 1}" class="cta-text" text-anchor="middle" dominant-baseline="central">${ctaText}</text>\n`;
-  svg += `  </a>\n`;
-
-  // ===== LINKS =====
-  if (links.length > 0) {
-    let lx = padX;
-    for (const link of links) {
-      const parts = link.split("|");
-      if (parts.length === 2) {
-        const linkText = escapeXml(parts[0].trim());
-        const linkUrl = escapeXml(parts[1].trim());
-        svg += `  <a href="${linkUrl}">\n`;
-        svg += `    <text x="${lx}" y="${ctaY + 22}" class="link-text">${linkText}</text>\n`;
-        svg += `  </a>\n`;
-        lx += linkText.length * 9 + 24;
-      }
-    }
-  }
-
-  svg += `</svg>`;
-  return svg;
+  return opts;
 };
+
+// ═══════════════════════════════════════════════════════════
+//  CONSTANTS
+// ═══════════════════════════════════════════════════════════
+
+const W = 800;
+const P = 40;       // horizontal padding
+const COL_L = P;     // left column X
+const COL_R = 380;   // right column X
+const BADGE_GAP = 8;
+const BADGE_H = 26;
+
+// ═══════════════════════════════════════════════════════════
+//  RUN
+// ═══════════════════════════════════════════════════════════
 
 const run = async () => {
   const opts = parseArgs();
-
   if (!opts.out) {
     console.error("Error: --out is required.");
     process.exit(1);
   }
 
-  const svg = renderHero(opts);
+  const style = opts.style || "clean";
+  const c = THEMES[style] || THEMES.clean;
+
+  // Parse inputs
+  const title = esc(opts.title || "Your Name");
+  const tagline = esc(opts.tagline || "");
+  const desc = esc(opts.desc || "");
+  const badges = (opts.baddes || opts.badges || "").split(",").filter(Boolean);
+  const points = (opts.points || "").split(",").filter(Boolean);
+  const statsRaw = (opts.stats || "").split(",").filter(Boolean);
+  const ctaText = esc(opts.cta_text || "Contact me");
+  const ctaUrl = esc(opts.cta_url || "#");
+  const links = (opts.links || "").split(",").filter(Boolean);
+
+  // Compute badge widths
+  const badgeData = badges.map((b) => ({
+    text: esc(b.trim()),
+    w: b.trim().length * 8 + 28,
+  }));
+
+  // ═══ Layout computation (top-down Y) ═══════════════════
+
+  let y = 0;
+  let svg = "";
+
+  // --- Header: title + tagline ---
+  const titleY = 40;
+  const taglineY = titleY + (tagline ? 24 : 0);
+  const headerEnd = tagline ? taglineY + 10 : titleY + 20;
+
+  // --- Description ---
+  const descEnd = desc ? headerEnd + 30 : headerEnd;
+
+  // --- Badges (right-aligned, inline with header) ---
+  const badgeTotalW = badgeData.reduce((s, b) => s + b.w, 0) + (badgeData.length - 1) * BADGE_GAP;
+  const badgeX0 = W - P - badgeTotalW;
+
+  // --- Two-column body ---
+  const bodyTop = descEnd + 20;
+
+  // Points column
+  const pointItems = points.map((p) => esc(p.trim()));
+  const pointsH = pointItems.length > 0 ? 20 + pointItems.length * 26 : 0;
+
+  // Stats column
+  const statsItems = statsRaw.map((s) => {
+    const [label, value] = s.split("|");
+    return { label: esc(label?.trim() || ""), value: esc(value?.trim() || "") };
+  });
+  const statsH = statsItems.length > 0 ? 20 + statsItems.length * 52 : 0;
+
+  const colH = Math.max(pointsH, statsH, 10);
+
+  // --- Footer: links + CTA ---
+  const FOOTER_H = 60;
+  const bodyEnd = bodyTop + colH;
+
+  // --- Total height ---
+  const H = bodyEnd + FOOTER_H + 10;
+
+  // ═══ Render SVG ════════════════════════════════════════
+
+  svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" fill="none">\n`;
+  svg += `<defs><style>${COLORS(c)}</style></defs>\n`;
+
+  // Background
+  svg += `<rect x="0" y="0" width="${W}" height="${H}" rx="10" fill="${c.bg}" stroke="${c.border}" stroke-width="1" />\n`;
+
+  // Title + tagline (left)
+  svg += `<text x="${P}" y="${titleY}" class="t">${title}</text>\n`;
+  if (tagline) svg += `<text x="${P}" y="${taglineY}" class="tag">${tagline}</text>\n`;
+
+  // Badges (right-aligned, top)
+  let bx = badgeX0;
+  for (const b of badgeData) {
+    svg += `<rect x="${bx}" y="${titleY - 16}" width="${b.w}" height="${BADGE_H}" rx="13" fill="${c.badge}" />\n`;
+    svg += `<text x="${bx + b.w / 2}" y="${titleY - 16 + BADGE_H / 2 + 1}" class="b" text-anchor="middle" dominant-baseline="central">${b.text}</text>\n`;
+    bx += b.w + BADGE_GAP;
+  }
+
+  // Description
+  if (desc) {
+    svg += `<text x="${P}" y="${descEnd - 8}" class="d">${desc}</text>\n`;
+  }
+
+  // Columns header
+  if (pointItems.length > 0) {
+    svg += `<text x="${P}" y="${bodyTop}" class="m">What I Do</text>\n`;
+    let py = bodyTop + 22;
+    for (const pt of pointItems) {
+      svg += `<text x="${P + 4}" y="${py}" class="pt">▸ ${pt}</text>\n`;
+      py += 26;
+    }
+  }
+
+  if (statsItems.length > 0) {
+    svg += `<text x="${COL_R}" y="${bodyTop}" class="m">Overview</text>\n`;
+    let sy = bodyTop + 28;
+    for (const s of statsItems) {
+      svg += `<text x="${COL_R}" y="${sy}" class="sv">${s.value}</text>\n`;
+      svg += `<text x="${COL_R}" y="${sy + 20}" class="sl">${s.label}</text>\n`;
+      sy += 52;
+    }
+  }
+
+  // Footer: CTA right, links left
+  const ctaW = Math.max(120, ctaText.length * 9 + 40);
+  const ctaX = W - P - ctaW;
+  const fy = H - 50;
+
+  svg += `<a href="${ctaUrl}">\n`;
+  svg += `  <rect x="${ctaX}" y="${fy - 18}" width="${ctaW}" height="36" rx="8" fill="${c.ctaBg}" />\n`;
+  svg += `  <text x="${ctaX + ctaW / 2}" y="${fy + 1}" class="ct" text-anchor="middle" dominant-baseline="central">${ctaText}</text>\n`;
+  svg += `</a>\n`;
+
+  let lx = P;
+  for (const link of links) {
+    const parts = link.split("|");
+    if (parts.length === 2) {
+      const lt = esc(parts[0].trim());
+      const lu = esc(parts[1].trim());
+      svg += `<a href="${lu}"><text x="${lx}" y="${fy}" class="lk">${lt}</text></a>\n`;
+      lx += lt.length * 9 + 28;
+    }
+  }
+
+  svg += `</svg>`;
+
   const outPath = resolve(opts.out);
   await mkdir(dirname(outPath), { recursive: true });
   await writeFile(outPath, svg, "utf8");
