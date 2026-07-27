@@ -19,8 +19,8 @@
  *     --avatar "https://github.com/username.png"
  */
 
-import { writeFile } from "node:fs/promises";
-import { resolve } from "node:path";
+import { mkdir, writeFile } from "node:fs/promises";
+import { dirname, resolve } from "node:path";
 
 const parseArgs = () => {
   const args = process.argv.slice(2);
@@ -242,6 +242,7 @@ const run = async () => {
 
   const svg = renderHero(opts);
   const outPath = resolve(opts.out);
+  await mkdir(dirname(outPath), { recursive: true });
   await writeFile(outPath, svg, "utf8");
   console.log(`Wrote ${outPath}`);
 };

@@ -5,8 +5,8 @@
  * Usage: node scripts/pin-card.mjs --username octocat --repo my-repo --theme dark [options]
  */
 
-import { writeFile } from "node:fs/promises";
-import { resolve } from "node:path";
+import { mkdir, writeFile } from "node:fs/promises";
+import { dirname, resolve } from "node:path";
 import { pin, loadConfigFromEnv } from "@stats-organization/github-readme-stats-core";
 import "dotenv/config";
 
@@ -78,6 +78,7 @@ const run = async () => {
 
   if (opts.out) {
     const outPath = resolve(opts.out);
+    await mkdir(dirname(outPath), { recursive: true });
     await writeFile(outPath, svg, "utf8");
     console.log(`Wrote ${outPath}`);
   } else {
