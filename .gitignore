@@ -12,3 +12,6 @@ benchmarks
 *.code-workspace
 
 .vercel
+
+# Build output (unless committed by workflow)
+# generated/

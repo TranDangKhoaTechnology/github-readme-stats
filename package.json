@@ -19,6 +19,12 @@
     "preview-theme": "node scripts/preview-theme",
     "close-stale-theme-prs": "node scripts/close-stale-theme-prs",
     "generate-langs-json": "node scripts/generate-langs-json",
+    "theme": "node scripts/theme.mjs",
+    "stats": "node scripts/stats.mjs",
+    "top-langs": "node scripts/top-langs.mjs",
+    "pin-card": "node scripts/pin-card.mjs",
+    "pins-auto": "node scripts/pins-auto.mjs",
+    "marketing": "node scripts/marketing.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "prepare": "husky",
@@ -53,6 +59,7 @@
     "prettier": "^3.7.3"
   },
   "dependencies": {
+    "@stats-organization/github-readme-stats-core": "^2.1.4",
     "axios": "^1.13.1",
     "dotenv": "^17.2.3",
     "emoji-name-map": "^2.0.3",
