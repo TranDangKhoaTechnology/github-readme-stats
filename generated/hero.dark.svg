@@ -1,56 +1,42 @@
-<svg
-  xmlns="http://www.w3.org/2000/svg"
-  width="800"
-  viewBox="0 0 800 340"
-  fill="none"
->
-  <defs>
-    <style>
-      .title { fill: #58a6ff; font-size: 28px; font-weight: 700; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
-      .tagline { fill: #f0883e; font-size: 16px; font-weight: 600; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
-      .desc { fill: #c9d1d9; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
-      .muted { fill: #8b949e; font-size: 13px; font-family: monospace; }
-      .badge-text { fill: #c9d1d9; font-size: 12px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-weight: 500; }
-      .point-text { fill: #c9d1d9; font-size: 14px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
-      .stats-label { fill: #8b949e; font-size: 12px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; text-transform: uppercase; letter-spacing: 1px; }
-      .stats-value { fill: #f0f6fc; font-size: 22px; font-weight: 700; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
-      .link-text { fill: #58a6ff; font-size: 13px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
-      .cta-text { fill: #ffffff; font-size: 14px; font-weight: 600; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
-      a { text-decoration: none; }
-    </style>
-  </defs>
-
-  <!-- Background -->
-  <rect x="0" y="0" width="800" height="340" rx="10" fill="#0d1117" />
-  <rect x="0" y="0" width="800" height="340" rx="10" stroke="#30363d" stroke-width="1" fill="none" />
-  <text x="40" y="66" class="title">Trần Đăng Khoa</text>
-  <text x="40" y="94" class="tagline">Automation • Web Apps • AI</text>
-  <text x="40" y="126" class="desc">Tôi xây hệ thống tự động hoá, landing page và chatbot để giúp bạn tăng doanh thu.</text>
-  <rect x="40" y="132" width="168" height="28" rx="14" fill="#21262d" />
-  <text x="52" y="154" class="badge-text">Open for freelance</text>
-  <rect x="216" y="132" width="72" height="28" rx="14" fill="#21262d" />
-  <text x="228" y="154" class="badge-text">Remote</text>
-  <rect x="296" y="132" width="128" height="28" rx="14" fill="#21262d" />
-  <text x="308" y="154" class="badge-text">Fast delivery</text>
-  <text x="40" y="190" class="muted" font-weight="600">What I do</text>
-  <text x="48" y="214" class="point-text">▸ Tự động hoá quy trình (Sheets/CRM/Zapier)</text>
-  <text x="48" y="238" class="point-text">▸ Landing page SEO + Analytics</text>
-  <text x="48" y="262" class="point-text">▸ Chatbot + API tích hợp</text>
-  <text x="420" y="212" class="muted" font-weight="600">Overview</text>
-  <text x="420" y="238" class="stats-value">25+</text>
-  <text x="420" y="258" class="stats-label">Projects</text>
-  <text x="420" y="288" class="stats-value">&lt;24h</text>
-  <text x="420" y="308" class="stats-label">Response</text>
-  <text x="420" y="338" class="stats-value">10+</text>
-  <text x="420" y="358" class="stats-label">Clients</text>
-  <a href="mailto:trandangkhoa.automation@gmail.com">
-    <rect x="600" y="270" width="160" height="36" rx="8" fill="#238636" />
-    <text x="680" y="289" class="cta-text" text-anchor="middle" dominant-baseline="central">Contact me</text>
-  </a>
-  <a href="https://github.com/TranDangKhoaTechnology">
-    <text x="40" y="292" class="link-text">GitHub</text>
-  </a>
-  <a href="mailto:trandangkhoa.automation@gmail.com">
-    <text x="118" y="292" class="link-text">Email</text>
-  </a>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="370" viewBox="0 0 800 370" fill="none">
+<defs><style>
+  .t  { fill:#58a6ff; font-size:24px; font-weight:700; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; }
+  .tag{ fill:#f0883e; font-size:15px; font-weight:600; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; }
+  .d  { fill:#c9d1d9; font-size:14px; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; }
+  .m  { fill:#8b949e; font-size:11px; font-weight:600; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; text-transform:uppercase; letter-spacing:1px; }
+  .b  { fill:#c9d1d9; font-size:12px; font-weight:500; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; }
+  .pt { fill:#c9d1d9; font-size:14px; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; }
+  .sv { fill:#f0f6fc; font-size:22px; font-weight:700; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; }
+  .sl { fill:#8b949e; font-size:11px; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; text-transform:uppercase; letter-spacing:0.8px; }
+  .ct { fill:#ffffff; font-size:14px; font-weight:600; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; }
+  .lk { fill:#58a6ff; font-size:13px; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; }
+  a{text-decoration:none}
+</style></defs>
+<rect x="0" y="0" width="800" height="370" rx="10" fill="#0d1117" stroke="#30363d" stroke-width="1" />
+<text x="40" y="40" class="t">Trần Đăng Khoa</text>
+<text x="40" y="64" class="tag">Automation • Web Apps • AI</text>
+<rect x="364" y="24" width="172" height="26" rx="13" fill="#21262d" />
+<text x="450" y="38" class="b" text-anchor="middle" dominant-baseline="central">Open for freelance</text>
+<rect x="544" y="24" width="76" height="26" rx="13" fill="#21262d" />
+<text x="582" y="38" class="b" text-anchor="middle" dominant-baseline="central">Remote</text>
+<rect x="628" y="24" width="132" height="26" rx="13" fill="#21262d" />
+<text x="694" y="38" class="b" text-anchor="middle" dominant-baseline="central">Fast delivery</text>
+<text x="40" y="96" class="d">Tôi xây hệ thống tự động hoá, landing page và chatbot để giúp bạn tăng doanh thu.</text>
+<text x="40" y="124" class="m">What I Do</text>
+<text x="44" y="146" class="pt">▸ Tự động hoá quy trình (Sheets/CRM/Zapier)</text>
+<text x="44" y="172" class="pt">▸ Landing page SEO + Analytics</text>
+<text x="44" y="198" class="pt">▸ Chatbot + API tích hợp</text>
+<text x="380" y="124" class="m">Overview</text>
+<text x="380" y="152" class="sv">25+</text>
+<text x="380" y="172" class="sl">Projects</text>
+<text x="380" y="204" class="sv">&lt;24h</text>
+<text x="380" y="224" class="sl">Response</text>
+<text x="380" y="256" class="sv">10+</text>
+<text x="380" y="276" class="sl">Clients</text>
+<a href="mailto:trandangkhoa.automation@gmail.com">
+  <rect x="630" y="302" width="130" height="36" rx="8" fill="#238636" />
+  <text x="695" y="321" class="ct" text-anchor="middle" dominant-baseline="central">Contact me</text>
+</a>
+<a href="https://github.com/TranDangKhoaTechnology"><text x="40" y="320" class="lk">GitHub</text></a>
+<a href="mailto:trandangkhoa.automation@gmail.com"><text x="122" y="320" class="lk">Email</text></a>
 </svg>
