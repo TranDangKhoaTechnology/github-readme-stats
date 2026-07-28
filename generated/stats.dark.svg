@@ -9,7 +9,7 @@
         aria-labelledby="descId"
       >
         <title id="titleId">Tr&#7847;n &#272;&#259;ng Khoa's GitHub Stats, Rank: C+</title>
-        <desc id="descId">Total Stars Earned: 19, Total Commits  (last year) : 240, Total PRs: 10, Total Issues: 1, Contributed to (last year): 3</desc>
+        <desc id="descId">Total Stars Earned: 20, Total Commits  (last year) : 242, Total PRs: 10, Total Issues: 1, Contributed to (last year): 3</desc>
         <style>
           .header {
             font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
@@ -73,7 +73,7 @@
         stroke-dashoffset: 251.32741228718345;
       }
       to {
-        stroke-dashoffset: 191.3433331299746;
+        stroke-dashoffset: 190.35701621921055;
       }
     }
   
@@ -158,7 +158,7 @@
         x="204.01"
         y="12.5"
         data-testid="stars"
-      >19</text>
+      >20</text>
     </g>
   </g><g transform="translate(0, 25)">
     <g class="stagger" style="animation-delay: 600ms" transform="translate(25, 0)">
@@ -169,7 +169,7 @@
         x="204.01"
         y="12.5"
         data-testid="commits"
-      >240</text>
+      >242</text>
     </g>
   </g><g transform="translate(0, 50)">
     <g class="stagger" style="animation-delay: 750ms" transform="translate(25, 0)">
