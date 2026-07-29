@@ -36,37 +36,37 @@ Phiên bản này sử dụng Express, Node.js 22 và có sẵn cấu hình Rend
   <tr>
     <td align="center">
       <strong>GitHub Stats</strong><br><br>
-      <img alt="GitHub Stats mẫu" src="https://github-readme-stats-12.onrender.com/api?username=octocat&amp;show_icons=true" />
+      <img alt="GitHub Stats mẫu" src="https://github-readme-stats-gx6uc6das-tran-dang-khoa.vercel.app//api?username=octocat&amp;show_icons=true" />
     </td>
     <td align="center">
       <strong>GitHub Stats · Radical</strong><br><br>
-      <img alt="GitHub Stats theme radical" src="https://github-readme-stats-12.onrender.com/api?username=octocat&amp;show_icons=true&amp;theme=radical" />
+      <img alt="GitHub Stats theme radical" src="https://github-readme-stats-gx6uc6das-tran-dang-khoa.vercel.app//api?username=octocat&amp;show_icons=true&amp;theme=radical" />
     </td>
   </tr>
   <tr>
     <td align="center">
       <strong>GitHub Stats · Dark</strong><br><br>
-      <img alt="GitHub Stats theme dark" src="https://github-readme-stats-12.onrender.com/api?username=octocat&amp;show_icons=true&amp;theme=github_dark" />
+      <img alt="GitHub Stats theme dark" src="https://github-readme-stats-gx6uc6das-tran-dang-khoa.vercel.app//api?username=octocat&amp;show_icons=true&amp;theme=github_dark" />
     </td>
     <td align="center">
       <strong>GitHub Stats · Transparent</strong><br><br>
-      <img alt="GitHub Stats trong suốt" src="https://github-readme-stats-12.onrender.com/api?username=octocat&amp;show_icons=true&amp;theme=transparent" />
+      <img alt="GitHub Stats trong suốt" src="https://github-readme-stats-gx6uc6das-tran-dang-khoa.vercel.app//api?username=octocat&amp;show_icons=true&amp;theme=transparent" />
     </td>
   </tr>
   <tr>
     <td align="center">
       <strong>Top Languages · Compact</strong><br><br>
-      <img alt="Top Languages compact" src="https://github-readme-stats-12.onrender.com/api/top-langs?username=octocat&amp;layout=compact&amp;theme=github_dark" />
+      <img alt="Top Languages compact" src="https://github-readme-stats-gx6uc6das-tran-dang-khoa.vercel.app//api/top-langs?username=octocat&amp;layout=compact&amp;theme=github_dark" />
     </td>
     <td align="center">
       <strong>Top Languages · Donut</strong><br><br>
-      <img alt="Top Languages donut" src="https://github-readme-stats-12.onrender.com/api/top-langs?username=octocat&amp;layout=donut&amp;theme=radical" />
+      <img alt="Top Languages donut" src="https://github-readme-stats-gx6uc6das-tran-dang-khoa.vercel.app//api/top-langs?username=octocat&amp;layout=donut&amp;theme=radical" />
     </td>
   </tr>
   <tr>
     <td align="center" colspan="2">
       <strong>Repository Card</strong><br><br>
-      <img alt="Repository Card mẫu" src="https://github-readme-stats-12.onrender.com/api/pin?username=TranDangKhoaTechnology&amp;repo=github-readme-stats&amp;show_owner=true&amp;theme=github_dark" />
+      <img alt="Repository Card mẫu" src="https://github-readme-stats-gx6uc6das-tran-dang-khoa.vercel.app//api/pin?username=TranDangKhoaTechnology&amp;repo=github-readme-stats&amp;show_owner=true&amp;theme=github_dark" />
     </td>
   </tr>
 </table>
