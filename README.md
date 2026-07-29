@@ -6,9 +6,9 @@ Tạo thẻ thống kê GitHub dạng SVG động để nhúng vào README.
 
 Được duy trì bởi **TranDangKhoaTechnology** và tối ưu để triển khai trên **Render**.
 
-![Node.js](https://img.shields.io/badge/Node.js-22-339933?logo=node.js&logoColor=white)
-![Render](https://img.shields.io/badge/Deploy-Render-46E3B7?logo=render&logoColor=black)
-![License](https://img.shields.io/badge/License-MIT-blue)
+![Node.js](https:/img.shields.io/badge/Node.js-22-339933?logo=node.js&logoColor=white)
+![Render](https:/img.shields.io/badge/Deploy-Render-46E3B7?logo=render&logoColor=black)
+![License](https:/img.shields.io/badge/License-MIT-blue)
 
 </div>
 
@@ -36,37 +36,37 @@ Phiên bản này sử dụng Express, Node.js 22 và có sẵn cấu hình Rend
   <tr>
     <td align="center">
       <strong>GitHub Stats</strong><br><br>
-      <img alt="GitHub Stats mẫu" src="https://github-readme-stats-gx6uc6das-tran-dang-khoa.vercel.app//api?username=octocat&amp;show_icons=true" />
+      <img alt="GitHub Stats mẫu" src="https:/github-readme-stats-gx6uc6das-tran-dang-khoa.vercel.app/api?username=octocat&amp;show_icons=true" />
     </td>
     <td align="center">
       <strong>GitHub Stats · Radical</strong><br><br>
-      <img alt="GitHub Stats theme radical" src="https://github-readme-stats-gx6uc6das-tran-dang-khoa.vercel.app//api?username=octocat&amp;show_icons=true&amp;theme=radical" />
+      <img alt="GitHub Stats theme radical" src="https:/github-readme-stats-gx6uc6das-tran-dang-khoa.vercel.app/api?username=octocat&amp;show_icons=true&amp;theme=radical" />
     </td>
   </tr>
   <tr>
     <td align="center">
       <strong>GitHub Stats · Dark</strong><br><br>
-      <img alt="GitHub Stats theme dark" src="https://github-readme-stats-gx6uc6das-tran-dang-khoa.vercel.app//api?username=octocat&amp;show_icons=true&amp;theme=github_dark" />
+      <img alt="GitHub Stats theme dark" src="https:/github-readme-stats-gx6uc6das-tran-dang-khoa.vercel.app/api?username=octocat&amp;show_icons=true&amp;theme=github_dark" />
     </td>
     <td align="center">
       <strong>GitHub Stats · Transparent</strong><br><br>
-      <img alt="GitHub Stats trong suốt" src="https://github-readme-stats-gx6uc6das-tran-dang-khoa.vercel.app//api?username=octocat&amp;show_icons=true&amp;theme=transparent" />
+      <img alt="GitHub Stats trong suốt" src="https:/github-readme-stats-gx6uc6das-tran-dang-khoa.vercel.app/api?username=octocat&amp;show_icons=true&amp;theme=transparent" />
     </td>
   </tr>
   <tr>
     <td align="center">
       <strong>Top Languages · Compact</strong><br><br>
-      <img alt="Top Languages compact" src="https://github-readme-stats-gx6uc6das-tran-dang-khoa.vercel.app//api/top-langs?username=octocat&amp;layout=compact&amp;theme=github_dark" />
+      <img alt="Top Languages compact" src="https:/github-readme-stats-gx6uc6das-tran-dang-khoa.vercel.app/api/top-langs?username=octocat&amp;layout=compact&amp;theme=github_dark" />
     </td>
     <td align="center">
       <strong>Top Languages · Donut</strong><br><br>
-      <img alt="Top Languages donut" src="https://github-readme-stats-gx6uc6das-tran-dang-khoa.vercel.app//api/top-langs?username=octocat&amp;layout=donut&amp;theme=radical" />
+      <img alt="Top Languages donut" src="https:/github-readme-stats-gx6uc6das-tran-dang-khoa.vercel.app/api/top-langs?username=octocat&amp;layout=donut&amp;theme=radical" />
     </td>
   </tr>
   <tr>
     <td align="center" colspan="2">
       <strong>Repository Card</strong><br><br>
-      <img alt="Repository Card mẫu" src="https://github-readme-stats-gx6uc6das-tran-dang-khoa.vercel.app//api/pin?username=TranDangKhoaTechnology&amp;repo=github-readme-stats&amp;show_owner=true&amp;theme=github_dark" />
+      <img alt="Repository Card mẫu" src="https:/github-readme-stats-gx6uc6das-tran-dang-khoa.vercel.app/api/pin?username=TranDangKhoaTechnology&amp;repo=github-readme-stats&amp;show_owner=true&amp;theme=github_dark" />
     </td>
   </tr>
 </table>
@@ -78,25 +78,25 @@ Thay `<username>`, `<repository>` và `<gist-id>` bằng thông tin của bạn.
 ### Thẻ thống kê GitHub
 
 ```md
-![GitHub Stats](https://<your-service>.onrender.com/api?username=<username>&show_icons=true)
+![GitHub Stats](https:/<your-service>.onrender.com/api?username=<username>&show_icons=true)
 ```
 
 ### Thẻ ngôn ngữ
 
 ```md
-![Top Languages](https://<your-service>.onrender.com/api/top-langs?username=<username>&layout=compact)
+![Top Languages](https:/<your-service>.onrender.com/api/top-langs?username=<username>&layout=compact)
 ```
 
 ### Thẻ repository
 
 ```md
-![Repository](https://<your-service>.onrender.com/api/pin?username=<username>&repo=<repository>)
+![Repository](https:/<your-service>.onrender.com/api/pin?username=<username>&repo=<repository>)
 ```
 
 ### Thẻ gist
 
 ```md
-![Gist](https://<your-service>.onrender.com/api/gist?id=<gist-id>)
+![Gist](https:/<your-service>.onrender.com/api/gist?id=<gist-id>)
 ```
 
 ### Thẻ WakaTime
@@ -104,7 +104,7 @@ Thay `<username>`, `<repository>` và `<gist-id>` bằng thông tin của bạn.
 Tài khoản WakaTime phải có profile công khai.
 
 ```md
-![WakaTime](https://<your-service>.onrender.com/api/wakatime?username=<username>)
+![WakaTime](https:/<your-service>.onrender.com/api/wakatime?username=<username>)
 ```
 
 ## Tùy chỉnh thẻ
@@ -131,7 +131,7 @@ Các tham số phổ biến có thể nối vào URL bằng `&`.
 Ví dụ:
 
 ```md
-![GitHub Stats](https://<your-service>.onrender.com/api?username=<username>&show_icons=true&theme=radical&hide_border=true)
+![GitHub Stats](https:/<your-service>.onrender.com/api?username=<username>&show_icons=true&theme=radical&hide_border=true)
 ```
 
 ### Tùy chọn riêng cho thẻ thống kê
@@ -167,7 +167,7 @@ Danh sách theme có sẵn nằm trong [themes/README.md](themes/README.md).
 
 Ứng dụng cần ít nhất một token để gọi GitHub API.
 
-1. Mở [GitHub Personal Access Tokens](https://github.com/settings/tokens).
+1. Mở [GitHub Personal Access Tokens](https:/github.com/settings/tokens).
 2. Tạo token mới.
 3. Nếu chỉ đọc dữ liệu công khai, chỉ cấp các quyền đọc cần thiết.
 4. Nếu muốn thống kê repository hoặc đóng góp riêng tư, token classic cần quyền `repo` và `read:user`.
@@ -180,7 +180,7 @@ Không ghi token vào mã nguồn, README, commit hoặc log. Token phải đư�
 Repository có sẵn [render.yaml](render.yaml).
 
 1. Fork hoặc push repository này lên GitHub của bạn.
-2. Mở [Render Dashboard](https://dashboard.render.com/).
+2. Mở [Render Dashboard](https:/dashboard.render.com/).
 3. Chọn **New → Blueprint**.
 4. Kết nối repository.
 5. Nhập giá trị bí mật cho biến `PAT_1`.
@@ -203,9 +203,9 @@ Trong **Environment**, bắt buộc thêm `PAT_1` với giá trị là GitHub Pe
 Sau khi deploy, kiểm tra:
 
 ```text
-https://<service-name>.onrender.com/
-https://<service-name>.onrender.com/health
-https://<service-name>.onrender.com/api?username=octocat
+https:/<service-name>.onrender.com/
+https:/<service-name>.onrender.com/health
+https:/<service-name>.onrender.com/api?username=octocat
 ```
 
 ## Render background scheduler
@@ -229,7 +229,7 @@ Không commit token thật, không đưa token vào README và không chia sẻ 
 | `RENDER_SCHEDULER_ENABLED` | No | `false` | Enables the background scheduler when set to `true` |
 | `RENDER_TOKEN` | Yes when enabled | — | Render bearer token |
 | `RENDER_OWNER_ID` | Yes when enabled | — | Render owner/team ID |
-| `RENDER_GRAPHQL_URL` | No | `https://api.render.com/graphql` | GraphQL endpoint |
+| `RENDER_GRAPHQL_URL` | No | `https:/api.render.com/graphql` | GraphQL endpoint |
 | `RENDER_SCHEDULER_INTERVAL_MS` | No | `15000` | Scheduler interval; minimum `10000` ms |
 | `RENDER_SCHEDULER_TIMEOUT_MS` | No | `10000` | Timeout for one request |
 | `RENDER_SCHEDULER_INITIAL_DELAY_MS` | No | `3000` | Delay before the first request |
@@ -241,7 +241,7 @@ Ví dụ Environment:
 RENDER_SCHEDULER_ENABLED=true
 RENDER_TOKEN=your_new_render_token_here
 RENDER_OWNER_ID=tea-xxxxxxxxxxxxxxxxxxxx
-RENDER_GRAPHQL_URL=https://api.render.com/graphql
+RENDER_GRAPHQL_URL=https:/api.render.com/graphql
 RENDER_SCHEDULER_INTERVAL_MS=15000
 RENDER_SCHEDULER_TIMEOUT_MS=10000
 RENDER_SCHEDULER_INITIAL_DELAY_MS=3000
@@ -315,9 +315,9 @@ yarn start
 Mở:
 
 ```text
-http://localhost:9000/
-http://localhost:9000/health
-http://localhost:9000/api?username=octocat
+http:/localhost:9000/
+http:/localhost:9000/health
+http:/localhost:9000/api?username=octocat
 ```
 
 Ứng dụng cũng hỗ trợ lệnh `node src/index.js` để tương thích với các dịch vụ tự chọn entrypoint.
@@ -374,6 +374,6 @@ Kiểm tra `PAT_1`, quyền của token và giới hạn GitHub API. Có thể t
 
 Dự án được phân phối theo giấy phép MIT. Bản Render và các thay đổi trong fork này được duy trì bởi **TranDangKhoaTechnology**.
 
-Dự án được phát triển dựa trên mã nguồn [anuraghazra/github-readme-stats](https://github.com/anuraghazra/github-readme-stats). Các thông báo bản quyền và điều khoản giấy phép của mã nguồn gốc vẫn được giữ theo yêu cầu của MIT.
+Dự án được phát triển dựa trên mã nguồn [anuraghazra/github-readme-stats](https:/github.com/anuraghazra/github-readme-stats). Các thông báo bản quyền và điều khoản giấy phép của mã nguồn gốc vẫn được giữ theo yêu cầu của MIT.
 
 © 2026 TranDangKhoaTechnology.
