@@ -8,8 +8,8 @@
         role="img"
         aria-labelledby="descId"
       >
-        <title id="titleId">Tr&#7847;n &#272;&#259;ng Khoa's GitHub Stats, Rank: C+</title>
-        <desc id="descId">Total Stars Earned: 21, Total Commits  (last year) : 259, Total PRs: 10, Total Issues: 1, Contributed to (last year): 3</desc>
+        <title id="titleId">Tr&#7847;n &#272;&#259;ng Khoa's GitHub Stats, Rank: B-</title>
+        <desc id="descId">Total Stars Earned: 21, Total Commits  (last year) : 260, Total PRs: 10, Total Issues: 1, Contributed to (last year): 3</desc>
         <style>
           .header {
             font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
@@ -73,7 +73,7 @@
         stroke-dashoffset: 251.32741228718345;
       }
       to {
-        stroke-dashoffset: 188.5283052352646;
+        stroke-dashoffset: 188.4717457998932;
       }
     }
   
@@ -143,7 +143,7 @@
         <g class="rank-text">
           
         <text x="-5" y="3" alignment-baseline="central" dominant-baseline="central" text-anchor="middle" data-testid="level-rank-icon">
-          C+
+          B-
         </text>
       
         </g>
@@ -169,7 +169,7 @@
         x="204.01"
         y="12.5"
         data-testid="commits"
-      >259</text>
+      >260</text>
     </g>
   </g><g transform="translate(0, 50)">
     <g class="stagger" style="animation-delay: 750ms" transform="translate(25, 0)">
