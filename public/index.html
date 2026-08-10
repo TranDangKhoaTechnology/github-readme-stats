@@ -135,6 +135,8 @@
       outline: none;
     }
     .field input:focus, .field select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(88,166,255,.10); }
+    .help { margin-top: 7px; color: var(--muted); font-size: 12px; line-height: 1.5; }
+    .help a { color: var(--accent); text-decoration: none; }
     .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     .checks { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 10px; margin: 4px 0 16px; }
     .check { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 13px; }
@@ -243,8 +245,14 @@
           </div>
 
           <div class="field" id="usernameField">
-            <label for="username">Username</label>
+            <label for="username">GitHub username</label>
             <input id="username" value="TranDangKhoaTechnology" autocomplete="off" spellcheck="false">
+          </div>
+
+          <div class="field hidden" id="wakatimeField">
+            <label for="wakatimeUsername">WakaTime username</label>
+            <input id="wakatimeUsername" placeholder="Nhập username trên WakaTime" autocomplete="off" spellcheck="false">
+            <div class="help">Đây là username của <strong>WakaTime</strong>, không tự động dùng GitHub username. Profile/code stats phải được đặt public trên WakaTime.</div>
           </div>
 
           <div class="field hidden" id="repoField">
@@ -338,7 +346,7 @@
         <article class="api-card"><h3>🧠 Languages</h3><p>Top ngôn ngữ với compact, donut, donut-vertical, pie.</p><span class="endpoint">/api/top-langs?username=...</span></article>
         <article class="api-card"><h3>📌 Repo Pin</h3><p>Card cho repository với mô tả, stars, forks và language.</p><span class="endpoint">/api/pin?username=...&repo=...</span></article>
         <article class="api-card"><h3>🧩 Gist</h3><p>Hiển thị một GitHub Gist bằng ID.</p><span class="endpoint">/api/gist?id=...</span></article>
-        <article class="api-card"><h3>⏱ WakaTime</h3><p>Thống kê coding time và ngôn ngữ từ WakaTime profile.</p><span class="endpoint">/api/wakatime?username=...</span></article>
+        <article class="api-card"><h3>⏱ WakaTime</h3><p>Dùng WakaTime username riêng và yêu cầu profile/code stats public.</p><span class="endpoint">/api/wakatime?username=...</span></article>
       </div>
     </section>
 
@@ -363,7 +371,7 @@
 
   <script>
     const $ = (id) => document.getElementById(id);
-    const state = { type: "stats" };
+    const state = { type: "stats", requestId: 0, previewObjectUrl: null };
 
     const tabs = [...document.querySelectorAll(".tab")];
     const inputs = [...document.querySelectorAll("input, select")];
@@ -408,7 +416,8 @@
         if (gist) params.set("id", gist);
       } else if (type === "wakatime") {
         path = "/api/wakatime";
-        params.set("username", username || "TranDangKhoaTechnology");
+        const wakatimeUsername = $("wakatimeUsername").value.trim();
+        if (wakatimeUsername) params.set("username", wakatimeUsername);
       }
 
       if (theme && theme !== "default") params.set("theme", theme);
@@ -420,17 +429,46 @@
       return `${base}${path}?${params.toString()}`;
     }
 
+    function clearPreview(message) {
+      state.requestId += 1;
+      if (state.previewObjectUrl) {
+        URL.revokeObjectURL(state.previewObjectUrl);
+        state.previewObjectUrl = null;
+      }
+      previewImage.removeAttribute("src");
+      previewImage.alt = message;
+    }
+
     function setVisibility() {
       const type = state.type;
       $("repoField").classList.toggle("hidden", type !== "pin");
       $("gistField").classList.toggle("hidden", type !== "gist");
-      $("usernameField").classList.toggle("hidden", type === "gist");
+      $("wakatimeField").classList.toggle("hidden", type !== "wakatime");
+      $("usernameField").classList.toggle("hidden", ["gist", "wakatime"].includes(type));
       $("layoutField").classList.toggle("hidden", type !== "langs");
       $("statsChecks").classList.toggle("hidden", type !== "stats");
       $("titleField").classList.toggle("hidden", ["pin", "gist"].includes(type));
     }
 
-    function updatePreview() {
+    async function updatePreview() {
+      if (state.type === "gist" && !$("gist").value.trim()) {
+        clearPreview("Nhập Gist ID để xem trước");
+        $("urlValue").textContent = "Nhập Gist ID để tạo URL.";
+        $("markdownValue").textContent = "Nhập Gist ID để tạo Markdown.";
+        status.className = "status";
+        status.innerHTML = '<span class="dot"></span><span>Nhập Gist ID để kiểm tra endpoint.</span>';
+        return;
+      }
+
+      if (state.type === "wakatime" && !$("wakatimeUsername").value.trim()) {
+        clearPreview("Nhập WakaTime username để xem trước");
+        $("urlValue").textContent = "Nhập WakaTime username để tạo URL.";
+        $("markdownValue").textContent = "Nhập WakaTime username để tạo Markdown.";
+        status.className = "status";
+        status.innerHTML = '<span class="dot"></span><span>WakaTime cần username riêng và profile/code stats public.</span>';
+        return;
+      }
+
       const url = createUrl();
       const label = {
         stats: "GitHub Stats",
@@ -443,26 +481,45 @@
       $("urlValue").textContent = url;
       $("markdownValue").textContent = `![${label}](${url})`;
 
-      if (state.type === "gist" && !$("gist").value.trim()) {
-        previewImage.removeAttribute("src");
-        previewImage.alt = "Nhập Gist ID để xem trước";
-        status.className = "status";
-        status.innerHTML = '<span class="dot"></span><span>Nhập Gist ID để kiểm tra endpoint.</span>';
-        return;
-      }
-
+      const requestId = ++state.requestId;
       status.className = "status";
-      status.innerHTML = '<span class="dot"></span><span>Đang tải preview…</span>';
-      previewImage.src = url;
+      status.innerHTML = '<span class="dot"></span><span>Đang kiểm tra dữ liệu và tải preview…</span>';
+
+      try {
+        const response = await fetch(url, { headers: { Accept: "image/svg+xml" } });
+        const svg = await response.text();
+        if (requestId !== state.requestId) return;
+
+        if (state.previewObjectUrl) URL.revokeObjectURL(state.previewObjectUrl);
+        state.previewObjectUrl = URL.createObjectURL(new Blob([svg], { type: "image/svg+xml" }));
+        previewImage.src = state.previewObjectUrl;
+        previewImage.alt = `${label} preview`;
+
+        const isErrorCard = !response.ok || /Something went wrong|Could not resolve|not public|Language not found|Incorrect .* input|Missing .* parameter/i.test(svg);
+
+        if (isErrorCard) {
+          status.className = "status bad";
+          if (state.type === "wakatime") {
+            status.textContent = "Không tìm thấy dữ liệu WakaTime công khai. Kiểm tra WakaTime username và bật public code stats/profile.";
+          } else {
+            status.textContent = "API đã trả về một error card. Kiểm tra lại tham số ở bên trái.";
+          }
+          return;
+        }
+
+        status.className = "status ok";
+        status.innerHTML = '<span class="dot"></span><span>API đang hoạt động · dữ liệu hợp lệ · preview đã tải.</span>';
+      } catch (error) {
+        if (requestId !== state.requestId) return;
+        clearPreview("Không tải được preview");
+        status.className = "status bad";
+        status.textContent = "Không kết nối được API hoặc deployment. Hãy thử tải lại trang.";
+      }
     }
 
-    previewImage.addEventListener("load", () => {
-      status.className = "status ok";
-      status.innerHTML = '<span class="dot"></span><span>API đang hoạt động · preview đã tải.</span>';
-    });
     previewImage.addEventListener("error", () => {
       status.className = "status bad";
-      status.textContent = "Không tải được preview. Kiểm tra tham số hoặc Vercel deployment.";
+      status.textContent = "SVG preview không hợp lệ hoặc không thể hiển thị.";
     });
 
     tabs.forEach((tab) => {
@@ -480,6 +537,7 @@
     document.querySelectorAll("[data-copy]").forEach((button) => {
       button.addEventListener("click", async () => {
         const source = $(button.dataset.copy).textContent;
+        if (!source || source.startsWith("Nhập ")) return;
         try {
           await navigator.clipboard.writeText(source);
           const old = button.textContent;
