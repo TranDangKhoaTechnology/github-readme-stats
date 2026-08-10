@@ -3,124 +3,496 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tran Dang Khoa - GitHub Readme Stats</title>
+  <meta name="description" content="GitHub Readme Stats self-hosted instance by TranDangKhoaTechnology - tạo Stats, Top Languages, Repo Pin, Gist và WakaTime cards.">
+  <meta name="theme-color" content="#0d1117">
+  <title>GitHub Readme Stats · TranDangKhoaTechnology</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      color-scheme: dark;
+      --bg: #0d1117;
+      --panel: #161b22;
+      --panel-2: #0d1117;
+      --border: #30363d;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --accent: #58a6ff;
+      --accent-2: #1f6feb;
+      --success: #3fb950;
+      --shadow: 0 16px 48px rgba(0, 0, 0, .28);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-      background: #0d1117;
-      color: #c9d1d9;
+      margin: 0;
       min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 15% 0%, rgba(31, 111, 235, .18), transparent 28rem),
+        radial-gradient(circle at 90% 12%, rgba(88, 166, 255, .10), transparent 24rem),
+        var(--bg);
+    }
+
+    a { color: inherit; }
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
+
+    .shell { width: min(1180px, calc(100% - 32px)); margin: 0 auto; }
+    .nav {
       display: flex;
-      flex-direction: column;
       align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 22px 0;
     }
-    .container { max-width: 900px; width: 100%; padding: 40px 20px; }
-
-    /* Header */
-    .header { text-align: center; margin-bottom: 40px; }
-    .avatar {
-      width: 120px; height: 120px;
-      border-radius: 50%;
-      border: 3px solid #30363d;
-      margin-bottom: 16px;
-    }
-    .header h1 { font-size: 2rem; color: #58a6ff; margin-bottom: 8px; }
-    .header p { color: #8b949e; font-size: 1.1rem; }
-
-    /* Badges */
-    .badges { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin: 20px 0; }
-    .badge {
-      background: #21262d;
-      border: 1px solid #30363d;
-      border-radius: 20px;
-      padding: 6px 14px;
-      font-size: 0.85rem;
-      color: #c9d1d9;
-    }
-
-    /* Cards */
-    .cards { display: flex; flex-direction: column; gap: 20px; align-items: center; }
-    .cards img {
-      max-width: 100%;
-      border-radius: 6px;
-    }
-
-    /* Links */
-    .links { display: flex; gap: 16px; justify-content: center; margin: 30px 0; flex-wrap: wrap; }
-    .links a {
-      color: #58a6ff;
+    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; font-weight: 750; }
+    .brand img { width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--border); }
+    .nav-links { display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+    .btn {
+      border: 1px solid var(--border);
+      background: rgba(22, 27, 34, .78);
+      color: var(--text);
+      border-radius: 9px;
+      padding: 9px 13px;
       text-decoration: none;
-      padding: 8px 20px;
-      border: 1px solid #30363d;
-      border-radius: 6px;
-      transition: all 0.2s;
-      font-size: 0.9rem;
+      transition: .18s ease;
     }
-    .links a:hover { background: #1f6feb22; border-color: #58a6ff; }
+    .btn:hover { border-color: var(--accent); transform: translateY(-1px); }
+    .btn.primary { background: var(--accent-2); border-color: var(--accent-2); color: white; }
 
-    /* Footer */
-    .footer { text-align: center; margin-top: 40px; padding: 20px; color: #484f58; font-size: 0.85rem; }
-    .footer a { color: #58a6ff; text-decoration: none; }
+    .hero {
+      display: grid;
+      grid-template-columns: 1.12fr .88fr;
+      gap: 28px;
+      align-items: center;
+      padding: 54px 0 34px;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--muted);
+      background: rgba(22, 27, 34, .65);
+      font-size: 13px;
+    }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--success); box-shadow: 0 0 0 4px rgba(63,185,80,.12); }
+    h1 { margin: 18px 0 14px; font-size: clamp(38px, 6vw, 68px); line-height: 1.02; letter-spacing: -2.5px; }
+    .gradient { color: #79c0ff; }
+    .lead { color: var(--muted); font-size: 18px; line-height: 1.7; max-width: 720px; }
+    .hero-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 24px; }
+    .mini-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .mini-card {
+      min-height: 118px;
+      border: 1px solid var(--border);
+      background: linear-gradient(145deg, rgba(22,27,34,.96), rgba(13,17,23,.82));
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+    .mini-card strong { display: block; font-size: 24px; margin-bottom: 7px; }
+    .mini-card span { color: var(--muted); font-size: 13px; line-height: 1.5; }
 
-    /* Section titles */
-    h2 { color: #58a6ff; margin: 40px 0 20px; font-size: 1.4rem; text-align: center; }
+    .section { padding: 38px 0; }
+    .section-head { margin-bottom: 18px; }
+    .section-head h2 { margin: 0 0 8px; font-size: 28px; letter-spacing: -.5px; }
+    .section-head p { margin: 0; color: var(--muted); line-height: 1.6; }
 
-    /* Repos grid */
-    .repo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
-    .repo-card {
-      background: #161b22;
-      border: 1px solid #30363d;
+    .builder {
+      display: grid;
+      grid-template-columns: 390px 1fr;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      background: rgba(22, 27, 34, .72);
+      box-shadow: var(--shadow);
+    }
+    .controls { padding: 20px; border-right: 1px solid var(--border); }
+    .preview { padding: 22px; min-width: 0; display: flex; flex-direction: column; gap: 16px; }
+    .tabs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-bottom: 18px; }
+    .tab {
+      border: 1px solid var(--border);
       border-radius: 8px;
-      padding: 16px;
-      text-decoration: none;
-      color: #c9d1d9;
-      transition: border-color 0.2s;
+      background: var(--panel-2);
+      color: var(--muted);
+      padding: 9px 5px;
+      font-size: 12px;
     }
-    .repo-card:hover { border-color: #58a6ff; }
-    .repo-card h3 { font-size: 0.95rem; color: #58a6ff; margin-bottom: 6px; }
-    .repo-card p { font-size: 0.8rem; color: #8b949e; line-height: 1.4; }
+    .tab.active { color: white; border-color: var(--accent-2); background: rgba(31,111,235,.18); }
 
-    @media (max-width: 600px) {
-      .container { padding: 20px 16px; }
-      .header h1 { font-size: 1.5rem; }
+    .field { margin-bottom: 14px; }
+    .field label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 7px; }
+    .field input, .field select {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--panel-2);
+      color: var(--text);
+      padding: 10px 11px;
+      outline: none;
+    }
+    .field input:focus, .field select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(88,166,255,.10); }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .checks { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 10px; margin: 4px 0 16px; }
+    .check { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 13px; }
+    .check input { accent-color: var(--accent-2); }
+    .hidden { display: none !important; }
+
+    .preview-box {
+      min-height: 250px;
+      display: grid;
+      place-items: center;
+      border: 1px dashed var(--border);
+      border-radius: 12px;
+      background: rgba(13,17,23,.62);
+      padding: 20px;
+      overflow: auto;
+    }
+    .preview-box img { max-width: 100%; height: auto; }
+    .status { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-size: 13px; }
+    .status.ok { color: #7ee787; }
+    .status.bad { color: #ff7b72; }
+
+    .output { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: var(--panel-2); }
+    .output-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 9px 10px; border-bottom: 1px solid var(--border); color: var(--muted); font-size: 12px; }
+    .copy { border: 1px solid var(--border); border-radius: 6px; padding: 5px 9px; background: var(--panel); color: var(--text); }
+    .copy:hover { border-color: var(--accent); }
+    code.value { display: block; padding: 12px; color: #a5d6ff; white-space: pre-wrap; overflow-wrap: anywhere; font-size: 12px; line-height: 1.6; }
+
+    .api-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+    .api-card { border: 1px solid var(--border); border-radius: 12px; padding: 16px; background: rgba(22,27,34,.72); }
+    .api-card h3 { margin: 0 0 7px; font-size: 15px; }
+    .api-card p { margin: 0 0 12px; color: var(--muted); font-size: 13px; line-height: 1.55; }
+    .endpoint { display: inline-block; color: #a5d6ff; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; }
+
+    .tips { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .tip { border: 1px solid var(--border); border-radius: 12px; padding: 16px; background: rgba(13,17,23,.45); }
+    .tip strong { display: block; margin-bottom: 7px; }
+    .tip span { color: var(--muted); font-size: 13px; line-height: 1.55; }
+
+    footer { border-top: 1px solid var(--border); color: var(--muted); margin-top: 36px; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 28px 0 38px; font-size: 13px; }
+    .footer-inner a { color: var(--accent); text-decoration: none; }
+
+    @media (max-width: 960px) {
+      .hero { grid-template-columns: 1fr; }
+      .builder { grid-template-columns: 1fr; }
+      .controls { border-right: 0; border-bottom: 1px solid var(--border); }
+      .api-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 620px) {
+      .shell { width: min(100% - 22px, 1180px); }
+      .nav { align-items: flex-start; }
+      .brand span { display: none; }
+      .hero { padding-top: 30px; }
+      h1 { letter-spacing: -1.5px; }
+      .mini-grid, .row, .checks, .tips, .api-grid { grid-template-columns: 1fr; }
+      .tabs { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <!-- Header -->
-    <div class="header">
-      <img class="avatar" src="https://github.com/TranDangKhoaTechnology.png" alt="Tran Dang Khoa">
-      <h1>👋 Tran Dang Khoa</h1>
-      <p>Embedded Systems Engineer & Full-stack Developer</p>
-      <div class="badges">
-        <span class="badge">🔧 STM32</span>
-        <span class="badge">📡 ESP32</span>
-        <span class="badge">⚡ Altium Designer</span>
-        <span class="badge">🌐 IoT</span>
-        <span class="badge">💻 JavaScript</span>
-        <span class="badge">🐍 Python</span>
-        <span class="badge">🔌 C/C++</span>
-      </div>
-      <div class="links">
-        <a href="https://github.com/TranDangKhoaTechnology">🐙 GitHub</a>
-        <a href="https://github.com/TranDangKhoaTechnology?tab=repositories">📦 Repositories</a>
-      </div>
-    </div>
+  <header class="shell nav">
+    <a class="brand" href="/">
+      <img src="https://github.com/TranDangKhoaTechnology.png" alt="TranDangKhoaTechnology">
+      <span>GitHub Readme Stats</span>
+    </a>
+    <nav class="nav-links">
+      <a class="btn" href="#generator">Tạo card</a>
+      <a class="btn" href="#api">API</a>
+      <a class="btn primary" href="https://github.com/TranDangKhoaTechnology/github-readme-stats">GitHub ↗</a>
+    </nav>
+  </header>
 
-    <!-- Stats -->
-    <h2>📊 GitHub Statistics</h2>
-    <div class="cards">
-      <img src="/api?username=TranDangKhoaTechnology&show_icons=true&theme=dark&hide_border=true&count_private=true" alt="GitHub Stats">
-      <img src="/api/top-langs?username=TranDangKhoaTechnology&layout=compact&theme=dark&hide_border=true" alt="Top Languages">
-    </div>
+  <main>
+    <section class="shell hero">
+      <div>
+        <div class="eyebrow"><span class="dot"></span> Self-hosted instance · Vercel</div>
+        <h1>GitHub stats <span class="gradient">đầy đủ hơn</span> cho README của bạn.</h1>
+        <p class="lead">Tạo nhanh GitHub Stats, Top Languages, Repo Pin, Gist và WakaTime. Có xem trước trực tiếp, tuỳ chỉnh theme và sao chép URL/Markdown ngay trên một trang.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#generator">Mở trình tạo card</a>
+          <a class="btn" href="https://github.com/TranDangKhoaTechnology">TranDangKhoaTechnology ↗</a>
+        </div>
+      </div>
+      <div class="mini-grid" aria-label="Tính năng">
+        <div class="mini-card"><strong>5</strong><span>loại card chính được gom vào cùng một giao diện.</span></div>
+        <div class="mini-card"><strong>Live</strong><span>preview cập nhật ngay khi thay đổi tham số.</span></div>
+        <div class="mini-card"><strong>URL</strong><span>tự dùng domain hiện tại nên deploy/fork khác vẫn hoạt động.</span></div>
+        <div class="mini-card"><strong>MD</strong><span>sao chép Markdown để dán thẳng vào GitHub README.</span></div>
+      </div>
+    </section>
 
-    <!-- Footer -->
-    <div class="footer">
-      <p>Powered by <a href="https://github.com/anuraghazra/github-readme-stats">github-readme-stats</a></p>
-      <p style="margin-top: 4px;">✨ Generated dynamically with ❤️</p>
+    <section class="shell section" id="generator">
+      <div class="section-head">
+        <h2>Card Generator</h2>
+        <p>Chọn loại card, nhập dữ liệu rồi sao chép kết quả. Mặc định đã tối ưu cho profile TranDangKhoaTechnology.</p>
+      </div>
+
+      <div class="builder">
+        <div class="controls">
+          <div class="tabs" id="tabs">
+            <button class="tab active" data-type="stats">Stats</button>
+            <button class="tab" data-type="langs">Languages</button>
+            <button class="tab" data-type="pin">Repo Pin</button>
+            <button class="tab" data-type="gist">Gist</button>
+            <button class="tab" data-type="wakatime">WakaTime</button>
+          </div>
+
+          <div class="field" id="usernameField">
+            <label for="username">Username</label>
+            <input id="username" value="TranDangKhoaTechnology" autocomplete="off" spellcheck="false">
+          </div>
+
+          <div class="field hidden" id="repoField">
+            <label for="repo">Repository</label>
+            <input id="repo" value="github-readme-stats" autocomplete="off" spellcheck="false">
+          </div>
+
+          <div class="field hidden" id="gistField">
+            <label for="gist">Gist ID</label>
+            <input id="gist" placeholder="Ví dụ: 0123456789abcdef..." autocomplete="off" spellcheck="false">
+          </div>
+
+          <div class="row">
+            <div class="field">
+              <label for="theme">Theme</label>
+              <select id="theme">
+                <option value="github_dark">github_dark</option>
+                <option value="dark">dark</option>
+                <option value="radical">radical</option>
+                <option value="tokyonight">tokyonight</option>
+                <option value="dracula">dracula</option>
+                <option value="transparent">transparent</option>
+                <option value="default">default</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="locale">Locale</label>
+              <select id="locale">
+                <option value="vi">vi</option>
+                <option value="en">en</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field hidden" id="layoutField">
+            <label for="layout">Layout</label>
+            <select id="layout">
+              <option value="compact">compact</option>
+              <option value="normal">normal</option>
+              <option value="donut">donut</option>
+              <option value="donut-vertical">donut-vertical</option>
+              <option value="pie">pie</option>
+            </select>
+          </div>
+
+          <div class="field" id="titleField">
+            <label for="title">Custom title (tuỳ chọn)</label>
+            <input id="title" placeholder="GitHub Statistics" autocomplete="off">
+          </div>
+
+          <div class="checks" id="commonChecks">
+            <label class="check"><input id="hideBorder" type="checkbox" checked> Ẩn viền</label>
+            <label class="check"><input id="animations" type="checkbox" checked> Animation</label>
+          </div>
+
+          <div class="checks" id="statsChecks">
+            <label class="check"><input id="icons" type="checkbox" checked> Hiện icon</label>
+            <label class="check"><input id="allCommits" type="checkbox" checked> All commits</label>
+            <label class="check"><input id="reviews" type="checkbox" checked> Reviews</label>
+            <label class="check"><input id="merged" type="checkbox" checked> PR merged</label>
+            <label class="check"><input id="mergedPct" type="checkbox" checked> PR merged %</label>
+            <label class="check"><input id="discussions" type="checkbox"> Discussions</label>
+          </div>
+        </div>
+
+        <div class="preview">
+          <div class="status" id="status"><span class="dot"></span><span>Đang kiểm tra API…</span></div>
+          <div class="preview-box">
+            <img id="previewImage" alt="GitHub Readme Stats preview">
+          </div>
+
+          <div class="output">
+            <div class="output-head"><span>Direct URL</span><button class="copy" data-copy="urlValue">Copy</button></div>
+            <code class="value" id="urlValue"></code>
+          </div>
+          <div class="output">
+            <div class="output-head"><span>Markdown</span><button class="copy" data-copy="markdownValue">Copy</button></div>
+            <code class="value" id="markdownValue"></code>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="shell section" id="api">
+      <div class="section-head">
+        <h2>API có sẵn</h2>
+        <p>Các endpoint dưới đây đều được tạo từ chính deployment hiện tại.</p>
+      </div>
+      <div class="api-grid">
+        <article class="api-card"><h3>📊 Stats</h3><p>Commits, stars, PR, issues, reviews và các chỉ số mở rộng.</p><span class="endpoint">/api?username=...</span></article>
+        <article class="api-card"><h3>🧠 Languages</h3><p>Top ngôn ngữ với compact, donut, donut-vertical, pie.</p><span class="endpoint">/api/top-langs?username=...</span></article>
+        <article class="api-card"><h3>📌 Repo Pin</h3><p>Card cho repository với mô tả, stars, forks và language.</p><span class="endpoint">/api/pin?username=...&repo=...</span></article>
+        <article class="api-card"><h3>🧩 Gist</h3><p>Hiển thị một GitHub Gist bằng ID.</p><span class="endpoint">/api/gist?id=...</span></article>
+        <article class="api-card"><h3>⏱ WakaTime</h3><p>Thống kê coding time và ngôn ngữ từ WakaTime profile.</p><span class="endpoint">/api/wakatime?username=...</span></article>
+      </div>
+    </section>
+
+    <section class="shell section">
+      <div class="section-head">
+        <h2>Dùng ổn định hơn</h2>
+      </div>
+      <div class="tips">
+        <div class="tip"><strong>Private contributions</strong><span>Muốn dữ liệu private đầy đủ, cấu hình GitHub token ở biến môi trường Vercel. Tham số URL một mình không thể cấp quyền đọc repo private.</span></div>
+        <div class="tip"><strong>Cache</strong><span>Cards có cache để giảm GitHub API calls. Không nên ép refresh liên tục nếu không cần thiết.</span></div>
+        <div class="tip"><strong>Self-hosted URL</strong><span>Generator luôn lấy <code>location.origin</code>, vì vậy khi đổi domain Vercel hoặc custom domain, URL tạo ra tự đổi theo.</span></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell footer-inner">
+      <span>© 2026 TranDangKhoaTechnology · GitHub Readme Stats self-hosted</span>
+      <span>Based on <a href="https://github.com/anuraghazra/github-readme-stats">github-readme-stats</a></span>
     </div>
-  </div>
+  </footer>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    const state = { type: "stats" };
+
+    const tabs = [...document.querySelectorAll(".tab")];
+    const inputs = [...document.querySelectorAll("input, select")];
+    const previewImage = $("previewImage");
+    const status = $("status");
+
+    function boolParam(params, key, value, whenFalse = false) {
+      if (value || whenFalse) params.set(key, String(value));
+    }
+
+    function createUrl() {
+      const base = location.origin;
+      const type = state.type;
+      const username = $("username").value.trim();
+      const theme = $("theme").value;
+      const locale = $("locale").value;
+      const title = $("title").value.trim();
+      let path = "/api";
+      const params = new URLSearchParams();
+
+      if (type === "stats") {
+        params.set("username", username || "TranDangKhoaTechnology");
+        boolParam(params, "show_icons", $("icons").checked);
+        boolParam(params, "include_all_commits", $("allCommits").checked);
+        const show = [];
+        if ($("reviews").checked) show.push("reviews");
+        if ($("merged").checked) show.push("prs_merged");
+        if ($("mergedPct").checked) show.push("prs_merged_percentage");
+        if ($("discussions").checked) show.push("discussions_started", "discussions_answered");
+        if (show.length) params.set("show", show.join(","));
+      } else if (type === "langs") {
+        path = "/api/top-langs";
+        params.set("username", username || "TranDangKhoaTechnology");
+        params.set("layout", $("layout").value);
+      } else if (type === "pin") {
+        path = "/api/pin";
+        params.set("username", username || "TranDangKhoaTechnology");
+        params.set("repo", $("repo").value.trim() || "github-readme-stats");
+      } else if (type === "gist") {
+        path = "/api/gist";
+        const gist = $("gist").value.trim();
+        if (gist) params.set("id", gist);
+      } else if (type === "wakatime") {
+        path = "/api/wakatime";
+        params.set("username", username || "TranDangKhoaTechnology");
+      }
+
+      if (theme && theme !== "default") params.set("theme", theme);
+      if (locale) params.set("locale", locale);
+      boolParam(params, "hide_border", $("hideBorder").checked);
+      if (!$("animations").checked) params.set("disable_animations", "true");
+      if (title && !["pin", "gist"].includes(type)) params.set("custom_title", title);
+
+      return `${base}${path}?${params.toString()}`;
+    }
+
+    function setVisibility() {
+      const type = state.type;
+      $("repoField").classList.toggle("hidden", type !== "pin");
+      $("gistField").classList.toggle("hidden", type !== "gist");
+      $("usernameField").classList.toggle("hidden", type === "gist");
+      $("layoutField").classList.toggle("hidden", type !== "langs");
+      $("statsChecks").classList.toggle("hidden", type !== "stats");
+      $("titleField").classList.toggle("hidden", ["pin", "gist"].includes(type));
+    }
+
+    function updatePreview() {
+      const url = createUrl();
+      const label = {
+        stats: "GitHub Stats",
+        langs: "Top Languages",
+        pin: "Repository Card",
+        gist: "Gist Card",
+        wakatime: "WakaTime Stats",
+      }[state.type];
+
+      $("urlValue").textContent = url;
+      $("markdownValue").textContent = `![${label}](${url})`;
+
+      if (state.type === "gist" && !$("gist").value.trim()) {
+        previewImage.removeAttribute("src");
+        previewImage.alt = "Nhập Gist ID để xem trước";
+        status.className = "status";
+        status.innerHTML = '<span class="dot"></span><span>Nhập Gist ID để kiểm tra endpoint.</span>';
+        return;
+      }
+
+      status.className = "status";
+      status.innerHTML = '<span class="dot"></span><span>Đang tải preview…</span>';
+      previewImage.src = url;
+    }
+
+    previewImage.addEventListener("load", () => {
+      status.className = "status ok";
+      status.innerHTML = '<span class="dot"></span><span>API đang hoạt động · preview đã tải.</span>';
+    });
+    previewImage.addEventListener("error", () => {
+      status.className = "status bad";
+      status.textContent = "Không tải được preview. Kiểm tra tham số hoặc Vercel deployment.";
+    });
+
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        state.type = tab.dataset.type;
+        tabs.forEach((item) => item.classList.toggle("active", item === tab));
+        setVisibility();
+        updatePreview();
+      });
+    });
+
+    inputs.forEach((input) => input.addEventListener("input", updatePreview));
+    inputs.forEach((input) => input.addEventListener("change", updatePreview));
+
+    document.querySelectorAll("[data-copy]").forEach((button) => {
+      button.addEventListener("click", async () => {
+        const source = $(button.dataset.copy).textContent;
+        try {
+          await navigator.clipboard.writeText(source);
+          const old = button.textContent;
+          button.textContent = "Copied!";
+          setTimeout(() => { button.textContent = old; }, 1200);
+        } catch {
+          window.prompt("Copy nội dung:", source);
+        }
+      });
+    });
+
+    setVisibility();
+    updatePreview();
+  </script>
 </body>
 </html>
