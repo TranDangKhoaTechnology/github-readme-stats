@@ -14,21 +14,43 @@ const fetchWakatimeStats = async ({ username, api_domain }) => {
     throw new MissingParamError(["username"]);
   }
 
+  const domain = api_domain
+    ? api_domain.replace(/^https?:\/\//i, "").replace(/\/$/g, "")
+    : "wakatime.com";
+  const encodedUsername = encodeURIComponent(username);
+
   try {
     const { data } = await axios.get(
-      `https://${
-        api_domain ? api_domain.replace(/\/$/gi, "") : "wakatime.com"
-      }/api/v1/users/${username}/stats?is_including_today=true`,
+      `https://${domain}/api/v1/users/${encodedUsername}/stats?is_including_today=true`,
     );
 
     return data.data;
   } catch (err) {
-    if (err.response.status < 200 || err.response.status > 299) {
-      throw new CustomError(
-        `Could not resolve to a User with the login of '${username}'`,
-        "WAKATIME_USER_NOT_FOUND",
-      );
+    if (axios.isAxiosError(err)) {
+      const status = err.response?.status;
+
+      if (status === 401 || status === 403) {
+        throw new CustomError(
+          `WakaTime profile '${username}' is not public or cannot be accessed`,
+          "WAKATIME_PROFILE_PRIVATE",
+        );
+      }
+
+      if (status === 400 || status === 404) {
+        throw new CustomError(
+          `Could not resolve to a WakaTime User with the login of '${username}'`,
+          "WAKATIME_USER_NOT_FOUND",
+        );
+      }
+
+      if (!err.response) {
+        throw new CustomError(
+          "Could not connect to the WakaTime API",
+          "WAKATIME_API_UNREACHABLE",
+        );
+      }
     }
+
     throw err;
   }
 };
